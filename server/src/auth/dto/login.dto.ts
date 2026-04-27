@@ -1,0 +1,17 @@
+//src/auth/dto/login.dto.ts
+import { ApiProperty } from '@nestjs/swagger/dist/decorators/api-property.decorator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+
+export class LoginDto {
+
+    @ApiProperty()
+    @IsEmail()
+    @IsNotEmpty()
+    email!: string;
+
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(6)
+    password!: string;
+}
