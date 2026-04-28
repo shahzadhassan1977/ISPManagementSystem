@@ -62,22 +62,4 @@ export class AuthService {
     return null;
   }
 
-  async createOTP(email: string) {
-      // Generate a 6-digit OTP
-      return await this.usersService.createOTP(email);
-  }
-
-
-  async validateOTP(email: string, code: string): Promise<boolean> {
-    // const otpRecord = await this.prisma.auth_otp.findFirst({
-    //   where: {
-    //     email,
-    //     code,
-    //     expires_at: { gt: new Date() },
-    //     is_used: false,
-    //   },
-    // });
-
-    return false; //otpRecord != null;
-  }
 }

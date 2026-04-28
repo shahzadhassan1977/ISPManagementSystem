@@ -15,8 +15,8 @@ import router from "next/router";
 
 const schema = z.object({
   email: z.string().email("Enter valid email"),
-  //password: z.string().min(6, "Minimum 6 characters"),
-  //rememberMe: z.boolean().optional(),
+  password: z.string().min(6, "Minimum 6 characters"),
+  rememberMe: z.boolean().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -97,7 +97,7 @@ export default function LoginPage() {
           </div>
 
           {/* PASSWORD */}
-          {/* <div>
+          { <div>
             <label className="text-sm text-gray-200">Password</label>
 
             <div className="relative">
@@ -122,13 +122,13 @@ export default function LoginPage() {
                 {errors.password.message}
               </p>
             )}
-          </div> */}
+          </div> }
 
           {/* REMEMBER ME */}
-          {/* <div className="flex items-center gap-2 text-gray-300 text-sm">
+          { <div className="flex items-center gap-2 text-gray-300 text-sm">
             <input type="checkbox" {...register("rememberMe")} />
             <span>Remember me</span>
-          </div> */}
+          </div> }
 
           {/* BUTTON */}
           <button

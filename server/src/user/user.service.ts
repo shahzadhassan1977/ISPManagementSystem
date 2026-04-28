@@ -7,7 +7,6 @@ import { FindOptionsWhere, In, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../auth/entities/role.entity';
 import { UserRole } from '../auth/entities/user-role.entity';
-import { AuthOTP } from '../auth/entities/auth-otp.entity';
 
 @Injectable()
 export class UserService {
@@ -18,9 +17,7 @@ export class UserService {
     @InjectRepository(Role)
     private roleRepo: Repository<Role>,
     @InjectRepository(UserRole)
-    private userRoleRepo: Repository<UserRole>,
-    @InjectRepository(AuthOTP)
-    private authOtpRepo: Repository<AuthOTP>
+    private userRoleRepo: Repository<UserRole>,    
   ){}
 
   async create(createUserDto: CreateUserDto) {
@@ -214,18 +211,5 @@ export class UserService {
             return await this.userRoleRepo.save(userRoles);
   }
 
-  async createOTP(email: string) {
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const otp = this.authOtpRepo.create({
-      email,
-      code,
-      isUsed: false,
-      expiresAt: new Date(Date.now() + 5 * 60 * 1000), // 5 mins
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-    await this.authOtpRepo.save(otp);
-    return code;
-  }
   
 }
