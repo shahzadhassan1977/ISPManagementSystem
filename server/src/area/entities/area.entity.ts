@@ -22,6 +22,12 @@ export class Area {
   @UpdateDateColumn()
   updatedAt!: Date;
 
+  @Column()
+  isActive!: boolean;
+  
+  @Column()
+  isDeleted!: boolean;
+
   @OneToMany(() => Subarea, (s) => s.area, {
     cascade: true,
   })
