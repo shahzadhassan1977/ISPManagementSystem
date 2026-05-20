@@ -12,26 +12,24 @@ async function bootstrap() {
     app.useGlobalInterceptors(new response_interceptor_1.ResponseInterceptor());
     app.useGlobalFilters(new http_exception_filter_1.HttpExceptionFilter());
     app.enableCors({
-        origin: "http://localhost:3000",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        origin: true,
         credentials: true,
     });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('ISP Management System API')
-        .setDescription('API documentation for the ISP Management System')
+        .setDescription('API documentation for ISP Management System')
         .setVersion('1.0')
         .addBearerAuth({
         type: 'http',
         scheme: 'bearer',
         bearerFormat: 'JWT',
-        name: 'JWT',
-        description: 'Enter JWT token',
-        in: 'header',
-    }, 'access_token')
+    }, 'access-token')
         .build();
-    const documentFactory = () => swagger_1.SwaggerModule.createDocument(app, config);
-    swagger_1.SwaggerModule.setup('swagger', app, documentFactory);
+    const document = swagger_1.SwaggerModule.createDocument(app, config);
+    swagger_1.SwaggerModule.setup('swagger', app, document);
     await app.listen(process.env.PORT ?? 5000);
+    console.log(`🚀 Server running on http://localhost:5000`);
+    console.log(`📄 Swagger running on http://localhost:5000/swagger`);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

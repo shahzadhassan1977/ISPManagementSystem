@@ -16,6 +16,8 @@ class CreateUserSettingDto {
     keyName;
     keyValue;
     userId;
+    isActive;
+    isDeleted;
 }
 exports.CreateUserSettingDto = CreateUserSettingDto;
 __decorate([
@@ -32,4 +34,12 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], CreateUserSettingDto.prototype, "userId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateUserSettingDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateUserSettingDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-usersetting.dto.js.map

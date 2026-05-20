@@ -33,6 +33,8 @@ class CreateSubscriptiondetailDto {
     subscriptionId;
     linemanId;
     areaRecoveryOfficerId;
+    isActive;
+    isDeleted;
 }
 exports.CreateSubscriptiondetailDto = CreateSubscriptiondetailDto;
 __decorate([
@@ -136,4 +138,12 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptiondetailDto.prototype, "areaRecoveryOfficerId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateSubscriptiondetailDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateSubscriptiondetailDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-subscriptiondetail.dto.js.map

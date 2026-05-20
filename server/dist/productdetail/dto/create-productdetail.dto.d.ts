@@ -1,6 +1,8 @@
 export declare class CreateProductdetailDto {
-    company: string;
+    companyId: number;
     package: string;
     bandwidth: string;
     productId: number;
+    isActive: boolean;
+    isDeleted: boolean;
 }

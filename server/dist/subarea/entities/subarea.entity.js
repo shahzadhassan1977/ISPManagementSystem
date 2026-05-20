@@ -16,6 +16,10 @@ const employeesubarea_entity_1 = require("../../employeesubarea/entities/employe
 let Subarea = class Subarea {
     subareaid;
     name;
+    createdAt;
+    updatedAt;
+    isActive;
+    isDeleted;
     areaId;
     area;
     employees;
@@ -29,6 +33,22 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Subarea.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Subarea.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], Subarea.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Subarea.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Subarea.prototype, "isDeleted", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)

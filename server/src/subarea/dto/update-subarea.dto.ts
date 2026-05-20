@@ -12,4 +12,10 @@ export class UpdateSubareaDto extends PartialType(CreateSubareaDto) {
         @ApiProperty()
         @IsNotEmpty()
         areaId?: number;
+
+        @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

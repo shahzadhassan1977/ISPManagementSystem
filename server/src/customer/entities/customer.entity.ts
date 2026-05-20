@@ -46,7 +46,8 @@ export class Customer {
 
   @CreateDateColumn()
   createdAt!: Date;
-
+    
   @UpdateDateColumn()
   updatedAt!: Date;
+  
 }

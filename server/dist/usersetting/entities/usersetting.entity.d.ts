@@ -5,4 +5,6 @@ export declare class Usersetting {
     userId: number;
     createdAt: Date;
     updatedAt: Date;
+    isActive: boolean;
+    isDeleted: boolean;
 }

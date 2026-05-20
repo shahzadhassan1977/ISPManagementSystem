@@ -15,6 +15,10 @@ const role_permission_entity_1 = require("./role-permission.entity");
 let Permission = class Permission {
     permissionid;
     name;
+    createdAt;
+    updatedAt;
+    isActive;
+    isDeleted;
     rolePermissions;
 };
 exports.Permission = Permission;
@@ -26,6 +30,22 @@ __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], Permission.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Permission.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], Permission.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Permission.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Permission.prototype, "isDeleted", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => role_permission_entity_1.RolePermission, (rp) => rp.permission),
     __metadata("design:type", Array)

@@ -8,4 +8,6 @@ export declare class Company {
     employees: Employee[];
     createdAt: Date;
     updatedAt: Date;
+    isActive: boolean;
+    isDeleted: boolean;
 }

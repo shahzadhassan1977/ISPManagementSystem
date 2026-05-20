@@ -56,3 +56,15 @@ export const useProductBySearch = (term: string) =>
     queryKey: ["products", term],
     queryFn: () => getProductBySearch(term),
   });
+
+
+  export const useCreateProductDetail = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: createProductDetails,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
+};

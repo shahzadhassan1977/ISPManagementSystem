@@ -33,4 +33,10 @@ export class CreatePaymentDto {
   @ApiProperty()
   @IsNumber()
   subscriptionId!: number;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

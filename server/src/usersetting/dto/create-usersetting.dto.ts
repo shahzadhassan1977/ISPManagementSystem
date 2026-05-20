@@ -13,4 +13,10 @@ export class CreateUserSettingDto {
   @ApiProperty()
   userId!: number;
 
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
+
 }

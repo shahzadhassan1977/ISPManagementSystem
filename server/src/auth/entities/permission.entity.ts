@@ -1,16 +1,28 @@
 //src/auth/entities/permission.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { RolePermission } from './role-permission.entity';
 
 @Entity()
 export class Permission {
   @PrimaryGeneratedColumn()
-    permissionid!: number;
+  permissionid!: number;
 
   @Column({ unique: true })
-    name!: string;
+  name!: string;
 
-    // ✅ Permission → Roles
+  @CreateDateColumn()
+  createdAt!: Date;
+    
+  @UpdateDateColumn()
+  updatedAt!: Date;
+
+  @Column()
+  isActive!: boolean;
+  
+  @Column()
+  isDeleted!: boolean;
+
+  // ✅ Permission → Roles
   @OneToMany(() => RolePermission, (rp) => rp.permission)
   rolePermissions!: RolePermission[];
 }

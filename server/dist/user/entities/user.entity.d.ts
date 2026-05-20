@@ -8,4 +8,5 @@ export declare class User {
     isDeleted: boolean;
     createdAt: Date;
     userRoles: UserRole[];
+    updatedAt: Date;
 }

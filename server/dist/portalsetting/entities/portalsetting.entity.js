@@ -17,6 +17,8 @@ let Portalsetting = class Portalsetting {
     keyValue;
     createdAt;
     updatedAt;
+    isActive;
+    isDeleted;
 };
 exports.Portalsetting = Portalsetting;
 __decorate([
@@ -39,6 +41,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Portalsetting.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Portalsetting.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Portalsetting.prototype, "isDeleted", void 0);
 exports.Portalsetting = Portalsetting = __decorate([
     (0, typeorm_1.Entity)()
 ], Portalsetting);

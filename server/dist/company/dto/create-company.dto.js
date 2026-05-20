@@ -17,6 +17,8 @@ class CreateCompanyDto {
     address;
     email;
     phone;
+    isActive;
+    isDeleted;
 }
 exports.CreateCompanyDto = CreateCompanyDto;
 __decorate([
@@ -39,4 +41,12 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCompanyDto.prototype, "phone", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateCompanyDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateCompanyDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-company.dto.js.map

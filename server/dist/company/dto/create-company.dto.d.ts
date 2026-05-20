@@ -3,4 +3,6 @@ export declare class CreateCompanyDto {
     address: string;
     email: string;
     phone: string;
+    isActive: boolean;
+    isDeleted: boolean;
 }

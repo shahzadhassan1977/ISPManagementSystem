@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { Role } from "../../auth/entities/role.entity";
 import { UserRole } from "../../auth/entities/user-role.entity";
 @Entity()
@@ -28,5 +28,10 @@ export class User {
     // ✅ User → UserRole (Many roles)
     @OneToMany(() => UserRole, (ur) => ur.user)
     userRoles!: UserRole[];
+
+    @UpdateDateColumn()
+    updatedAt!: Date;
+    
+      
 
 }

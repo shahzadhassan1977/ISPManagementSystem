@@ -15,6 +15,8 @@ const class_validator_1 = require("class-validator");
 class CreateSubareaDto {
     name;
     areaId;
+    isActive;
+    isDeleted;
 }
 exports.CreateSubareaDto = CreateSubareaDto;
 __decorate([
@@ -27,4 +29,12 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubareaDto.prototype, "areaId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateSubareaDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateSubareaDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-subarea.dto.js.map

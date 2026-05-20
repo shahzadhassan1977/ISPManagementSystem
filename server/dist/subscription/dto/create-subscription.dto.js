@@ -19,6 +19,8 @@ class CreateSubscriptionDto {
     renewalDate;
     billingCycle;
     status;
+    isActive;
+    isDeleted;
 }
 exports.CreateSubscriptionDto = CreateSubscriptionDto;
 __decorate([
@@ -51,4 +53,12 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateSubscriptionDto.prototype, "status", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateSubscriptionDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateSubscriptionDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-subscription.dto.js.map

@@ -18,6 +18,8 @@ let Usersetting = class Usersetting {
     userId;
     createdAt;
     updatedAt;
+    isActive;
+    isDeleted;
 };
 exports.Usersetting = Usersetting;
 __decorate([
@@ -44,6 +46,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Usersetting.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Usersetting.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Usersetting.prototype, "isDeleted", void 0);
 exports.Usersetting = Usersetting = __decorate([
     (0, typeorm_1.Entity)()
 ], Usersetting);

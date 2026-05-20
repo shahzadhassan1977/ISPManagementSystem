@@ -3,8 +3,8 @@ import { IsString, IsNumber } from 'class-validator';
 
 export class CreateProductdetailDto {
   @ApiProperty()
-  @IsString()
-  company!: string;
+  @IsNumber()
+  companyId!: number;
 
   @ApiProperty()
   @IsString()
@@ -17,4 +17,10 @@ export class CreateProductdetailDto {
   @ApiProperty()
   @IsNumber()
   productId!: number;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

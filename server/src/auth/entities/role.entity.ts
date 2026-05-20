@@ -1,6 +1,6 @@
 //src/auth/entities/role.entity.ts
 import { permission } from 'process';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Permission } from './permission.entity';
 import { User } from '../../user/entities/user.entity';
 import { UserRole } from './user-role.entity';
@@ -13,6 +13,18 @@ export class Role {
 
   @Column({ unique: true })
     name!: string;
+
+  @CreateDateColumn()
+    createdAt!: Date;
+      
+    @UpdateDateColumn()
+    updatedAt!: Date;
+  
+    @Column()
+    isActive!: boolean;
+    
+    @Column()
+    isDeleted!: boolean;
 
      // ✅ Role → Users
     @OneToMany(() => UserRole, (ur) => ur.role)

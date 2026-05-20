@@ -17,4 +17,10 @@ export class CreateCompanyDto {
   @ApiProperty()
   @IsString()
   phone!: string;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

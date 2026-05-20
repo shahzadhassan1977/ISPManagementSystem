@@ -7,4 +7,6 @@ export declare class CreatePaymentDto {
     status: string;
     customerId: number;
     subscriptionId: number;
+    isActive: boolean;
+    isDeleted: boolean;
 }

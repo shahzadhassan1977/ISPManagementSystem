@@ -11,4 +11,5 @@ export declare class ProductdetailService {
     update(id: number, dto: UpdateProductdetailDto): Promise<import("typeorm").UpdateResult>;
     remove(id: number): Promise<import("typeorm").DeleteResult>;
     findByProduct(productId: number): Promise<Productdetail[]>;
+    findByCompany(companyid: number): Promise<Productdetail[]>;
 }

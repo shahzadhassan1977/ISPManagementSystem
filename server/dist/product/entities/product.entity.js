@@ -22,6 +22,8 @@ let Product = class Product {
     subscriptions;
     createdAt;
     updatedAt;
+    isActive;
+    isDeleted;
 };
 exports.Product = Product;
 __decorate([
@@ -56,6 +58,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Product.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Product.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Product.prototype, "isDeleted", void 0);
 exports.Product = Product = __decorate([
     (0, typeorm_1.Entity)()
 ], Product);

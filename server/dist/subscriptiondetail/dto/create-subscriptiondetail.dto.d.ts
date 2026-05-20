@@ -19,4 +19,6 @@ export declare class CreateSubscriptiondetailDto {
     subscriptionId: number;
     linemanId: number;
     areaRecoveryOfficerId: number;
+    isActive: boolean;
+    isDeleted: boolean;
 }

@@ -10,4 +10,10 @@ export class CreatePortalSettingDto {
   @IsString()
   keyValue!: string;
 
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
+
 }

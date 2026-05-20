@@ -60,7 +60,13 @@ export class Subscription {
 
   @CreateDateColumn()
   createdAt!: Date;
-
+    
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @Column()
+  isActive!: boolean;
+  
+  @Column()
+  isDeleted!: boolean;
 }

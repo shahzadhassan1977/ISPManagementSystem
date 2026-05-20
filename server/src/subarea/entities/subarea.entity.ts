@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { Area } from "../../area/entities/area.entity";
 import { EmployeeSubarea } from "../../employeesubarea/entities/employeesubarea.entity";
 
@@ -10,6 +10,18 @@ export class Subarea {
 
   @Column()
   name!: string;
+
+  @CreateDateColumn()
+    createdAt!: Date;
+      
+    @UpdateDateColumn()
+    updatedAt!: Date;
+  
+    @Column()
+    isActive!: boolean;
+    
+    @Column()
+    isDeleted!: boolean;
 
   @Column()
   areaId!: number; // ✅ helpful for queries

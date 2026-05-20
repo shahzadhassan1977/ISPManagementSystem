@@ -13,17 +13,19 @@ exports.CreateProductdetailDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateProductdetailDto {
-    company;
+    companyId;
     package;
     bandwidth;
     productId;
+    isActive;
+    isDeleted;
 }
 exports.CreateProductdetailDto = CreateProductdetailDto;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateProductdetailDto.prototype, "company", void 0);
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], CreateProductdetailDto.prototype, "companyId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
@@ -39,4 +41,12 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateProductdetailDto.prototype, "productId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateProductdetailDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateProductdetailDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-productdetail.dto.js.map

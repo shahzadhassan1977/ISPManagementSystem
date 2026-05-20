@@ -82,4 +82,10 @@ export class CreateSubscriptiondetailDto {
   @ApiProperty()
   @IsNumber()
   areaRecoveryOfficerId!: number;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

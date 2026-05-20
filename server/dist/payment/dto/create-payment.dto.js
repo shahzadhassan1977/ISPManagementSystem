@@ -21,6 +21,8 @@ class CreatePaymentDto {
     status;
     customerId;
     subscriptionId;
+    isActive;
+    isDeleted;
 }
 exports.CreatePaymentDto = CreatePaymentDto;
 __decorate([
@@ -63,4 +65,12 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreatePaymentDto.prototype, "subscriptionId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreatePaymentDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreatePaymentDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-payment.dto.js.map

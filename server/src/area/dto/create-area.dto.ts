@@ -6,4 +6,10 @@ export class CreateAreaDto {
   @IsString()
   @IsNotEmpty()
   name!: string;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

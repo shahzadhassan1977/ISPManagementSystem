@@ -17,30 +17,32 @@ async function bootstrap() {
   //app.useGlobalInterceptors(app.get(LoggingInterceptor));
 
   app.enableCors({
-    origin: "http://localhost:3000", // your frontend
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    origin: true,
     credentials: true,
   });
 
-   const config = new DocumentBuilder()
+  // ✅ Swagger
+  const config = new DocumentBuilder()
     .setTitle('ISP Management System API')
-    .setDescription('API documentation for the ISP Management System')
+    .setDescription('API documentation for ISP Management System')
     .setVersion('1.0')
-    .addBearerAuth({ 
-        type: 'http', 
-        scheme: 'bearer', 
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
         bearerFormat: 'JWT',
-        name: 'JWT',
-        description: 'Enter JWT token',
-        in: 'header',
       },
-      'access_token', )// This name must match the decorator later)
-    //.addTag('users')
+      'access-token',
+    )
     .build();
-  const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, documentFactory);
 
+  const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup('swagger', app, document);
 
   await app.listen(process.env.PORT ?? 5000);
+
+  console.log(`🚀 Server running on http://localhost:5000`);
+  console.log(`📄 Swagger running on http://localhost:5000/swagger`);
 }
 bootstrap();

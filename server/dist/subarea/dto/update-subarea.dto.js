@@ -17,6 +17,8 @@ const class_validator_1 = require("class-validator");
 class UpdateSubareaDto extends (0, mapped_types_1.PartialType)(create_subarea_dto_1.CreateSubareaDto) {
     name;
     areaId;
+    isActive;
+    isDeleted;
 }
 exports.UpdateSubareaDto = UpdateSubareaDto;
 __decorate([
@@ -29,4 +31,12 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], UpdateSubareaDto.prototype, "areaId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], UpdateSubareaDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], UpdateSubareaDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=update-subarea.dto.js.map

@@ -13,4 +13,10 @@ export class CreateProductDto {
   @ApiProperty()
   @IsNumber()
   purchasePrice!: number;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

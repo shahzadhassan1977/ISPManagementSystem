@@ -14,6 +14,8 @@ const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateAreaDto {
     name;
+    isActive;
+    isDeleted;
 }
 exports.CreateAreaDto = CreateAreaDto;
 __decorate([
@@ -22,4 +24,12 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateAreaDto.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateAreaDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateAreaDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-area.dto.js.map

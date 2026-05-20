@@ -3,5 +3,7 @@ declare const UpdateSubareaDto_base: import("@nestjs/mapped-types").MappedType<P
 export declare class UpdateSubareaDto extends UpdateSubareaDto_base {
     name?: string;
     areaId?: number;
+    isActive: boolean;
+    isDeleted: boolean;
 }
 export {};

@@ -9,5 +9,11 @@ export class CreateSubareaDto {
   @ApiProperty()
   @IsNumber()
   areaId!: number;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
  
 }

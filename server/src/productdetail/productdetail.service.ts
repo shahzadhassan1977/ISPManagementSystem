@@ -51,4 +51,13 @@ export class ProductdetailService {
       where: { product: { productid: productId } },
     });
   }
+
+   // 🔥 useful filter
+  findByCompany(companyid: number) {
+    return this.repo.find({
+      where: {
+          companyId: companyid        
+      }
+    });
+  }
 }

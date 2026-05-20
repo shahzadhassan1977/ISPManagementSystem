@@ -15,6 +15,8 @@ const class_validator_1 = require("class-validator");
 class CreatePortalSettingDto {
     keyName;
     keyValue;
+    isActive;
+    isDeleted;
 }
 exports.CreatePortalSettingDto = CreatePortalSettingDto;
 __decorate([
@@ -27,4 +29,12 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreatePortalSettingDto.prototype, "keyValue", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreatePortalSettingDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreatePortalSettingDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=create-portalsetting,dto.js.map

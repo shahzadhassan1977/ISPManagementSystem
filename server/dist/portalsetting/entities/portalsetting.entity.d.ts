@@ -4,4 +4,6 @@ export declare class Portalsetting {
     keyValue: string;
     createdAt: Date;
     updatedAt: Date;
+    isActive: boolean;
+    isDeleted: boolean;
 }

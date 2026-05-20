@@ -16,6 +16,8 @@ const api_property_decorator_1 = require("@nestjs/swagger/dist/decorators/api-pr
 const class_validator_1 = require("class-validator");
 class UpdateRoleDto extends (0, mapped_types_1.PartialType)(create_role_dto_1.CreateRoleDto) {
     name;
+    isActive;
+    isDeleted;
 }
 exports.UpdateRoleDto = UpdateRoleDto;
 __decorate([
@@ -23,4 +25,12 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateRoleDto.prototype, "name", void 0);
+__decorate([
+    (0, api_property_decorator_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], UpdateRoleDto.prototype, "isActive", void 0);
+__decorate([
+    (0, api_property_decorator_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], UpdateRoleDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=update-role.dto.js.map

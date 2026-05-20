@@ -25,4 +25,10 @@ export class CreateSubscriptionDto {
   @ApiProperty()
   @IsString()
   status!: string;
+
+  @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
 }

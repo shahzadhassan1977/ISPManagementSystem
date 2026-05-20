@@ -5,4 +5,6 @@ export declare class CreateSubscriptionDto {
     renewalDate: Date;
     billingCycle: string;
     status: string;
+    isActive: boolean;
+    isDeleted: boolean;
 }

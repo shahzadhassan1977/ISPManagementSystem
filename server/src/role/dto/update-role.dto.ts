@@ -6,6 +6,12 @@ import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 export class UpdateRoleDto extends PartialType(CreateRoleDto) {
         @ApiProperty()
         @IsNotEmpty()
-        name?: string;    
+        name?: string;  
+        
+        @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
         
 }

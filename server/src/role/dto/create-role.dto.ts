@@ -6,5 +6,11 @@ export class CreateRoleDto {
     @ApiProperty()
     @IsNotEmpty()
     name!: string;
+
+    @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
     
 }

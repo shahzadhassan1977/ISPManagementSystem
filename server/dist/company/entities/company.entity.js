@@ -21,6 +21,8 @@ let Company = class Company {
     employees;
     createdAt;
     updatedAt;
+    isActive;
+    isDeleted;
 };
 exports.Company = Company;
 __decorate([
@@ -57,6 +59,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Company.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Company.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Company.prototype, "isDeleted", void 0);
 exports.Company = Company = __decorate([
     (0, typeorm_1.Entity)()
 ], Company);

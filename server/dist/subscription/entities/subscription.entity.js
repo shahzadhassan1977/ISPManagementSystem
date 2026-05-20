@@ -29,6 +29,8 @@ let Subscription = class Subscription {
     payments;
     createdAt;
     updatedAt;
+    isActive;
+    isDeleted;
 };
 exports.Subscription = Subscription;
 __decorate([
@@ -89,6 +91,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Subscription.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Subscription.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Subscription.prototype, "isDeleted", void 0);
 exports.Subscription = Subscription = __decorate([
     (0, typeorm_1.Entity)()
 ], Subscription);

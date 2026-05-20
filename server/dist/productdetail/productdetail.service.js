@@ -54,6 +54,13 @@ let ProductdetailService = class ProductdetailService {
             where: { product: { productid: productId } },
         });
     }
+    findByCompany(companyid) {
+        return this.repo.find({
+            where: {
+                companyId: companyid
+            }
+        });
+    }
 };
 exports.ProductdetailService = ProductdetailService;
 exports.ProductdetailService = ProductdetailService = __decorate([

@@ -21,6 +21,7 @@ let User = class User {
     isDeleted;
     createdAt;
     userRoles;
+    updatedAt;
 };
 exports.User = User;
 __decorate([
@@ -55,6 +56,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => user_role_entity_1.UserRole, (ur) => ur.user),
     __metadata("design:type", Array)
 ], User.prototype, "userRoles", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], User.prototype, "updatedAt", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

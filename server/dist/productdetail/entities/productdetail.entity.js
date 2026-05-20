@@ -14,13 +14,15 @@ const typeorm_1 = require("typeorm");
 const product_entity_1 = require("../../product/entities/product.entity");
 let Productdetail = class Productdetail {
     id;
-    company;
+    companyId;
     package;
     bandwidth;
     productId;
     product;
     createdAt;
     updatedAt;
+    isActive;
+    isDeleted;
 };
 exports.Productdetail = Productdetail;
 __decorate([
@@ -29,8 +31,8 @@ __decorate([
 ], Productdetail.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Productdetail.prototype, "company", void 0);
+    __metadata("design:type", Number)
+], Productdetail.prototype, "companyId", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
@@ -58,6 +60,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Productdetail.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Productdetail.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Productdetail.prototype, "isDeleted", void 0);
 exports.Productdetail = Productdetail = __decorate([
     (0, typeorm_1.Entity)(),
     (0, typeorm_1.Unique)(['package', 'product'])
