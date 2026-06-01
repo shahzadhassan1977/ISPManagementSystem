@@ -17,6 +17,8 @@ let Area = class Area {
     name;
     createdAt;
     updatedAt;
+    isActive;
+    isDeleted;
     subAreas;
 };
 exports.Area = Area;
@@ -36,6 +38,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Area.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Area.prototype, "isActive", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Area.prototype, "isDeleted", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => subarea_entity_1.Subarea, (s) => s.area, {
         cascade: true,

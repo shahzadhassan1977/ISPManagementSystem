@@ -4,5 +4,7 @@ export declare class Area {
     name: string;
     createdAt: Date;
     updatedAt: Date;
+    isActive: boolean;
+    isDeleted: boolean;
     subAreas: Subarea[];
 }
