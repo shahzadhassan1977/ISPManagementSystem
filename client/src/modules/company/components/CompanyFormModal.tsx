@@ -13,6 +13,9 @@ const schema = z.object({
   email: z.email("Please enter correct email address"),
   address: z.string().min(2, "min legnth > 2"),
   phone: z.string().min(11, "min legnth = 11").max(11, "max legnth = 11"),
+  // ✅ FIX HERE
+  isActive: z.boolean(),
+  isDeleted: z.boolean(),
 });
 
 export default function CompanyFormModal({ open, onClose, data }: any) {
@@ -34,7 +37,7 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
   const { mutate: createCompany } = useCreateCompany();
   const { mutate: updateCompany } = useUpdateCompany();
 
-  const onSubmit = (formData: any) => {
+  const onSubmit = (formData: any) => {    
     if (data?.id) {
       updateCompany(
         { id: data.id, data: formData },
@@ -84,6 +87,28 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
 
         <input {...register("phone")} placeholder="Phone" className="input" />
         {errors.phone && <p className="text-red-500 text-xs">{errors.phone.message as string}</p>}
+
+        {/* ACTIVE & DELETED TOGGLES */}
+        <div className="flex items-center gap-4">
+            <label className="flex items-center gap-1">
+                <input
+                type="checkbox"
+                {...register("isActive")}
+                className="checkbox"
+                />
+                <span>Active</span>
+            </label>
+
+            <label className="flex items-center gap-1">
+                <input
+                type="checkbox"
+                {...register("isDeleted")}
+                className="checkbox"
+                />
+                <span>Deleted</span>
+          </label>
+        </div>
+
 
         <div className="flex justify-end gap-2 mt-4">
           <button type="button" onClick={onClose} className="border px-3 py-1 rounded">

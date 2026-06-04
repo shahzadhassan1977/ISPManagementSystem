@@ -1,0 +1,34 @@
+export declare class SubscriptionDto {
+    subscriptionid: number;
+    customerId: number;
+    productId: number;
+    startDate: Date;
+    renewalDate: Date;
+    billingCycle: string;
+    status: string;
+    isActive: boolean;
+    isDeleted: boolean;
+    installationDate: Date;
+    installationCharges: number;
+    wireCharges: number;
+    deviceCharges: number;
+    splitterCharges: number;
+    fee: number;
+    otherCharges: number;
+    paid: number;
+    remainingBalance: number;
+    deviceMac: string;
+    userId: string;
+    password: string;
+    staticIP: string;
+    olt: string;
+    oltPort: string;
+    splitter: string;
+    splitterPort: string;
+    subscriptionId: number;
+    linemanId: number;
+    areaRecoveryOfficerId: number;
+    createdAt: Date;
+    updatedAt: Date;
+    id: number;
+}

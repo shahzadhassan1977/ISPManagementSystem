@@ -12,22 +12,28 @@ const typeorm_1 = require("@nestjs/typeorm");
 const subscription_entity_1 = require("./entities/subscription.entity");
 const subscription_service_1 = require("./subscription.service");
 const subscription_controller_1 = require("./subscription.controller");
+const subscriptiondetail_entity_1 = require("../subscriptiondetail/entities/subscriptiondetail.entity");
+const subscriptiondetail_service_1 = require("../subscriptiondetail/subscriptiondetail.service");
+const subscriptiondetail_controller_1 = require("../subscriptiondetail/subscriptiondetail.controller");
 let SubscriptionModule = class SubscriptionModule {
 };
 exports.SubscriptionModule = SubscriptionModule;
 exports.SubscriptionModule = SubscriptionModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([subscription_entity_1.Subscription])
+            typeorm_1.TypeOrmModule.forFeature([subscription_entity_1.Subscription, subscriptiondetail_entity_1.Subscriptiondetail])
         ],
         providers: [
-            subscription_service_1.SubscriptionService
+            subscription_service_1.SubscriptionService,
+            subscriptiondetail_service_1.SubscriptiondetailService
         ],
         controllers: [
-            subscription_controller_1.SubscriptionController
+            subscription_controller_1.SubscriptionController,
+            subscriptiondetail_controller_1.SubscriptiondetailController
         ],
         exports: [
             subscription_service_1.SubscriptionService,
+            subscriptiondetail_service_1.SubscriptiondetailService,
             typeorm_1.TypeOrmModule
         ],
     })

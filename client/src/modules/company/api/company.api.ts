@@ -6,6 +6,7 @@ export const getCompanies = async () => {
 };
 
 export const createCompany = async (data: any) => {
+  console.log("data ---",data);
   const res = await api.post("/companies", data);
   return res.data.data;
 };

@@ -41,7 +41,6 @@ export default function CustomerFormModal({ open, onClose, data }: any) {
   const { mutate: updateCustomer } = useUpdateCustomer();
 
   const onSubmit = (formData: any) => {
-    console.log("formData ---", formData);
     if (data?.customerid) {
       updateCustomer(
         { customerid: data.customerid, data: formData },
