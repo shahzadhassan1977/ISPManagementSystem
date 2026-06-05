@@ -25,6 +25,9 @@ export class Payment {
   invoiceNumber!: string;
 
   @Column()
+  comments!: string;
+
+  @Column()
   billingMonth!: string;
 
   @Column()

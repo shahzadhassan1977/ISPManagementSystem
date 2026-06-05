@@ -5,6 +5,7 @@ export declare class Payment {
     amount: number;
     otherAmount: number;
     invoiceNumber: string;
+    comments: string;
     billingMonth: string;
     billingYear: string;
     status: string;

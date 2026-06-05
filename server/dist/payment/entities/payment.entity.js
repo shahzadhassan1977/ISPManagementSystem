@@ -18,6 +18,7 @@ let Payment = class Payment {
     amount;
     otherAmount;
     invoiceNumber;
+    comments;
     billingMonth;
     billingYear;
     status;
@@ -48,6 +49,10 @@ __decorate([
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], Payment.prototype, "invoiceNumber", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Payment.prototype, "comments", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

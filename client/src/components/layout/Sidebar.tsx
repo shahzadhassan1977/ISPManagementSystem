@@ -104,7 +104,7 @@ export default function Sidebar() {
                 Subscriptions
               </Link>
 
-              <Link href="/payments" className="block p-2 hover:bg-white/10 rounded">
+              <Link href="/payment" className="block p-2 hover:bg-white/10 rounded">
                 Payments & Billing
               </Link>
 

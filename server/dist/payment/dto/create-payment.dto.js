@@ -16,6 +16,7 @@ class CreatePaymentDto {
     amount;
     otherAmount;
     invoiceNumber;
+    comments;
     billingMonth;
     billingYear;
     status;
@@ -40,6 +41,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreatePaymentDto.prototype, "invoiceNumber", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreatePaymentDto.prototype, "comments", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),

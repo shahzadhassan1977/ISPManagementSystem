@@ -16,6 +16,10 @@ export class CreatePaymentDto {
 
   @ApiProperty()
   @IsString()
+  comments!: string;
+
+  @ApiProperty()
+  @IsString()
   billingMonth!: string;
 
   @ApiProperty()
