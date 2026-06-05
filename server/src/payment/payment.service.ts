@@ -24,14 +24,22 @@ export class PaymentService {
 
   findAll() {
     return this.repo.find({
-      relations: ['customer', 'subscription'],
+      relations: [
+        'customer',
+        'subscription', 
+        'subscription.product',
+      ],
     });
   }
 
   findOne(id: number) {
     return this.repo.findOne({
       where: { id },
-      relations: ['customer', 'subscription'],
+      relations: [
+        'customer', 
+        'subscription',
+        'subscription.product',
+      ],
     });
   }
 
@@ -52,6 +60,11 @@ export class PaymentService {
   // 🔥 Useful APIs
   findByCustomer(customerId: number) {
     return this.repo.find({
+      relations: [
+        'customer',
+        'subscription',
+        'subscription.product',
+      ],
       where: { customer: { customerid: customerId } },
     });
   }

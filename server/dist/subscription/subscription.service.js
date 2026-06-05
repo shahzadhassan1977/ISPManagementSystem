@@ -32,7 +32,7 @@ let SubscriptionService = class SubscriptionService {
     }
     findAll() {
         return this.repo.find({
-            relations: ['customer', 'product'],
+            relations: ['customer', 'product', 'subscriptiondetails'],
         });
     }
     findOne(id) {
@@ -53,6 +53,7 @@ let SubscriptionService = class SubscriptionService {
     }
     findByCustomer(customerId) {
         return this.repo.find({
+            relations: ['customer', 'product', 'subscriptiondetails'],
             where: { customer: { customerid: customerId } },
         });
     }

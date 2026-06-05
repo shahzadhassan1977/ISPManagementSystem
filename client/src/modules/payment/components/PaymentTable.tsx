@@ -36,7 +36,7 @@ export default function PaymentTable({ onEdit }: any) {
   
   const columns: ColumnDef<Payment>[] = [
     {
-      accessorKey: "Customer Name",
+      accessorKey: "customer.name",
       header: "Customer Name",
     },
     {
@@ -50,15 +50,7 @@ export default function PaymentTable({ onEdit }: any) {
     {
       accessorKey: "otherAmount",
       header: "Other Amount",
-    },
-    {
-      accessorKey: "billingMonth",
-      header: "Billing Month",
-    },
-    {
-      accessorKey: "billingYear",
-      header: "Billing Year",
-    },
+    },    
     {
       accessorKey: "status",
       header: "status",
@@ -111,7 +103,7 @@ export default function PaymentTable({ onEdit }: any) {
       },
     });
   };
-
+console.log("table data ----", data);
   return (
     <>
       <DataTable
@@ -127,14 +119,6 @@ export default function PaymentTable({ onEdit }: any) {
         >       
         {viewData && (
             <div className="grid grid-cols-3 gap-4">
-            
-  comments: string;
-  customerId: number;
-  subscriptionId: number;
-  isActive: boolean;
-  isDeleted: boolean;
-  createdAt: Date;
-  updatedAt: Date;
                 {/* INVOICE NUMBER */}
                 <div>
                     <p className="text-sm text-gray-500">Invoice Number</p>
@@ -149,14 +133,14 @@ export default function PaymentTable({ onEdit }: any) {
 
                 {/* CUSTOMER ID */}
                 <div>
-                    <p className="text-sm text-gray-500">Customer Id</p>
-                    <p className="font-semibold">{viewData.customerId}</p>
+                    <p className="text-sm text-gray-500">Customer Name</p>
+                    <p className="font-semibold">{viewData.customer.name}</p>
                 </div>
 
                 {/* SUBSCRIPTION ID */}
                 <div>
-                    <p className="text-sm text-gray-500">Subscription Id</p>
-                    <p className="font-semibold">{viewData.subscriptionId}</p>
+                    <p className="text-sm text-gray-500">Subscription</p>
+                    <p className="font-semibold">{viewData.subscription.product.name}</p>
                 </div>
 
                 {/* AMOUNT */}

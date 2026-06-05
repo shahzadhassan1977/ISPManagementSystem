@@ -8,8 +8,10 @@ export const getSubscriptions = async () => {
   return res.data.data;
 };
 
-export const getSubscriptionsbyCustomerId = async (customerId : any) => {
-  const res = await api.get(`/subscriptions/{customerId}?customerId=${customerId }`);
+export const getSubscriptionsbyCustomerId = async (customerId: any) => {
+  const res = await api.get(
+    `/subscriptions/${customerId}?customerId=${customerId}`,
+  );
   return res.data.data;
 };
 

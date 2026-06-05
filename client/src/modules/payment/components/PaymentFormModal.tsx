@@ -4,14 +4,14 @@ import Modal from "@/components/ui/Modal";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useCreatePayment, useUpdatePayment } from "../hooks/usePayments";
+import { useCreatePayment, useUpdatePayment, usePayments } from "../hooks/usePayments";
 import { useCompanies } from "@/modules/company/hooks/useCompany";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { is } from "zod/locales";
 import Select from "react-select";
 import { useCustomers } from "@/modules/customer/hooks/useCustomers";
-import { useSubscriptions } from "@/modules/subscription/hooks/useSubscription";
+import { useSubscriptionsByCustomer } from "@/modules/subscription/hooks/useSubscription";
 
 const schema = z.object({
   id: z.number(),
@@ -23,7 +23,7 @@ const schema = z.object({
   status: z.string(),
   customerId: z.number(),
   subscriptionId: z.number(),
-  // ✅ FIX HERE
+  comments: z.string().optional(),
   isActive: z.boolean(),
   isDeleted: z.boolean(),
 });
@@ -35,6 +35,8 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
     formState: { errors },
     reset,
     control,
+    watch,
+    setValue,
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -47,10 +49,24 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
       customerId: 0,
       subscriptionId: 0,
       status: "",
+      comments: "",
       isActive: true,
       isDeleted: false,
     },
   });
+
+  const selectedCustomerId = watch("customerId");
+  const selectedSubscriptionId = watch("subscriptionId");
+  const billingMonth = watch("billingMonth");
+  const billingYear = watch("billingYear");
+  const currentAmount = watch("amount");
+
+  const { data: payments = [] } = usePayments();
+  const lastPaymentId = payments.reduce(
+    (max: number, payment: any) => Math.max(max, Number(payment.id) || 0),
+    0,
+  );
+  const nextPaymentId = data?.id ? Number(data.id) : lastPaymentId + 1;
 
   useEffect(() => {
     if (data) {
@@ -61,6 +77,7 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
           ? Number(data.subscriptionId)
           : undefined,
         invoiceNumber: data.invoiceNumber ? data.invoiceNumber : "",
+        comments: data.comments ? data.comments : "",
         status: data.status ? data.status : "",
         amount: data.amount ? data.amount : 0.0,
         otherAmount: data.otherAmount ? data.otherAmount : 0.0,
@@ -73,10 +90,46 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
     }
   }, [data, reset]);
 
+  // 🔥 AUTO-GENERATE INVOICE NUMBER
+  useEffect(() => {
+    if (billingMonth && billingYear && !data?.id) {
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      const monthName = monthNames[Number(billingMonth) - 1];
+      const invoiceNumber = `INV-${monthName}-${billingYear}-${nextPaymentId}`;
+      setValue("invoiceNumber", invoiceNumber);
+    }
+  }, [billingMonth, billingYear, nextPaymentId, data?.id, setValue]);
+
   const { mutateAsync: createPayment } = useCreatePayment();
   const { mutateAsync: updatePayment } = useUpdatePayment();
   const { data: customers = [] } = useCustomers();
-  const { data: subscriptions = [] } = useSubscriptions();
+  const { data: subscriptions = [] } = useSubscriptionsByCustomer(
+    Number(selectedCustomerId),
+  );
+
+  const selectedSubscription = subscriptions.find(
+    (sub: any) => sub.subscriptionid === Number(selectedSubscriptionId),
+  );
+
+  useEffect(() => {
+    if (selectedSubscription && (currentAmount === 0 || currentAmount === undefined)) {
+      const salePrice = Number(selectedSubscription.product?.salePrice ?? 0);
+      setValue("amount", salePrice);
+    }
+  }, [selectedSubscription, currentAmount, setValue]);
 
   // 🔥 CUSTOMER OPTIONS
   const customerOptions = customers.map((c: any) => ({
@@ -84,10 +137,9 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
     label: c.name,
   }));
 
-  // 🔥 SUBSCRIPTION OPTIONS
   const subscriptionOptions = subscriptions.map((c: any) => ({
     value: c.subscriptionid,
-    label: c.product.name,
+    label: c.product?.name || "Subscription",
   }));
 
   // 🔥 BILLING MONTH OPTIONS
@@ -112,7 +164,7 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
     const currentYear = new Date().getFullYear();
     // Loop 5 years back, current year, and 5 years coming (11 total)
     for (let i = currentYear - 5; i <= currentYear + 5; i++) {
-      years.push({ value: i, label: i.toString() });
+      years.push({ value: i.toString(), label: i.toString() });
     }
     return years;
   })();
@@ -139,6 +191,7 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
         otherAmount: formData.otherAmount,
         billingMonth: formData.billingMonth,
         billingYear: formData.billingYear,
+        comments: formData.comments,
         isActive: formData.isActive,
         isDeleted: formData.isDeleted,
       };
@@ -181,223 +234,286 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
       open={open}
       onClose={onClose}
       title={data ? "Edit Payment" : "Add Payment"}
+      width="100"
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-        {/* CUSTOMER */}
-        <div>
-          <label className="text-sm text-gray-500 mb-1 block">Customer</label>
+      <div className="max-h-[80vh] overflow-y-auto pr-3">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* TWO COLUMN SCROLLABLE CONTAINER */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* CUSTOMER */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">
+                Customer
+              </label>
 
-          <Controller
-            name="customerId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                options={customerOptions}
-                value={
-                  customerOptions.find(
-                    (o: any) => o.value === Number(field.value),
-                  ) || null
-                }
-                onChange={(val: any) => field.onChange(val?.value)}
-                className="text-black"
-                placeholder="Select customer..."
+              <Controller
+                name="customerId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={customerOptions}
+                    value={
+                      customerOptions.find(
+                        (o: any) => o.value === Number(field.value),
+                      ) || null
+                    }
+                    onChange={(val: any) => {
+                      field.onChange(val?.value);
+                      // Clear subscription when customer changes
+                      setValue("subscriptionId", 0);
+                    }}
+                    className="text-black"
+                    placeholder="Select customer..."
+                  />
+                )}
               />
-            )}
-          />
 
-          {errors.customerId && (
-            <p className="text-red-500 text-xs">
-              {errors.customerId.message as string}
-            </p>
-          )}
-        </div>
+              {errors.customerId && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.customerId.message as string}
+                </p>
+              )}
+            </div>
 
-        {/* SUBSCRIPTION */}
-        <div>
-          <label className="text-sm text-gray-500 mb-1 block">
-            Subscription
-          </label>
+            {/* SUBSCRIPTION */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">
+                Subscription
+              </label>
 
-          <Controller
-            name="subscriptionId"
-            control={control}
-            render={({ field }) => (
-              <Select
-                options={subscriptionOptions}
-                value={
-                  subscriptionOptions.find(
-                    (o: any) => o.value === Number(field.value),
-                  ) || null
-                }
-                onChange={(val: any) => field.onChange(val?.value)}
-                className="text-black"
-                placeholder="Select subscription..."
+              <Controller
+                name="subscriptionId"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={subscriptionOptions}
+                    value={
+                      subscriptionOptions.find(
+                        (o: any) => o.value === Number(field.value),
+                      ) || null
+                    }
+                    onChange={(val: any) => field.onChange(val?.value)}
+                    className="text-black"
+                    placeholder="Select subscription..."
+                    isDisabled={!selectedCustomerId}
+                  />
+                )}
               />
-            )}
-          />
 
-          {errors.subscriptionId && (
-            <p className="text-red-500 text-xs">
-              {errors.subscriptionId.message as string}
-            </p>
-          )}
-        </div>
+              {errors.subscriptionId && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.subscriptionId.message as string}
+                </p>
+              )}
+            </div>
 
-        {/* BILLING MONTH */}
-        <div>
-          <label className="text-sm text-gray-500 mb-1 block">
-            Billing Month
-          </label>
+            {/* BILLING MONTH */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">
+                Billing Month
+              </label>
 
-          <Controller
-            name="billingMonth"
-            control={control}
-            render={({ field }) => (
-              <Select
-                options={billingMonthOptions}
-                value={
-                  billingMonthOptions.find(
-                    (o: any) => o.value === Number(field.value),
-                  ) || null
-                }
-                onChange={(val: any) => field.onChange(val?.value)}
-                className="text-black"
-                placeholder="Select billing month..."
+              <Controller
+                name="billingMonth"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={billingMonthOptions}
+                    value={
+                      billingMonthOptions.find(
+                        (o: any) => o.value === field.value,
+                      ) || null
+                    }
+                    onChange={(val: any) => field.onChange(val?.value)}
+                    className="text-black"
+                    placeholder="Select billing month..."
+                  />
+                )}
               />
-            )}
-          />
 
-          {errors.billingMonth && (
-            <p className="text-red-500 text-xs">
-              {errors.billingMonth.message as string}
-            </p>
-          )}
-        </div>
+              {errors.billingMonth && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.billingMonth.message as string}
+                </p>
+              )}
+            </div>
 
-        {/* BILLING YEAR */}
-        <div>
-          <label className="text-sm text-gray-500 mb-1 block">
-            Billing Year
-          </label>
+            {/* BILLING YEAR */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">
+                Billing Year
+              </label>
 
-          <Controller
-            name="billingYear"
-            control={control}
-            render={({ field }) => (
-              <Select
-                options={billingYearOptions}
-                value={
-                  billingYearOptions.find(
-                    (o: any) => o.value === Number(field.value),
-                  ) || null
-                }
-                onChange={(val: any) => field.onChange(val?.value)}
-                className="text-black"
-                placeholder="Select billing year..."
+              <Controller
+                name="billingYear"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={billingYearOptions}
+                    value={
+                      billingYearOptions.find(
+                        (o: any) => o.value === field.value,
+                      ) || null
+                    }
+                    onChange={(val: any) => field.onChange(val?.value)}
+                    className="text-black"
+                    placeholder="Select billing year..."
+                  />
+                )}
               />
-            )}
-          />
 
-          {errors.billingYear && (
-            <p className="text-red-500 text-xs">
-              {errors.billingYear.message as string}
-            </p>
-          )}
-        </div>
+              {errors.billingYear && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.billingYear.message as string}
+                </p>
+              )}
+            </div>
 
-        {/* AMOUNT  */}
-        <div>
-          <input
-            {...register("amount", {
-              valueAsNumber: true,
-            })}
-            placeholder="Amount"
-            className="input"
-            type="number"
-          />
+            {/* INVOICE NUMBER */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">
+                Invoice Number
+              </label>
 
-          {errors.amount && (
-            <p className="text-red-500 text-xs">
-              {errors.amount.message as string}
-            </p>
-          )}
-        </div>
-
-        {/* OTHER AMOUNT  */}
-        <div>
-          <input
-            {...register("otherAmount", {
-              valueAsNumber: true,
-            })}
-            placeholder="Other Amount"
-            className="input"
-            type="number"
-          />
-
-          {errors.otherAmount && (
-            <p className="text-red-500 text-xs">
-              {errors.otherAmount.message as string}
-            </p>
-          )}
-        </div>
-
-        {/* STATUS */}
-        <div>
-          <label className="text-sm text-gray-500 mb-1 block">Status</label>
-
-          <Controller
-            name="status"
-            control={control}
-            render={({ field }) => (
-              <Select
-                options={statusOptions}
-                value={
-                  statusOptions.find(
-                    (o: any) => o.value === Number(field.value),
-                  ) || null
-                }
-                onChange={(val: any) => field.onChange(val?.value)}
-                className="text-black"
-                placeholder="Select status..."
+              <input
+                {...register("invoiceNumber")}
+                placeholder="Auto-generated"
+                className="input w-full"
+                type="text"
+                readOnly
               />
-            )}
-          />
 
-          {errors.status && (
-            <p className="text-red-500 text-xs">
-              {errors.status.message as string}
-            </p>
-          )}
-        </div>
+              {errors.invoiceNumber && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.invoiceNumber.message as string}
+                </p>
+              )}
+            </div>
 
-        {/* ACTIVE & DELETED */}
-        <div className="flex items-center gap-4">
-          <label className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              {...register("isActive")}
-              className="checkbox"
-            />
+            {/* AMOUNT */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">Amount</label>
 
-            <span>Active</span>
-          </label>
-        </div>
+              <input
+                {...register("amount", {
+                  valueAsNumber: true,
+                })}
+                placeholder="Amount"
+                className="input w-full"
+                type="number"
+                step="0.01"
+              />
 
-        {/* ACTIONS */}
-        <div className="flex justify-end gap-2 mt-4">
-          <button
-            type="button"
-            onClick={onClose}
-            className="border px-3 py-1 rounded"
-          >
-            Cancel
-          </button>
+              {errors.amount && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.amount.message as string}
+                </p>
+              )}
+            </div>
 
-          <button className="bg-blue-600 text-white px-3 py-1 rounded">
-            Save
-          </button>
-        </div>
-      </form>
+            {/* OTHER AMOUNT */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">
+                Other Amount
+              </label>
+
+              <input
+                {...register("otherAmount", {
+                  valueAsNumber: true,
+                })}
+                placeholder="Other Amount"
+                className="input w-full"
+                type="number"
+                step="0.01"
+              />
+
+              {errors.otherAmount && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.otherAmount.message as string}
+                </p>
+              )}
+            </div>            
+            {/* STATUS */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">Status</label>
+
+              <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={statusOptions}
+                    value={
+                      statusOptions.find((o: any) => o.value === field.value) ||
+                      null
+                    }
+                    onChange={(val: any) => field.onChange(val?.value)}
+                    className="text-black"
+                    placeholder="Select status..."
+                  />
+                )}
+              />
+
+              {errors.status && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.status.message as string}
+                </p>
+              )}
+            </div>
+
+            {/* ACTIVE */}
+            <div className="flex items-center pt-6">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  {...register("isActive")}
+                  className="checkbox"
+                />
+                <span className="text-sm text-gray-500">Active</span>
+              </label>
+            </div>
+
+            {/* COMMENTS */}
+            <div className="md:col-span-3">
+              <label className="text-sm text-gray-500 mb-1 block">
+                Comments
+              </label>
+
+              <textarea
+                {...register("comments")}
+                placeholder="Add comments..."
+                className="textarea w-full"
+                rows={4}
+              />
+
+              {errors.comments && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.comments.message as string}
+                </p>
+              )}
+            </div>
+
+          </div>
+
+          {/* ACTIONS */}
+          <div className="flex justify-end gap-2 mt-6 pt-4 border-t">
+            <button
+              type="button"
+              onClick={onClose}
+              className="border px-4 py-2 rounded hover:bg-gray-50 transition"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 }

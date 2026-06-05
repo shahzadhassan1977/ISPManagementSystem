@@ -32,13 +32,21 @@ let PaymentService = class PaymentService {
     }
     findAll() {
         return this.repo.find({
-            relations: ['customer', 'subscription'],
+            relations: [
+                'customer',
+                'subscription',
+                'subscription.product',
+            ],
         });
     }
     findOne(id) {
         return this.repo.findOne({
             where: { id },
-            relations: ['customer', 'subscription'],
+            relations: [
+                'customer',
+                'subscription',
+                'subscription.product',
+            ],
         });
     }
     update(id, dto) {
@@ -55,6 +63,11 @@ let PaymentService = class PaymentService {
     }
     findByCustomer(customerId) {
         return this.repo.find({
+            relations: [
+                'customer',
+                'subscription',
+                'subscription.product',
+            ],
             where: { customer: { customerid: customerId } },
         });
     }

@@ -24,12 +24,12 @@ export class SubscriptionService {
 
   findAll() {
     return this.repo.find({
-      relations: ['customer', 'product'],
+      relations: ['customer', 'product', 'subscriptiondetails'],
     });
   }
 
   findOne(id: number) {
-    return this.repo.findOne({
+    return this.repo.findOne({      
       where: { subscriptionid:id },
       relations: ['customer', 'product', 'subscriptiondetails'],
     });
@@ -50,6 +50,7 @@ export class SubscriptionService {
   // 🔥 useful filters
   findByCustomer(customerId: number) {
     return this.repo.find({
+      relations: ['customer', 'product', 'subscriptiondetails'],
       where: { customer: { customerid: customerId } },
     });
   }
