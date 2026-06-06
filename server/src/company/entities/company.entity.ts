@@ -41,4 +41,7 @@ export class Company {
   
   @Column()
   isDeleted!: boolean;
+
+  @Column()
+  isOwner!: boolean;
 }

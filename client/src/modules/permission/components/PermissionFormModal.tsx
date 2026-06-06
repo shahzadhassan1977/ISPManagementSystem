@@ -9,7 +9,9 @@ import { toast } from "sonner";
 import { useEffect } from "react";
 
 const schema = z.object({
-  name: z.string().min(2, "min legnth > 2"),  
+  name: z.string().min(2, "min legnth > 2"), 
+  isActive: z.boolean(),
+  isDeleted: z.boolean(), 
 });
 
 export default function PermissionFormModal({ open, onClose, data }: any) {
@@ -21,7 +23,11 @@ export default function PermissionFormModal({ open, onClose, data }: any) {
     reset,
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: data || {},
+    defaultValues: {
+      name: "",
+      isActive: true,
+      isDeleted: false,
+    },
   });
 
   useEffect(() => {
@@ -73,6 +79,18 @@ export default function PermissionFormModal({ open, onClose, data }: any) {
         <input {...register("name")} placeholder="Name" className="input" />
         {errors.name && <p className="text-red-500 text-xs">{errors.name.message as string}</p>}
         
+        {/* ACTIVE & DELETED TOGGLES */}
+        <div className="flex items-center gap-4">
+            <label className="flex items-center gap-1">
+                <input
+                type="checkbox"
+                {...register("isActive")}
+                className="checkbox"
+                />
+                <span>Active</span>
+            </label>            
+        </div>
+
         <div className="flex justify-end gap-2 mt-4">
           <button type="button" onClick={onClose} className="border px-3 py-1 rounded">
             Cancel

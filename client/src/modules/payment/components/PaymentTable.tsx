@@ -4,9 +4,11 @@ import ViewModal from "@/components/ui/ViewModal";
 import DataTable from "@/components/ui/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import { usePayments, useDeletePayment } from "../hooks/usePayments";
+import { useCompanies } from "@/modules/company/hooks/useCompany";
 import { useState } from "react";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { toast } from "sonner";
+import jsPDF from "jspdf";
 
 type Payment = {
   id: number;
@@ -33,7 +35,52 @@ export default function PaymentTable({ onEdit }: any) {
 
   const [viewData, setViewData] = useState<any>(null);
   const [openView, setOpenView] = useState(false);
-  
+  const { data: companies = [] } = useCompanies();
+
+  const getOwnerCompany = () =>
+    companies.find((company: any) => company.isOwner) ?? companies[0] ?? null;
+
+  const downloadInvoicePdf = (payment: any) => {
+    const ownerCompany = getOwnerCompany();
+    const companyName = ownerCompany?.name ?? "Company Name";
+    const companyAddress = ownerCompany?.address ?? "Company Address";
+    const companyPhone = ownerCompany?.phone ?? "Company Phone";
+    const status = payment.status ?? "";
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text(companyName, 20, 25);
+    doc.setFontSize(10);
+    doc.text(companyAddress, 20, 33);
+    doc.text(`Phone: ${companyPhone}`, 20, 40);
+
+    const statusLabel = status.toString();
+    const ribbonWidth = doc.getTextWidth(statusLabel) + 12;
+    const ribbonX = 180 - ribbonWidth;
+    const ribbonY = 15;
+
+    doc.setFillColor(220, 38, 38);
+    doc.rect(ribbonX, ribbonY, ribbonWidth, 12, "F");
+    doc.setTextColor("#ffffff");
+    doc.setFontSize(10);
+    doc.text(statusLabel, ribbonX + 6, ribbonY + 8);
+    doc.setTextColor("#000000");
+
+    doc.setFontSize(14);
+    doc.text("Invoice", 20, 55);
+    doc.setFontSize(11);
+    doc.text(`Invoice Number: ${payment.invoiceNumber || "N/A"}`, 20, 68);
+    doc.text(`Billing Month: ${payment.billingMonth || "N/A"}`, 20, 76);
+    doc.text(`Billing Year: ${payment.billingYear || "N/A"}`, 20, 84);
+    doc.text(`Customer Name: ${payment.customer?.name || "N/A"}`, 20, 92);
+    doc.text(`Subscription: ${payment.subscription?.product?.name || "N/A"}`, 20, 100);
+    doc.text(`Amount: ${payment.amount ?? "0"}`, 20, 108);
+    doc.text(`Other Amount: ${payment.otherAmount ?? "0"}`, 20, 116);
+    doc.text(`Comments: ${payment.comments || "-"}`, 20, 124);
+
+    doc.save(`invoice-${payment.invoiceNumber ?? payment.id}.pdf`);
+  };
+
   const columns: ColumnDef<Payment>[] = [
     {
       accessorKey: "customer.name",
@@ -65,17 +112,28 @@ export default function PaymentTable({ onEdit }: any) {
       header: "Actions",
       cell: ({ row }) => (
         <div className="space-x-2">
-          <button onClick={() => {            
-          setViewData(row.original);
-          setOpenView(true);
-          }}
-          className="text-blue-500">View</button>
+          <button
+            onClick={() => {
+              setViewData(row.original);
+              setOpenView(true);
+            }}
+            className="text-blue-500"
+          >
+            View
+          </button>
 
           <button
             onClick={() => onEdit(row.original)}
             className="text-green-500"
           >
             Edit
+          </button>
+
+          <button
+            onClick={() => downloadInvoicePdf(row.original)}
+            className="text-purple-500"
+          >
+            Invoice
           </button>
 
           <button

@@ -23,4 +23,7 @@ export class CreateCompanyDto {
       
   @ApiProperty()
   isDeleted!: boolean;
+
+  @ApiProperty()
+  isOwner!: boolean;
 }

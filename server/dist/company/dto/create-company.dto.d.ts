@@ -5,4 +5,5 @@ export declare class CreateCompanyDto {
     phone: string;
     isActive: boolean;
     isDeleted: boolean;
+    isOwner: boolean;
 }

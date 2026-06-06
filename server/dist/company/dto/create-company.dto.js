@@ -19,6 +19,7 @@ class CreateCompanyDto {
     phone;
     isActive;
     isDeleted;
+    isOwner;
 }
 exports.CreateCompanyDto = CreateCompanyDto;
 __decorate([
@@ -49,4 +50,8 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreateCompanyDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], CreateCompanyDto.prototype, "isOwner", void 0);
 //# sourceMappingURL=create-company.dto.js.map

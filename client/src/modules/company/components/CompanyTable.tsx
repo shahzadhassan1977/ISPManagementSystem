@@ -9,7 +9,7 @@ import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { toast } from "sonner";
 
 type Company = {
-  id: number;
+  companyid: number;
   name: string;
   email: string;
   address: string;
@@ -65,7 +65,7 @@ export default function CompanyTable({ onEdit }: any) {
 
           <button
             onClick={() => {
-              setSelectedId(row.original.id);
+              setSelectedId(row.original.companyid);
               setOpenConfirm(true);
             }}
             className="text-red-500"
@@ -131,7 +131,19 @@ export default function CompanyTable({ onEdit }: any) {
                 {/* ID (optional) */}
                 <div>
                     <p className="text-sm text-gray-500">Company ID</p>
-                    <p className="font-semibold">{viewData.id}</p>
+                    <p className="font-semibold">{viewData.companyid}</p>
+                </div>
+
+                {/* IS ACTIVE */}
+                <div>
+                    <p className="text-sm text-gray-500">Is Active</p>
+                    <p className="font-semibold">{viewData.isActive ? "Yes" : "No"}</p>
+                </div>
+
+                {/* IS OWNER */}
+                <div>
+                    <p className="text-sm text-gray-500">Is Owner</p>
+                    <p className="font-semibold">{viewData.isOwner ? "Yes" : "No"}</p>
                 </div>
 
             </div>

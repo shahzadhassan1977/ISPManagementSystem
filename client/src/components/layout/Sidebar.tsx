@@ -9,6 +9,7 @@ import {
   CreditCard,
   Settings,
   ChevronDown,
+  FileBadge,
 } from "lucide-react";
 
 export default function Sidebar() {
@@ -16,6 +17,8 @@ export default function Sidebar() {
 
   const [openAdmin, setOpenAdmin] = useState(false);
   const [openSales, setOpenSales] = useState(false);
+  const [openReports, setOpenReports] = useState(false);
+  
 
   const isActive = (path: string) => pathname === path;
 
@@ -58,18 +61,30 @@ export default function Sidebar() {
 
               <Link href="/company" className="block p-2 hover:bg-white/10 rounded">
                 Company
+              </Link>              
+
+              <Link href="/permission" className="block p-2 hover:bg-white/10 rounded">
+                Application Permission
+              </Link>
+
+              <Link href="/role" className="block p-2 hover:bg-white/10 rounded">
+                Application Role
               </Link>
 
               <Link href="/user" className="block p-2 hover:bg-white/10 rounded">
-                Application Users & Roles
-              </Link>
+                Application User
+              </Link>              
 
               <Link href="/employee" className="block p-2 hover:bg-white/10 rounded">
-                Employees & Subarea
+                Employees
               </Link>
 
               <Link href="/area" className="block p-2 hover:bg-white/10 rounded">
-                Area & SubArea
+                Area
+              </Link>
+
+              <Link href="/subarea" className="block p-2 hover:bg-white/10 rounded">
+                SubArea
               </Link>
 
             </div>
@@ -110,6 +125,46 @@ export default function Sidebar() {
 
             </div>
           )}
+        </div>
+
+        {/* Reports */}
+        <div>
+          <button
+            onClick={() => setOpenReports(!openReports)}
+            className="flex items-center justify-between w-full p-2 hover:bg-white/10 rounded"
+          >
+            <span className="flex items-center gap-2">              
+              <FileBadge size={18} />
+              Reports
+            </span>
+            <ChevronDown size={16} />
+          </button>
+
+          {openReports && (
+            <div className="ml-6 space-y-1 mt-1">
+
+              <Link href="/repCustomerInvoice" className="block p-2 hover:bg-white/10 rounded">
+                Customers Invoice
+              </Link>
+
+              <Link href="/reports" className="block p-2 hover:bg-white/10 rounded">
+                Reports Home
+              </Link>
+
+              <Link href="/reports/daily" className="block p-2 hover:bg-white/10 rounded">
+                Daily Reports
+              </Link>
+
+              <Link href="/reports/monthly" className="block p-2 hover:bg-white/10 rounded">
+                Monthly Reports
+              </Link>
+
+              <Link href="/reports/yearly" className="block p-2 hover:bg-white/10 rounded">
+                Yearly Reports
+              </Link>
+            </div>
+          )}
+
         </div>
 
         {/* SETTINGS */}

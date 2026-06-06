@@ -10,4 +10,5 @@ export declare class Company {
     updatedAt: Date;
     isActive: boolean;
     isDeleted: boolean;
+    isOwner: boolean;
 }

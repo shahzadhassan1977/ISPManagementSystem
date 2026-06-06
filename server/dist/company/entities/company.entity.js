@@ -23,6 +23,7 @@ let Company = class Company {
     updatedAt;
     isActive;
     isDeleted;
+    isOwner;
 };
 exports.Company = Company;
 __decorate([
@@ -67,6 +68,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Company.prototype, "isDeleted", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], Company.prototype, "isOwner", void 0);
 exports.Company = Company = __decorate([
     (0, typeorm_1.Entity)()
 ], Company);

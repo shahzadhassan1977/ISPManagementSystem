@@ -16,6 +16,7 @@ const schema = z.object({
   // ✅ FIX HERE
   isActive: z.boolean(),
   isDeleted: z.boolean(),
+  isOwner: z.boolean(),
 });
 
 export default function CompanyFormModal({ open, onClose, data }: any) {
@@ -27,7 +28,15 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
     reset,
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: data || {},
+    defaultValues: {
+      name:  "",
+      email:  "",
+      address: "",
+      phone:  "",
+      isActive: true,
+      isDeleted: false,
+      isOwner: false,
+    },
   });
 
   useEffect(() => {
@@ -102,10 +111,10 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
             <label className="flex items-center gap-1">
                 <input
                 type="checkbox"
-                {...register("isDeleted")}
+                {...register("isOwner")}
                 className="checkbox"
                 />
-                <span>Deleted</span>
+                <span>Owner</span>
           </label>
         </div>
 
