@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateRoleDto = void 0;
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_role_dto_1 = require("./create-role.dto");
-const api_property_decorator_1 = require("@nestjs/swagger/dist/decorators/api-property.decorator");
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UpdateRoleDto extends (0, mapped_types_1.PartialType)(create_role_dto_1.CreateRoleDto) {
     name;
@@ -21,16 +21,16 @@ class UpdateRoleDto extends (0, mapped_types_1.PartialType)(create_role_dto_1.Cr
 }
 exports.UpdateRoleDto = UpdateRoleDto;
 __decorate([
-    (0, api_property_decorator_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdateRoleDto.prototype, "name", void 0);
 __decorate([
-    (0, api_property_decorator_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], UpdateRoleDto.prototype, "isActive", void 0);
 __decorate([
-    (0, api_property_decorator_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], UpdateRoleDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=update-role.dto.js.map

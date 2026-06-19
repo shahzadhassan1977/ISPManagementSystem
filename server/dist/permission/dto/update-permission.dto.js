@@ -12,14 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdatePermissionDto = void 0;
 const mapped_types_1 = require("@nestjs/mapped-types");
 const create_permission_dto_1 = require("./create-permission.dto");
-const api_property_decorator_1 = require("@nestjs/swagger/dist/decorators/api-property.decorator");
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UpdatePermissionDto extends (0, mapped_types_1.PartialType)(create_permission_dto_1.CreatePermissionDto) {
     name;
 }
 exports.UpdatePermissionDto = UpdatePermissionDto;
 __decorate([
-    (0, api_property_decorator_1.ApiProperty)(),
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdatePermissionDto.prototype, "name", void 0);
