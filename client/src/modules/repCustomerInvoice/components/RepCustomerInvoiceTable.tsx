@@ -113,13 +113,13 @@ export default function RepCustomerInvoiceTable() {
     doc.text("INVOICE", 40, 66);
 
     doc.setFontSize(10);
-    doc.text(`INVOICE #`, 430, 35);
+    doc.text(`INVOICE #`, 330, 35);
     doc.text(payment.invoiceNumber || "N/A", 520, 35, { align: "right" });
-    doc.text(`INVOICE DATE`, 430, 52);
+    doc.text(`INVOICE DATE`, 330, 52);
     doc.text(formatDate(invoiceDate), 520, 52, { align: "right" });
-    doc.text(`P.O.#`, 430, 69);
+    doc.text(`P.O.#`, 330, 69);
     doc.text(`PO-${payment.id}`, 520, 69, { align: "right" });
-    doc.text(`DUE DATE`, 430, 86);
+    doc.text(`DUE DATE`, 330, 86);
     doc.text(formatDate(dueDate), 520, 86, { align: "right" });
 
     doc.setTextColor("#000000");
@@ -173,7 +173,7 @@ export default function RepCustomerInvoiceTable() {
     doc.text(subtotal.toFixed(2), 520, tableY + 70, { align: "right" });
     doc.text("TOTAL", 400, tableY + 90);
     doc.setFontSize(18);
-    doc.text(`$${subtotal.toFixed(2)}`, 520, tableY + 90, { align: "right" });
+    doc.text(`Rs.${subtotal.toFixed(2)}`, 520, tableY + 90, { align: "right" });
 
     doc.setFontSize(10);
     doc.setTextColor("#444444");

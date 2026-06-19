@@ -97,7 +97,7 @@ export default function DailyReportPage() {
 
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
             <p className="text-sm text-slate-500">Daily revenue</p>
-            <p className="mt-4 text-4xl font-semibold">£{totalRevenue.toFixed(2)}</p>
+            <p className="mt-4 text-4xl font-semibold">Rs.{totalRevenue.toFixed(2)}</p>
           </div>
 
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">

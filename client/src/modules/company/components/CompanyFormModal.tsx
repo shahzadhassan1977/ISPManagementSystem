@@ -4,7 +4,7 @@ import Modal from "@/components/ui/Modal";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useCreateCompany, useUpdateCompany } from "../hooks/useCompany";
+import { useCreateCompany, useUpdateCompany, useCompanies } from "../hooks/useCompany";
 import { toast } from "sonner";
 import { useEffect } from "react";
 
@@ -43,13 +43,21 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
     if (data) reset(data);
   }, [data, reset]);
 
+  const { data: companies = [] } = useCompanies();
   const { mutate: createCompany } = useCreateCompany();
   const { mutate: updateCompany } = useUpdateCompany();
 
-  const onSubmit = (formData: any) => {    
-    if (data?.id) {
+  const currentCompanyId = data?.companyid ?? data?.id;
+  const existingOwner = companies.find((company: any) => company.isOwner);
+  const existingOwnerCompanyId = existingOwner?.companyid ?? existingOwner?.id;
+  const isOwnerDisabled = Boolean(
+    existingOwner && existingOwnerCompanyId !== currentCompanyId
+  );
+
+  const onSubmit = (formData: any) => {
+    if (data?.companyid) {
       updateCompany(
-        { id: data.id, data: formData },
+        { id: data.companyid, data: formData },
         {
           onSuccess: () => {
             toast.success("Updated");
@@ -113,6 +121,7 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
                 type="checkbox"
                 {...register("isOwner")}
                 className="checkbox"
+                disabled={isOwnerDisabled}
                 />
                 <span>Owner</span>
           </label>

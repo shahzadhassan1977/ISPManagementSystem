@@ -36,6 +36,7 @@ let PaymentService = class PaymentService {
                 'customer',
                 'subscription',
                 'subscription.product',
+                'subscription.subscriptiondetails',
             ],
         });
     }
@@ -46,6 +47,7 @@ let PaymentService = class PaymentService {
                 'customer',
                 'subscription',
                 'subscription.product',
+                'subscription.subscriptiondetails',
             ],
         });
     }
@@ -67,6 +69,7 @@ let PaymentService = class PaymentService {
                 'customer',
                 'subscription',
                 'subscription.product',
+                'subscription.subscriptiondetails',
             ],
             where: { customer: { customerid: customerId } },
         });

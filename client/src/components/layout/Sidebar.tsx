@@ -162,6 +162,14 @@ export default function Sidebar() {
               <Link href="/reports/yearly" className="block p-2 hover:bg-white/10 rounded">
                 Yearly Reports
               </Link>
+
+              <Link href="/reports/employee-wise" className="block p-2 hover:bg-white/10 rounded">
+                Employee Wise Report
+              </Link>
+
+              <Link href="/reports/product-wise" className="block p-2 hover:bg-white/10 rounded">
+                Product Wise Report
+              </Link>
             </div>
           )}
 

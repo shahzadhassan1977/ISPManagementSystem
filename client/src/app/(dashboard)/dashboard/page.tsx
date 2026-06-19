@@ -51,7 +51,7 @@ const formatDayLabel = (date: Date) =>
 const formatMonthLabel = (date: Date) =>
   date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 
-const formatCurrency = (value: number) => `$${value.toFixed(2)}`;
+const formatCurrency = (value: number) => `Rs.${value.toFixed(2)}`;
 
 const barPercentage = (value: number, max: number) => {
   if (max === 0) return "10%";

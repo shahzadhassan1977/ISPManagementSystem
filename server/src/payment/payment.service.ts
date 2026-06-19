@@ -28,6 +28,7 @@ export class PaymentService {
         'customer',
         'subscription', 
         'subscription.product',
+        'subscription.subscriptiondetails',
       ],
     });
   }
@@ -39,6 +40,7 @@ export class PaymentService {
         'customer', 
         'subscription',
         'subscription.product',
+        'subscription.subscriptiondetails',
       ],
     });
   }
@@ -64,6 +66,7 @@ export class PaymentService {
         'customer',
         'subscription',
         'subscription.product',
+        'subscription.subscriptiondetails',
       ],
       where: { customer: { customerid: customerId } },
     });

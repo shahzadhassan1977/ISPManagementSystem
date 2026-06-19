@@ -19,6 +19,16 @@ const cards = [
     description: "Yearly customer, revenue, and subscription summaries.",
     href: "/reports/yearly",
   },
+  {
+    label: "Employee Wise Report",
+    description: "Explore product payment and profit by employee-related records.",
+    href: "/reports/employee-wise",
+  },
+  {
+    label: "Product Wise Report",
+    description: "View payment, purchase price, sale price, and profit by product.",
+    href: "/reports/product-wise",
+  },
 ];
 
 export default function ReportsPage() {
