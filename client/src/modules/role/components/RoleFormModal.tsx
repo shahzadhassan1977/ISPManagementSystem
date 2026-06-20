@@ -56,6 +56,8 @@ export default function RoleFormModal({ open, onClose, data }: any) {
 
   const onSubmit = async (formData: any) => {
   try {
+    console.log("createrole data ----",data);
+    console.log("createrole formdata ----",formData);
     let roleId = data?.roleid;
 
     // ✅ CREATE / UPDATE ROLE

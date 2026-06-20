@@ -16,72 +16,26 @@ exports.PermissionController = void 0;
 const common_1 = require("@nestjs/common");
 const permission_service_1 = require("./permission.service");
 const create_permission_dto_1 = require("./dto/create-permission.dto");
-const typeorm_1 = require("typeorm");
 const update_permission_dto_1 = require("./dto/update-permission.dto");
 let PermissionController = class PermissionController {
     permissionService;
     constructor(permissionService) {
         this.permissionService = permissionService;
     }
-    create(createPermissionDto) {
-        try {
-            return this.permissionService.create(createPermissionDto);
-        }
-        catch (err) {
-            if (err instanceof typeorm_1.QueryFailedError) {
-                console.error('SQL Query:', err.query);
-                console.error('Parameters:', err.parameters);
-                console.error('DB Error Code:', err.driverError.code);
-            }
-        }
+    async create(createPermissionDto) {
+        return await this.permissionService.create(createPermissionDto);
     }
-    findAll() {
-        try {
-            return this.permissionService.findAll();
-        }
-        catch (err) {
-            if (err instanceof typeorm_1.QueryFailedError) {
-                console.error('SQL Query:', err.query);
-                console.error('Parameters:', err.parameters);
-                console.error('DB Error Code:', err.driverError.code);
-            }
-        }
+    async findAll() {
+        return await this.permissionService.findAll();
     }
-    findOne(id) {
-        try {
-            return this.permissionService.findOne(+id);
-        }
-        catch (err) {
-            if (err instanceof typeorm_1.QueryFailedError) {
-                console.error('SQL Query:', err.query);
-                console.error('Parameters:', err.parameters);
-                console.error('DB Error Code:', err.driverError.code);
-            }
-        }
+    async findOne(id) {
+        return await this.permissionService.findOne(+id);
     }
-    update(id, updatePermissionDto) {
-        try {
-            return this.permissionService.update(+id, updatePermissionDto);
-        }
-        catch (err) {
-            if (err instanceof typeorm_1.QueryFailedError) {
-                console.error('SQL Query:', err.query);
-                console.error('Parameters:', err.parameters);
-                console.error('DB Error Code:', err.driverError.code);
-            }
-        }
+    async update(id, updatePermissionDto) {
+        return await this.permissionService.update(+id, updatePermissionDto);
     }
-    remove(id) {
-        try {
-            return this.permissionService.remove(+id);
-        }
-        catch (err) {
-            if (err instanceof typeorm_1.QueryFailedError) {
-                console.error('SQL Query:', err.query);
-                console.error('Parameters:', err.parameters);
-                console.error('DB Error Code:', err.driverError.code);
-            }
-        }
+    async remove(id) {
+        return await this.permissionService.remove(+id);
     }
 };
 exports.PermissionController = PermissionController;
@@ -90,35 +44,35 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_permission_dto_1.CreatePermissionDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PermissionController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PermissionController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PermissionController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_permission_dto_1.UpdatePermissionDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PermissionController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], PermissionController.prototype, "remove", null);
 exports.PermissionController = PermissionController = __decorate([
     (0, common_1.Controller)('permission'),

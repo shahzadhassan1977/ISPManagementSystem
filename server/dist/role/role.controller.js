@@ -24,9 +24,9 @@ let RoleController = class RoleController {
     constructor(roleService) {
         this.roleService = roleService;
     }
-    create(createRoleDto) {
+    async create(createRoleDto) {
         try {
-            return this.roleService.create(createRoleDto);
+            return await this.roleService.create(createRoleDto);
         }
         catch (err) {
             if (err instanceof typeorm_1.QueryFailedError) {
@@ -34,11 +34,12 @@ let RoleController = class RoleController {
                 console.error('Parameters:', err.parameters);
                 console.error('DB Error Code:', err.driverError.code);
             }
+            throw err;
         }
     }
-    findAll() {
+    async findAll() {
         try {
-            return this.roleService.findAll();
+            return await this.roleService.findAll();
         }
         catch (err) {
             if (err instanceof typeorm_1.QueryFailedError) {
@@ -46,11 +47,12 @@ let RoleController = class RoleController {
                 console.error('Parameters:', err.parameters);
                 console.error('DB Error Code:', err.driverError.code);
             }
+            throw err;
         }
     }
-    findOne(id) {
+    async findOne(id) {
         try {
-            return this.roleService.findOne(+id);
+            return await this.roleService.findOne(+id);
         }
         catch (err) {
             if (err instanceof typeorm_1.QueryFailedError) {
@@ -58,11 +60,12 @@ let RoleController = class RoleController {
                 console.error('Parameters:', err.parameters);
                 console.error('DB Error Code:', err.driverError.code);
             }
+            throw err;
         }
     }
-    update(id, updateRoleDto) {
+    async update(id, updateRoleDto) {
         try {
-            return this.roleService.update(+id, updateRoleDto);
+            return await this.roleService.update(+id, updateRoleDto);
         }
         catch (err) {
             if (err instanceof typeorm_1.QueryFailedError) {
@@ -70,11 +73,12 @@ let RoleController = class RoleController {
                 console.error('Parameters:', err.parameters);
                 console.error('DB Error Code:', err.driverError.code);
             }
+            throw err;
         }
     }
-    remove(id) {
+    async remove(id) {
         try {
-            return this.roleService.remove(+id);
+            return await this.roleService.remove(+id);
         }
         catch (err) {
             if (err instanceof typeorm_1.QueryFailedError) {
@@ -82,6 +86,7 @@ let RoleController = class RoleController {
                 console.error('Parameters:', err.parameters);
                 console.error('DB Error Code:', err.driverError.code);
             }
+            throw err;
         }
     }
     assignPermission(assignPermissionDto) {
@@ -94,20 +99,20 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_role_dto_1.CreateRoleDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], RoleController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], RoleController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], RoleController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Put)(':id'),
@@ -115,14 +120,14 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_role_dto_1.UpdateRoleDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], RoleController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], RoleController.prototype, "remove", null);
 __decorate([
     (0, common_1.Post)('AssignPermission'),

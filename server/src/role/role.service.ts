@@ -24,7 +24,9 @@ export class RoleService {
     async create(createRoleDto: CreateRoleDto) {
           
         const role=this.roleRepo.create({
-            name: createRoleDto.name
+            name: createRoleDto.name,
+            isActive: createRoleDto.isActive ?? true,
+            isDeleted: createRoleDto.isDeleted ?? false,
           });
       
           return this.roleRepo.save(role);
@@ -89,7 +91,7 @@ export class RoleService {
     }
       
       
-        // ✅ DELETE USER
+        // ✅ DELETE ROLE
     async remove(id: number) {
       
           const role = await this.findOne(id);

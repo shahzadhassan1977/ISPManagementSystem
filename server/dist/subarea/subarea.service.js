@@ -29,6 +29,8 @@ let SubareaService = class SubareaService {
         const subarea = this.subareaRepo.create({
             name: createSubareaDto.name,
             area: { areaid: createSubareaDto.areaId },
+            isActive: createSubareaDto.isActive ?? true,
+            isDeleted: createSubareaDto.isDeleted ?? false,
         });
         return this.subareaRepo.save(subarea);
     }
@@ -60,17 +62,30 @@ let SubareaService = class SubareaService {
     }
     async update(id, dto) {
         const subArea = await this.findOne(id);
-        if (subArea?.name === dto.name && subArea?.area.areaid === dto.areaId) {
-            return subArea;
-        }
-        else if (subArea) {
-            subArea.name = dto.name;
-            subArea.area = { areaid: dto.areaId };
-            return this.subareaRepo.save(subArea);
-        }
-        else {
+        if (!subArea) {
             throw new Error('Subarea not found');
         }
+        let changed = false;
+        if (dto.name && subArea.name !== dto.name) {
+            subArea.name = dto.name;
+            changed = true;
+        }
+        if (dto.areaId && subArea.area.areaid !== dto.areaId) {
+            subArea.area = { areaid: dto.areaId };
+            changed = true;
+        }
+        if (dto.isActive !== undefined && subArea.isActive !== dto.isActive) {
+            subArea.isActive = dto.isActive;
+            changed = true;
+        }
+        if (dto.isDeleted !== undefined && subArea.isDeleted !== dto.isDeleted) {
+            subArea.isDeleted = dto.isDeleted;
+            changed = true;
+        }
+        if (!changed) {
+            return subArea;
+        }
+        return this.subareaRepo.save(subArea);
     }
     async remove(id) {
         const subarea = await this.findOne(id);

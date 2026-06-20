@@ -16,6 +16,8 @@ const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UpdatePermissionDto extends (0, mapped_types_1.PartialType)(create_permission_dto_1.CreatePermissionDto) {
     name;
+    isActive;
+    isDeleted;
 }
 exports.UpdatePermissionDto = UpdatePermissionDto;
 __decorate([
@@ -23,4 +25,12 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UpdatePermissionDto.prototype, "name", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], UpdatePermissionDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Boolean)
+], UpdatePermissionDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=update-permission.dto.js.map

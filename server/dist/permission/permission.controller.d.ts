@@ -4,11 +4,11 @@ import { UpdatePermissionDto } from './dto/update-permission.dto';
 export declare class PermissionController {
     private readonly permissionService;
     constructor(permissionService: PermissionService);
-    create(createPermissionDto: CreatePermissionDto): Promise<import("../auth/entities/permission.entity").Permission> | undefined;
-    findAll(): Promise<import("../auth/entities/permission.entity").Permission[]> | undefined;
-    findOne(id: string): Promise<import("../auth/entities/permission.entity").Permission> | undefined;
-    update(id: string, updatePermissionDto: UpdatePermissionDto): Promise<import("../auth/entities/permission.entity").Permission> | undefined;
+    create(createPermissionDto: CreatePermissionDto): Promise<import("../auth/entities/permission.entity").Permission>;
+    findAll(): Promise<import("../auth/entities/permission.entity").Permission[]>;
+    findOne(id: string): Promise<import("../auth/entities/permission.entity").Permission>;
+    update(id: string, updatePermissionDto: UpdatePermissionDto): Promise<import("../auth/entities/permission.entity").Permission>;
     remove(id: string): Promise<{
         message: string;
-    }> | undefined;
+    }>;
 }

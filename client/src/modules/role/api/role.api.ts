@@ -6,6 +6,7 @@ export const getRoles = async () => {
 };
 
 export const createRole = async (data: any) => {
+  console.log("createrole data ---",data);
   const res = await api.post("/role", data);
   return res.data.data;
 };

@@ -15,7 +15,9 @@ export class PermissionService {
            async create(createPermissionDto: CreatePermissionDto) {
               
             const permission=this.permissionRepo.create({
-                name: createPermissionDto.name
+                name: createPermissionDto.name,
+                isActive: createPermissionDto.isActive ?? true,
+                isDeleted: createPermissionDto.isDeleted ?? false,
               });
           
               return this.permissionRepo.save(permission);
@@ -66,6 +68,15 @@ export class PermissionService {
                 }
                 permission.name = dto.name;
               }
+
+              if (dto.isActive !== undefined) {
+                permission.isActive = dto.isActive;
+              }
+
+              if (dto.isDeleted !== undefined) {
+                permission.isDeleted = dto.isDeleted;
+              }
+
               await this.permissionRepo.save(permission);
           
               return this.findOne(id);

@@ -16,10 +16,10 @@ export class Permission {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Column()
+  @Column({ default: true })
   isActive!: boolean;
   
-  @Column()
+  @Column({ default: false })
   isDeleted!: boolean;
 
   // ✅ Permission → Roles

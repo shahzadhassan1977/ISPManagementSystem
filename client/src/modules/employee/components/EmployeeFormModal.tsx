@@ -24,8 +24,8 @@ const schema = z.object({
   email: z.string().email("invalid email"),
   phone: z.string().min(6, "min length > 6"),
   mobile: z.string().min(6, "min length > 6"),
-  isActive: z.string().transform((val) => val === "true"), // 🔥 transform to boolean
-  isDeleted: z.string().transform((val) => val === "true"), // 🔥 transform to boolean
+  isActive: z.boolean(),
+  isDeleted: z.boolean(),
   designation: z.string(),
   companyid: z.number(),
 });
@@ -47,6 +47,7 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
     reset,
     control,
     watch,
+    setValue,
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -54,14 +55,17 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
       email: "",
       phone: "",
       mobile: "",
-      isActive: "true",
-      isDeleted: "false",
+      isActive: true,
+      isDeleted: false,
       companyid: undefined,
       designation: "",
     },
   });
 
   const { data: companies = [] } = useCompanies();
+  const ownerCompany = companies.find((company: any) => company.isOwner);
+  const defaultCompanyId = ownerCompany ? getCompanyId(ownerCompany) : undefined;
+  const isCompanyDropdownDisabled = Boolean(ownerCompany);
 
   const { data: subareas = [] } = useSubareas();
   const [selectedSubareas, setSelectedSubareas] = useState<any[]>([]);
@@ -73,33 +77,46 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
   const selectedDesignation = watch("designation");
 
   useEffect(() => {
-    if (!data) return;
-    if (companies.length === 0) return; // 🔥 WAIT
-    if (subareas.length === 0) return; // 🔥 WAIT
+    if (companies.length === 0) return;
 
-    // ✅ RESET FORM
+    if (data) {
+      if (subareas.length === 0) return; // 🔥 WAIT
+
+      // ✅ RESET FORM FOR EDIT
+      reset({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        mobile: data.mobile,
+        designation: data.designation || "",
+        isActive: Boolean(data.isActive),
+        isDeleted: Boolean(data.isDeleted),
+        companyid: getEmployeeCompanyId(data) || defaultCompanyId,
+      });
+
+      // ✅ SET SUBAREAS FOR EDIT
+      const perms =
+        data?.employeeSubAreas?.map((item: any) => ({
+          value: Number(item.subarea?.subareaid),
+          label: item.subarea?.area?.name + " - " + item.subarea?.name,
+        })) || [];
+
+      setSelectedSubareas(perms);
+      return;
+    }
+
+    // ✅ RESET FORM FOR CREATE
     reset({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      mobile: data.mobile,
-      designation: data.designation || "",
-      isActive: data.isActive ? "true" : "false",
-      isDeleted: data.isDeleted ? "true" : "false",
-      companyid: getEmployeeCompanyId(data),
+      name: "",
+      email: "",
+      phone: "",
+      mobile: "",
+      designation: "",
+      isActive: true,
+      isDeleted: false,
+      companyid: defaultCompanyId,
     });
-
-    // ✅ SET SUBAREAS
-    // 🔥 FIX: extract from nested API
-    //    const perms = extractSubareas(data);
-    const perms =
-      data?.employeeSubAreas?.map((item: any) => ({
-        value: Number(item.subarea?.subareaid),
-        label: item.subarea?.area?.name + " - " + item.subarea?.name,
-      })) || [];
-
-    setSelectedSubareas(perms);
-  }, [data, companies, subareas, reset]);
+  }, [data, companies, defaultCompanyId, subareas.length, reset]);
 
   // 🎯 convert subareas for dropdown
   const options = subareas.map((p: any) => ({
@@ -231,27 +248,6 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
             )}
           </div>
 
-          {/* EMPLOYEE ACTIVE STATUS */}
-          <div>
-            <label className="text-sm text-gray-500 mb-1 block">
-              Is Active
-            </label>
-            <select {...register("isActive")} className="input">
-              <option value="true">Active</option>
-              <option value="false">Inactive</option>
-            </select>
-          </div>
-
-          {/* EMPLOYEE DELETED STATUS */}
-          <div>
-            <label className="text-sm text-gray-500 mb-1 block">
-              Is Deleted
-            </label>
-            <select {...register("isDeleted")} className="input">
-              <option value="true">Deleted</option>
-              <option value="false">Not Deleted</option>
-            </select>
-          </div>
           {/* EMPLOYEE DESIGNATION */}
           <div>
             <label className="text-sm text-gray-500 mb-1 block">
@@ -299,6 +295,7 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
                     ) || null
                   }
                   onChange={(val: any) => field.onChange(val?.value)}
+                  isDisabled={isCompanyDropdownDisabled}
                   className="text-black"
                   placeholder="Select company..."
                 />
@@ -333,6 +330,24 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
               </div>
             </>
           )}
+
+          {/* STATUS CONTROLS */}
+          <div className="flex flex-col gap-3 mt-4">
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                {...register("isActive")}
+                className="checkbox"
+              />
+              <span className="text-sm text-gray-700">Active</span>
+            </label>
+
+            <input
+              type="hidden"
+              value="false"
+              {...register("isDeleted")}
+            />
+          </div>
 
           {/* ACTIONS */}
           <div className="flex justify-end gap-2 mt-4">

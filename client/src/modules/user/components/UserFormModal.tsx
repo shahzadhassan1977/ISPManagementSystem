@@ -20,8 +20,8 @@ const schema = z.object({
   name: z.string().min(2, "min length > 2"),
   email: z.string().email("invalid email"),
   password: z.string().min(6, "min length > 6"),
-  isActive: z.string().transform((val) => val === "true"), // 🔥 transform to boolean
-  isDeleted: z.string().transform((val) => val === "true"), // 🔥 transform to boolean    
+  isActive: z.boolean(),
+  isDeleted: z.preprocess((val) => val === "true" || val === true, z.boolean()),
 });
 
 export default function UserFormModal({ open, onClose, data }: any) {
@@ -32,7 +32,13 @@ export default function UserFormModal({ open, onClose, data }: any) {
     reset,
   } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: data || {},
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      isActive: true,
+      isDeleted: false,
+    },
   });
 
   const { data: roles = [] } = useRoles();
@@ -44,13 +50,26 @@ export default function UserFormModal({ open, onClose, data }: any) {
 
  useEffect(() => {
   if (data) {
-    reset(data);
+    reset({
+      ...data,
+      isActive: Boolean(data.isActive),
+      isDeleted: data.isDeleted ?? false,
+    });
 
     // 🔥 FIX: extract from nested API
     const perms = extractRoles(data);
 
     setSelectedRoles(perms);
+    return;
   }
+
+  reset({
+    name: "",
+    email: "",
+    password: "",
+    isActive: true,
+    isDeleted: false,
+  });
 }, [data, reset]);
 
   // 🎯 convert roles for dropdown
@@ -158,35 +177,7 @@ export default function UserFormModal({ open, onClose, data }: any) {
           )}
         </div>
             
-            {/* USER ACTIVE STATUS */}
-        <div>
-          <label className="text-sm text-gray-500 mb-1 block">
-            Is Active
-          </label>
-          <select
-            {...register("isActive")}
-            className="input"
-          >
-            <option value="true">Active</option>
-            <option value="false">Inactive</option>
-          </select>
-        </div>
-
-        {/* USER DELETED STATUS */}
-        <div>
-          <label className="text-sm text-gray-500 mb-1 block">
-            Is Deleted
-          </label>
-          <select
-            {...register("isDeleted")}
-            className="input"
-          >
-            <option value="true">Deleted</option>
-            <option value="false">Not Deleted</option>
-          </select>
-        </div>
-
-        {/* 🔥 MULTI SELECT ROLES */}
+            {/* 🔥 MULTI SELECT ROLES */}
         <div>
           <label className="text-sm text-gray-500 mb-1 block">
             Roles
@@ -203,6 +194,19 @@ export default function UserFormModal({ open, onClose, data }: any) {
         </div>
 
         {/* ACTIONS */}
+        <input type="hidden" {...register("isDeleted")} />
+
+        <div className="flex flex-col gap-3 mt-4">
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              {...register("isActive")}
+              className="checkbox"
+            />
+            <span className="text-sm text-gray-700">Active</span>
+          </label>
+        </div>
+
         <div className="flex justify-end gap-2 mt-4">
           <button
             type="button"

@@ -31,16 +31,26 @@ export default function PermissionFormModal({ open, onClose, data }: any) {
   });
 
   useEffect(() => {
-    if (data) reset(data);
+    if (!data) return;
+
+    reset({
+      ...data,
+      isActive: data.isActive ?? true,
+      isDeleted: data.isDeleted ?? false,
+    });
   }, [data, reset]);
 
   const { mutate: createPermission } = useCreatePermission();
   const { mutate: updatePermission } = useUpdatePermission();
 
   const onSubmit = (formData: any) => {
-    if (data?.id) {
+    const permissionId = data?.permissionid ?? data?.id;
+
+    console.log("data update per--", data);
+    console.log("formData update per--", formData);
+    if (permissionId) {
       updatePermission(
-        { id: data.id, data: formData },
+        { id: permissionId, data: formData },
         {
           onSuccess: () => {
             toast.success("Updated");

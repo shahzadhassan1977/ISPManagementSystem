@@ -11,6 +11,7 @@ import { useState } from "react";
 import ConfirmDialog from "@/components/ui/ConfirmDialog";
 import { toast } from "sonner";
 import { isAborted } from "zod/v3";
+import { useEmployees } from "@/modules/employee/hooks/useEmployee";
 
 type Subscription = {
   subscriptionid: number;
@@ -57,12 +58,19 @@ type SubscriptionDetail = {
 export default function SubscriptionTable({ onEdit }: any) {
   const { data = [], isLoading, isError, error } = useSubscriptions();
   const { mutate: deleteSubscription, isPending } = useDeleteSubscription();
+  const { data: employees = [] } = useEmployees();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
 
   const [viewData, setViewData] = useState<any>(null);
   const [openView, setOpenView] = useState(false);
+
+  const getEmployeeName = (id?: number) => {
+    if (!id) return "N/A";
+    const employee = employees.find((emp: any) => emp.employeeid === id || emp.id === id);
+    return employee?.name ?? "N/A";
+  };
 
   const columns: ColumnDef<Subscription>[] = [
     {
@@ -306,20 +314,28 @@ export default function SubscriptionTable({ onEdit }: any) {
                   {viewData.subscriptiondetails.splitterPort? viewData.subscriptiondetails.splitterPort : "N/A"}
                 </p>
               </div>
-              {/* Lineman Id */}
+              {/* Lineman */}
               <div>
                 <p className="text-sm text-gray-500">Lineman Id</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.linemanId? viewData.subscriptiondetails.linemanId : "N/A"}
+                  {viewData.subscriptiondetails.linemanId ? viewData.subscriptiondetails.linemanId : "N/A"}
+                </p>
+                <p className="text-sm text-gray-500">Lineman Name</p>
+                <p className="font-semibold">
+                  {getEmployeeName(viewData.subscriptiondetails.linemanId)}
                 </p>
               </div>
-              {/* Area Recovery Officer Id */}
+              {/* Area Recovery Officer */}
               <div>
                 <p className="text-sm text-gray-500">
                   Area Recovery Officer Id
                 </p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.areaRecoveryOfficerId? viewData.subscriptiondetails.areaRecoveryOfficerId : "N/A"}
+                  {viewData.subscriptiondetails.areaRecoveryOfficerId ? viewData.subscriptiondetails.areaRecoveryOfficerId : "N/A"}
+                </p>
+                <p className="text-sm text-gray-500">Area Recovery Officer Name</p>
+                <p className="font-semibold">
+                  {getEmployeeName(viewData.subscriptiondetails.areaRecoveryOfficerId)}
                 </p>
               </div>
               {/* Is Active */}

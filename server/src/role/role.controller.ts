@@ -10,10 +10,10 @@ export class RoleController {
      constructor(private readonly roleService: RoleService) {}
 
         @Post()
-        create(@Body() createRoleDto: CreateRoleDto) {
+        async create(@Body() createRoleDto: CreateRoleDto) {
             try
             {
-                return this.roleService.create(createRoleDto);
+                return await this.roleService.create(createRoleDto);
             }
             catch(err)
             {
@@ -22,15 +22,16 @@ export class RoleController {
                     console.error('Parameters:', err.parameters);
                     // Access database-specific error codes (e.g., '23505' for Postgres unique violation)
                     console.error('DB Error Code:', (err.driverError as any).code);
-                }      
+                }
+                throw err;
             }    
         }
 
         @Get()
-        findAll() {
+        async findAll() {
             try
             {
-               return this.roleService.findAll();
+               return await this.roleService.findAll();
             }
             catch(err)
             {
@@ -39,15 +40,16 @@ export class RoleController {
                  console.error('Parameters:', err.parameters);
                  // Access database-specific error codes (e.g., '23505' for Postgres unique violation)
                  console.error('DB Error Code:', (err.driverError as any).code);
-               } 
+               }
+               throw err;
             }             
         }
          
         @Get(':id')
-        findOne(@Param('id') id: string) {
+        async findOne(@Param('id') id: string) {
             try
             {
-              return this.roleService.findOne(+id);
+              return await this.roleService.findOne(+id);
             }
             catch(err)
             {
@@ -56,15 +58,16 @@ export class RoleController {
                  console.error('Parameters:', err.parameters);
                  // Access database-specific error codes (e.g., '23505' for Postgres unique violation)
                  console.error('DB Error Code:', (err.driverError as any).code);
-                } 
+                }
+               throw err;
             }             
         }
      
         @Put(':id')
-        update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
+        async update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
                 try
                 {
-                    return this.roleService.update(+id, updateRoleDto);
+                    return await this.roleService.update(+id, updateRoleDto);
                 }
                 catch(err)
                 {
@@ -73,15 +76,16 @@ export class RoleController {
                     console.error('Parameters:', err.parameters);
                     // Access database-specific error codes (e.g., '23505' for Postgres unique violation)
                     console.error('DB Error Code:', (err.driverError as any).code);
-                    } 
+                    }
+                    throw err;
                 }
         }
          
         @Delete(':id')
-        remove(@Param('id') id: string) {
+        async remove(@Param('id') id: string) {
             try
             {
-                return this.roleService.remove(+id);
+                return await this.roleService.remove(+id);
             }
             catch(err)
             {
@@ -90,7 +94,8 @@ export class RoleController {
                     console.error('Parameters:', err.parameters);
                     // Access database-specific error codes (e.g., '23505' for Postgres unique violation)
                     console.error('DB Error Code:', (err.driverError as any).code);
-                } 
+                }
+                throw err;
             }
         }
 

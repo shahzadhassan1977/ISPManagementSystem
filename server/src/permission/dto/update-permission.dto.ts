@@ -7,5 +7,11 @@ export class UpdatePermissionDto extends PartialType(CreatePermissionDto) {
         @ApiProperty()
         @IsNotEmpty()
         name?: string;    
+
+        @ApiProperty()
+  isActive!: boolean;
+      
+  @ApiProperty()
+  isDeleted!: boolean;
         
 }
