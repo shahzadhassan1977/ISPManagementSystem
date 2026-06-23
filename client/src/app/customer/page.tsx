@@ -13,6 +13,8 @@ export default function CustomerPage() {
     <PageWrapper
       title="Customer Management"
       description="Manage ISP customer details"
+      pagePermission="customer"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

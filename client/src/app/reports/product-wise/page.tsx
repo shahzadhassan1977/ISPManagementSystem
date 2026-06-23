@@ -125,6 +125,7 @@ export default function ProductWiseReportPage() {
     <PageWrapper
       title="Product Wise Report"
       description="View purchase price, sale price, payment, and profit for each product report record."
+      pagePermission="reportproduct-wise"
     >
       <div className="space-y-6">
         <div className="bg-white p-6 rounded-xl shadow space-y-4">

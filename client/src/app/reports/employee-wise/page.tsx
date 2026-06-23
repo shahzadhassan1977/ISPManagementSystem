@@ -134,6 +134,7 @@ export default function EmployeeWiseReportPage() {
     <PageWrapper
       title="Employee Wise Report"
       description="View payments, purchase price, sale price, and profit for employee-associated records."
+      pagePermission="reportemployee-wise"
     >
       <div className="space-y-6">
         <div className="bg-white p-6 rounded-xl shadow space-y-4">

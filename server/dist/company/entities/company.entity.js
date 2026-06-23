@@ -18,6 +18,7 @@ let Company = class Company {
     address;
     email;
     phone;
+    cardRechargeURL;
     employees;
     createdAt;
     updatedAt;
@@ -46,6 +47,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Company.prototype, "phone", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, name: 'cardrechargeURL' }),
+    __metadata("design:type", String)
+], Company.prototype, "cardRechargeURL", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => employee_entity_1.Employee, (e) => e.company, {
         cascade: true,

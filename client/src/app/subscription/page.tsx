@@ -13,6 +13,8 @@ export default function SubscriptionPage() {
     <PageWrapper
       title="Subscription Management"
       description="Manage ISP subscription details"
+      pagePermission="subscription"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

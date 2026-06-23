@@ -11,7 +11,8 @@ export default function RepCustomerInvoicePage() {
   return (
     <PageWrapper
       title="Report Customer Invoice"
-      description="Get Customer Invoice Report"      
+      description="Get Customer Invoice Report"
+      pagePermission="repCustomerInvoice"
     >
       <RepCustomerInvoiceTable/>      
     </PageWrapper>

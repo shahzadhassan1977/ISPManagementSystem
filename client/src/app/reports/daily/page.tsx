@@ -86,7 +86,8 @@ export default function DailyReportPage() {
   return (
     <PageWrapper
       title="Daily Reports"
-      description="Review today&apos;s customer registration, revenue, and subscription activity."
+      description="Review today's customer registration, revenue, and subscription activity."
+      pagePermission="reportdaily"
     >
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

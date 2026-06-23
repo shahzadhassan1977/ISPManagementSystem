@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail } from 'class-validator';
+import { IsOptional, IsString, IsEmail } from 'class-validator';
 
 export class CreateCompanyDto {
   @ApiProperty()
@@ -17,6 +17,11 @@ export class CreateCompanyDto {
   @ApiProperty()
   @IsString()
   phone!: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  cardRechargeURL?: string;
 
   @ApiProperty()
   isActive!: boolean;

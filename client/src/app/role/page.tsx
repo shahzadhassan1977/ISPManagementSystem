@@ -13,6 +13,8 @@ export default function RolePage() {
     <PageWrapper
       title="Role Management"
       description="Manage ISP role details"
+      pagePermission="role"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

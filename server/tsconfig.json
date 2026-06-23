@@ -20,7 +20,7 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "exclude": ["node_modules", "dist", "coverage", ".next", "test"]
-  }
+    "noFallthroughCasesInSwitch": false
+  },
+  "exclude": ["node_modules", "dist", "coverage", ".next", "test"]
 }

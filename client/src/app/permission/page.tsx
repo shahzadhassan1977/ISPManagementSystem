@@ -13,6 +13,8 @@ export default function PermissionPage() {
     <PageWrapper
       title="Permission Management"
       description="Manage ISP permission details"
+      pagePermission="permission"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

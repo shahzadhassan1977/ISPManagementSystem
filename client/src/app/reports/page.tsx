@@ -36,6 +36,7 @@ export default function ReportsPage() {
     <PageWrapper
       title="Reports"
       description="Choose a report type to review customer registration, revenue, and subscription activity."
+      pagePermission="reports"
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {cards.map((card) => (

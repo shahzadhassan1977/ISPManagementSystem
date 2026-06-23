@@ -5,6 +5,7 @@ export declare class Company {
     address: string;
     email: string;
     phone: string;
+    cardRechargeURL?: string;
     employees: Employee[];
     createdAt: Date;
     updatedAt: Date;

@@ -30,7 +30,9 @@ export class RolesGuard implements CanActivate {
       : [];
 
     return requiredRoles.some((role) =>
-      userRoles.includes(role),
+      userRoles
+        .map((userRole) => userRole.toString().trim().toLowerCase())
+        .includes(role.toString().trim().toLowerCase()),
     );
 
     //return requiredRoles.includes(user.role);

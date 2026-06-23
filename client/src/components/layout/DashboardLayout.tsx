@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
+import { useAuthStore } from "@/core/store/auth.store";
+import { parseJwt, getTokenFromCookie, isTokenExpired, isAdminUser } from "@/utils/auth";
 
 export default function DashboardLayout({
   children,
@@ -11,18 +13,40 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const setUser = useAuthStore((s) => s.setUser);
+  const clearAndRedirect = useAuthStore((s) => s.clearAndRedirect);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const token = document.cookie.includes("access_token=");
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("access_token") || getTokenFromCookie()
+        : null;
 
     if (!token) {
       router.replace("/login");
       return;
     }
 
+    if (isTokenExpired(token)) {
+      clearAndRedirect();
+      return;
+    }
+
+    const parsed = parseJwt(token);
+    if (!parsed) {
+      console.warn("Failed to parse JWT during auth refresh, redirecting to login.");
+      clearAndRedirect();
+      return;
+    }
+
+    if (isAdminUser(parsed)) {
+      console.debug("Admin JWT refresh payload:", parsed);
+    }
+
+    setUser(parsed);
     setIsReady(true);
-  }, [router]);
+  }, [router, setUser, clearAndRedirect]);
 
   if (!isReady) {
     return (

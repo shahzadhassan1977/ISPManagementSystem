@@ -13,6 +13,8 @@ export default function PaymentPage() {
     <PageWrapper
       title="Payment Management"
       description="Manage ISP payment details"
+      pagePermission="payment"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

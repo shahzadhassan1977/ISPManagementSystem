@@ -89,7 +89,8 @@ export default function MonthlyReportPage() {
   return (
     <PageWrapper
       title="Monthly Reports"
-      description="Review this month&apos;s customer registration, revenue, and subscription activity."
+      description="Review this month's customer registration, revenue, and subscription activity."
+      pagePermission="reportmonthly"
     >
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

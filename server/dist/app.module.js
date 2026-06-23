@@ -62,6 +62,7 @@ const usersetting_controller_1 = require("./usersetting/usersetting.controller")
 const usersetting_module_1 = require("./usersetting/usersetting.module");
 const portalsetting_controller_1 = require("./portalsetting/portalsetting.controller");
 const portalsetting_module_1 = require("./portalsetting/portalsetting.module");
+const communication_module_1 = require("./communication/communication.module");
 const change_log_entity_1 = require("./common/entities/change-log.entity");
 let AppModule = class AppModule {
 };
@@ -103,6 +104,7 @@ exports.AppModule = AppModule = __decorate([
             subscription_module_1.SubscriptionModule,
             subscriptiondetail_module_1.SubscriptiondetailModule,
             payment_module_1.PaymentModule,
+            communication_module_1.CommunicationModule,
             employeesubarea_module_1.EmployeeSubareaModule,
             usersetting_module_1.UsersettingModule,
             portalsetting_module_1.PortalsettingModule

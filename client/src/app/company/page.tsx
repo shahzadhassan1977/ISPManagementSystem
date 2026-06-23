@@ -13,6 +13,8 @@ export default function CompanyPage() {
     <PageWrapper
       title="Company Management"
       description="Manage ISP company details"
+      pagePermission="company"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

@@ -13,6 +13,8 @@ export default function UserPage() {
     <PageWrapper
       title="User Management"
       description="Manage ISP user details"
+      pagePermission="user"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

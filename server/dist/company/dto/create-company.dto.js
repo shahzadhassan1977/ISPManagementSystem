@@ -17,6 +17,7 @@ class CreateCompanyDto {
     address;
     email;
     phone;
+    cardRechargeURL;
     isActive;
     isDeleted;
     isOwner;
@@ -42,6 +43,12 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCompanyDto.prototype, "phone", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ required: false }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateCompanyDto.prototype, "cardRechargeURL", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)

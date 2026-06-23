@@ -25,6 +25,9 @@ export class Company {
   @Column()
   phone!: string;
 
+  @Column({ nullable: true, name: 'cardrechargeURL' })
+  cardRechargeURL?: string;
+
   @OneToMany(() => Employee, (e) => e.company, {
     cascade: true,
   })

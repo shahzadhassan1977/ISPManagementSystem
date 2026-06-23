@@ -13,6 +13,8 @@ export default function EmployeePage() {
     <PageWrapper
       title="Employee Management"
       description="Manage ISP employee details"
+      pagePermission="employee"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

@@ -53,6 +53,7 @@ import { UsersettingController } from './usersetting/usersetting.controller';
 import { UsersettingModule } from './usersetting/usersetting.module';
 import { PortalsettingController } from './portalsetting/portalsetting.controller';
 import { PortalsettingModule } from './portalsetting/portalsetting.module';
+import { CommunicationModule } from './communication/communication.module';
 import { ChangeLog } from './common/entities/change-log.entity';
 
 
@@ -93,6 +94,7 @@ import { ChangeLog } from './common/entities/change-log.entity';
     SubscriptionModule,
     SubscriptiondetailModule,
     PaymentModule,
+    CommunicationModule,
     EmployeeSubareaModule,
     UsersettingModule,
     PortalsettingModule

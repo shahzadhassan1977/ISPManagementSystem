@@ -13,6 +13,8 @@ export default function ProductPage() {
     <PageWrapper
       title="Product Management"
       description="Manage ISP product details"
+      pagePermission="product"
+      actionPermission="add"
       action={
         <button
           onClick={() => {

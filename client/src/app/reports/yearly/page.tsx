@@ -82,7 +82,8 @@ export default function YearlyReportPage() {
   return (
     <PageWrapper
       title="Yearly Reports"
-      description="Review this year&apos;s customer registration, revenue, and subscription activity."
+      description="Review this year's customer registration, revenue, and subscription activity."
+      pagePermission="reportyearly"
     >
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -12,8 +12,8 @@ export default function SubareaPage() {
   return (
     <PageWrapper
       title="Subarea Management"
-      description="Manage ISP subarea details"
-      action={
+      description="Manage ISP subarea details"      pagePermission="subarea"
+      actionPermission="add"      action={
         <button
           onClick={() => {
             setEditData(null);

@@ -3,6 +3,7 @@ export declare class CreateCompanyDto {
     address: string;
     email: string;
     phone: string;
+    cardRechargeURL?: string;
     isActive: boolean;
     isDeleted: boolean;
     isOwner: boolean;

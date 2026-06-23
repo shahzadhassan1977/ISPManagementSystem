@@ -1,17 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Eye, EyeOff } from "lucide-react";
-import { useLogin } from "@/modules/auth/hooks/useLogin";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import router from "next/router";
-
-
+import { useLogin } from "@/modules/auth/hooks/useLogin";
+import { getTokenFromCookie, isTokenExpired } from "@/utils/auth";
 
 const schema = z.object({
   email: z.string().email("Enter valid email"),
@@ -21,23 +18,24 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-
 export default function LoginPage() {
-
   const router = useRouter();
-
-  useEffect(() => {
-    const token = document.cookie.includes("access_token=");
-
-    // 🔐 If already logged in → redirect immediately
-    if (token) {
-      router.replace("/dashboard");
-    }
-  }, []);
-
   const [showPassword, setShowPassword] = useState(false);
   const { mutate, isPending } = useLogin();
-  
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token") || getTokenFromCookie();
+
+    if (token && !isTokenExpired(token)) {
+      router.replace("/dashboard");
+      return;
+    }
+
+    if (token) {
+      localStorage.removeItem("access_token");
+      document.cookie = "access_token=; path=/; max-age=0";
+    }
+  }, [router]);
 
   const {
     register,
@@ -50,27 +48,30 @@ export default function LoginPage() {
   const onSubmit = (data: FormData) => {
     mutate(data, {
       onSuccess: () => {
-        toast.success("Login successful 🚀");
-
-        // ✅ REDIRECT TO DASHBOARD
-        router.push("/dashboard");
-
+        toast.success("Login successful");
       },
-      onError: (err: any) => {
-        toast.error(
-          err?.response?.data?.message || "Invalid credentials ❌"
-        );
+      onError: (err: unknown) => {
+        const message =
+          err &&
+          typeof err === "object" &&
+          "response" in err &&
+          err.response &&
+          typeof err.response === "object" &&
+          "data" in err.response &&
+          err.response.data &&
+          typeof err.response.data === "object" &&
+          "message" in err.response.data
+            ? String(err.response.data.message)
+            : "Invalid credentials";
+
+        toast.error(message);
       },
     });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-
-      {/* GLASS CARD */}
       <div className="w-full max-w-md p-8 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-2xl shadow-2xl">
-
-        {/* HEADER */}
         <h1 className="text-2xl font-bold text-white text-center">
           ISP Management System
         </h1>
@@ -78,10 +79,7 @@ export default function LoginPage() {
           Secure Admin Login
         </p>
 
-        {/* FORM */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
-          {/* EMAIL */}
           <div>
             <label className="text-sm text-gray-200">Email</label>
             <input
@@ -96,8 +94,7 @@ export default function LoginPage() {
             )}
           </div>
 
-          {/* PASSWORD */}
-          { <div>
+          <div>
             <label className="text-sm text-gray-200">Password</label>
 
             <div className="relative">
@@ -105,7 +102,7 @@ export default function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 {...register("password")}
                 className="w-full mt-1 px-3 py-2 pr-10 rounded-lg bg-white/10 text-white border border-white/20 focus:ring-2 focus:ring-blue-500 outline-none"
-                placeholder="••••••••"
+                placeholder="Password"
               />
 
               <button
@@ -122,15 +119,13 @@ export default function LoginPage() {
                 {errors.password.message}
               </p>
             )}
-          </div> }
+          </div>
 
-          {/* REMEMBER ME */}
-          { <div className="flex items-center gap-2 text-gray-300 text-sm">
+          <div className="flex items-center gap-2 text-gray-300 text-sm">
             <input type="checkbox" {...register("rememberMe")} />
             <span>Remember me</span>
-          </div> }
+          </div>
 
-          {/* BUTTON */}
           <button
             disabled={isPending}
             className="w-full py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition disabled:opacity-50"
@@ -139,7 +134,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* FOOTER */}
         <p className="text-center text-xs text-gray-400 mt-6">
           Secure ISP Admin Panel
         </p>

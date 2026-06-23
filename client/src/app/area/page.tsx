@@ -13,6 +13,8 @@ export default function AreaPage() {
     <PageWrapper
       title="Area Management"
       description="Manage ISP area details"
+      pagePermission="area"
+      actionPermission="add"
       action={
         <button
           onClick={() => {
