@@ -15,24 +15,9 @@ const create_user_dto_1 = require("./create-user.dto");
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UpdateUserDto extends (0, mapped_types_1.PartialType)(create_user_dto_1.CreateUserDto) {
-    name;
-    email;
     password;
-    isActive;
-    isDeleted;
 }
 exports.UpdateUserDto = UpdateUserDto;
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], UpdateUserDto.prototype, "name", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], UpdateUserDto.prototype, "email", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
@@ -40,12 +25,4 @@ __decorate([
     (0, class_validator_1.MinLength)(6),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "password", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", Boolean)
-], UpdateUserDto.prototype, "isActive", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", Boolean)
-], UpdateUserDto.prototype, "isDeleted", void 0);
 //# sourceMappingURL=update-user.dto.js.map

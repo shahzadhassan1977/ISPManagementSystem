@@ -21,6 +21,10 @@ class CreateCompanyDto {
     isActive;
     isDeleted;
     isOwner;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateCompanyDto = CreateCompanyDto;
 __decorate([
@@ -61,4 +65,20 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreateCompanyDto.prototype, "isOwner", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateCompanyDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateCompanyDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateCompanyDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateCompanyDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-company.dto.js.map

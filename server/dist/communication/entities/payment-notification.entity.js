@@ -27,6 +27,8 @@ let PaymentNotification = class PaymentNotification {
     sentAt;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.PaymentNotification = PaymentNotification;
 __decorate([
@@ -89,6 +91,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], PaymentNotification.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], PaymentNotification.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], PaymentNotification.prototype, "updatedBy", void 0);
 exports.PaymentNotification = PaymentNotification = __decorate([
     (0, typeorm_1.Entity)()
 ], PaymentNotification);

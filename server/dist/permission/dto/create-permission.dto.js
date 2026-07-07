@@ -16,6 +16,10 @@ class CreatePermissionDto {
     name;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreatePermissionDto = CreatePermissionDto;
 __decorate([
@@ -31,4 +35,20 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreatePermissionDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreatePermissionDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreatePermissionDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreatePermissionDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreatePermissionDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-permission.dto.js.map

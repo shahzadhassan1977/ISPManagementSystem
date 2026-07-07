@@ -11,4 +11,8 @@ export declare class CreateEmailConfigDto {
     subjectTemplate?: string;
     bodyTemplate?: string;
     isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

@@ -15,23 +15,29 @@ export class Role {
     name!: string;
 
   @CreateDateColumn()
-    createdAt!: Date;
+  createdAt!: Date;
       
-    @UpdateDateColumn()
-    updatedAt!: Date;
-  
-    @Column()
-    isActive!: boolean;
+  @UpdateDateColumn()
+  updatedAt!: Date;
+
+  @Column()
+  createdBy!: number;
     
-    @Column()
-    isDeleted!: boolean;
+  @Column()
+  updatedBy!: number;
+  
+  @Column()
+  isActive!: boolean;
+    
+  @Column()
+  isDeleted!: boolean;
 
-     // ✅ Role → Users
-    @OneToMany(() => UserRole, (ur) => ur.role)
-     userRoles!: UserRole[];
+  // ✅ Role → Users
+  @OneToMany(() => UserRole, (ur) => ur.role)
+  userRoles!: UserRole[];
 
-    // ✅ Role → Permissions
-    @OneToMany(() => RolePermission, (rp) => rp.role)
-    rolePermissions!: RolePermission[];
+  // ✅ Role → Permissions
+  @OneToMany(() => RolePermission, (rp) => rp.role)
+  rolePermissions!: RolePermission[];
 
 }

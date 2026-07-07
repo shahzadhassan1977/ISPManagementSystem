@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useCustomers } from "@/modules/customer/hooks/useCustomers";
 import { usePayments } from "@/modules/payment/hooks/usePayments";
 import { useSubscriptions } from "@/modules/subscription/hooks/useSubscription";
-import { Users, CreditCard, Activity, BarChart3 } from "lucide-react";
+import { useExpenses } from "@/modules/expense/hooks/useExpenses";
+import { Users, CreditCard, Activity, BarChart3, Wallet } from "lucide-react";
 
 const parseDate = (value: any) => (value ? new Date(value) : null);
 
@@ -51,6 +52,12 @@ const formatDayLabel = (date: Date) =>
 const formatMonthLabel = (date: Date) =>
   date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
 
+const formatDate = (value: any) => {
+  if (!value) return "N/A";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "N/A" : date.toLocaleDateString("en-GB");
+};
+
 const formatCurrency = (value: number) => `Rs.${value.toFixed(2)}`;
 
 const barPercentage = (value: number, max: number) => {
@@ -62,6 +69,7 @@ export default function DashboardPage() {
   const { data: customers = [] } = useCustomers();
   const { data: payments = [] } = usePayments();
   const { data: subscriptions = [] } = useSubscriptions();
+  const { data: expenses = [] } = useExpenses();
 
   const today = new Date();
   const currentMonth = today.getMonth();
@@ -113,6 +121,21 @@ export default function DashboardPage() {
     const date = parseDate(subscription.startDate);
     return subscription.isActive && date && date.getFullYear() === currentYear;
   }).length;
+
+  const monthlyExpenses = expenses
+    .filter((expense: any) => {
+      const date = parseDate(expense.expenseDate);
+      return date && date.getFullYear() === currentYear && date.getMonth() === currentMonth;
+    })
+    .reduce((sum: number, expense: any) => sum + Number(expense.amount || 0), 0);
+
+  const pendingExpenses = expenses
+    .filter((expense: any) => ["Pending", "OnHold", "InProcess"].includes(expense.status))
+    .reduce((sum: number, expense: any) => sum + Number(expense.amount || 0), 0);
+
+  const recentExpenses = [...expenses]
+    .sort((a: any, b: any) => new Date(b.expenseDate || b.createdAt).getTime() - new Date(a.expenseDate || a.createdAt).getTime())
+    .slice(0, 5);
 
   const dailyTrend = getDateKeys(7).map((date) => ({
     label: formatDayLabel(date),
@@ -205,6 +228,55 @@ export default function DashboardPage() {
             <p className="mt-3 text-lg font-semibold text-slate-900">{report.title}</p>
           </Link>
         ))}
+      </section>
+
+      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm text-gray-500 uppercase tracking-[0.2em]">Expense Overview</p>
+            <h2 className="text-2xl font-semibold">Business spend this month</h2>
+          </div>
+          <div className="rounded-2xl bg-amber-100 p-3 text-amber-700">
+            <Wallet size={20} />
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-sm text-gray-500">This month</p>
+            <p className="mt-2 text-2xl font-semibold">{formatCurrency(monthlyExpenses)}</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-sm text-gray-500">Pending</p>
+            <p className="mt-2 text-2xl font-semibold">{formatCurrency(pendingExpenses)}</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-sm text-gray-500">Recent entries</p>
+            <p className="mt-2 text-2xl font-semibold">{recentExpenses.length}</p>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold">Recent expenses</h3>
+          <div className="mt-3 space-y-2">
+            {recentExpenses.length === 0 ? (
+              <p className="text-sm text-gray-500">No expense records available yet.</p>
+            ) : (
+              recentExpenses.map((expense: any) => (
+                <div key={expense.id} className="flex items-center justify-between rounded-2xl border border-slate-200 px-4 py-3">
+                  <div>
+                    <p className="font-medium">{expense.title}</p>
+                    <p className="text-sm text-gray-500">{expense.category} • {expense.status}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold">{formatCurrency(Number(expense.amount || 0))}</p>
+                    <p className="text-sm text-gray-500">{formatDate(expense.expenseDate || expense.createdAt)}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </section>
 
       <section className="space-y-6">

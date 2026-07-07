@@ -13,4 +13,6 @@ export declare class SmsConfig {
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

@@ -5,6 +5,8 @@ export declare class Subarea {
     name: string;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
     areaId: number;

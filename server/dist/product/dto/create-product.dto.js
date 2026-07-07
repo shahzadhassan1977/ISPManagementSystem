@@ -18,6 +18,10 @@ class CreateProductDto {
     purchasePrice;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateProductDto = CreateProductDto;
 __decorate([
@@ -43,4 +47,20 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreateProductDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateProductDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateProductDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateProductDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateProductDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-product.dto.js.map

@@ -35,10 +35,15 @@ class CreateSubscriptiondetailDto {
     areaRecoveryOfficerId;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateSubscriptiondetailDto = CreateSubscriptiondetailDto;
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], CreateSubscriptiondetailDto.prototype, "installationDate", void 0);
@@ -54,46 +59,55 @@ __decorate([
 ], CreateSubscriptiondetailDto.prototype, "wireCharges", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptiondetailDto.prototype, "deviceCharges", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptiondetailDto.prototype, "splitterCharges", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptiondetailDto.prototype, "fee", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptiondetailDto.prototype, "otherCharges", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptiondetailDto.prototype, "paid", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptiondetailDto.prototype, "remainingBalance", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateSubscriptiondetailDto.prototype, "deviceMac", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateSubscriptiondetailDto.prototype, "userId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateSubscriptiondetailDto.prototype, "password", void 0);
@@ -140,10 +154,32 @@ __decorate([
 ], CreateSubscriptiondetailDto.prototype, "areaRecoveryOfficerId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], CreateSubscriptiondetailDto.prototype, "isActive", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], CreateSubscriptiondetailDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Date)
+], CreateSubscriptiondetailDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Date)
+], CreateSubscriptiondetailDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateSubscriptiondetailDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateSubscriptiondetailDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-subscriptiondetail.dto.js.map

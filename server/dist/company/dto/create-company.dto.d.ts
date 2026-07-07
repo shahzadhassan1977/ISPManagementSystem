@@ -7,4 +7,8 @@ export declare class CreateCompanyDto {
     isActive: boolean;
     isDeleted: boolean;
     isOwner: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

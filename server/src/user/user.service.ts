@@ -30,9 +30,12 @@ export class UserService {
       name: createUserDto.name,
       isActive: createUserDto.isActive,
       isDeleted: createUserDto.isDeleted,
-      createdAt: createUserDto.createdAt,
+      createdAt: new Date(createUserDto.createdAt),
+      updatedAt: new Date(createUserDto.updatedAt),
+      createdBy: createUserDto.createdBy,
+      updatedBy: createUserDto.updatedBy,
     });
-
+    console.log("user ----",user);
     return this.userRepo.save(user);
   }
 
@@ -107,10 +110,10 @@ export class UserService {
         throw new BadRequestException('Email already in use');
       }
 
-      user.email = dto.email;
-      user.name = dto.name;
-      user.isActive = dto.isActive;
-      user.isDeleted = dto.isDeleted;
+      // user.email = dto.email;
+      // user.name = dto.name;
+      // user.isActive = dto.isActive;
+      // user.isDeleted = dto.isDeleted;
     }
 
     if (dto.password) {

@@ -17,6 +17,10 @@ class CreateSubareaDto {
     areaId;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateSubareaDto = CreateSubareaDto;
 __decorate([
@@ -37,4 +41,20 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreateSubareaDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateSubareaDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateSubareaDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateSubareaDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateSubareaDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-subarea.dto.js.map

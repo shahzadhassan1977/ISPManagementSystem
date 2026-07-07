@@ -12,5 +12,17 @@ export class CreatePermissionDto {
       
   @ApiProperty()
   isDeleted!: boolean;
+
+  @ApiProperty()
+  createdAt!: Date;
+  
+  @ApiProperty()
+  updatedAt!: Date;
+  
+  @ApiProperty()
+  createdBy!: number;
+      
+  @ApiProperty()
+  updatedBy!: number;
     
 }

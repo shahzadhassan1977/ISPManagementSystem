@@ -16,11 +16,14 @@ class CreateAreaDto {
     name;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateAreaDto = CreateAreaDto;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateAreaDto.prototype, "name", void 0);
@@ -32,4 +35,20 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreateAreaDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateAreaDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateAreaDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateAreaDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateAreaDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-area.dto.js.map

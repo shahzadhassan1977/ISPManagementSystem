@@ -19,4 +19,16 @@ export class CreateProductDto {
       
   @ApiProperty()
   isDeleted!: boolean;
+
+  @ApiProperty()
+  createdAt!: Date;
+  
+  @ApiProperty()
+  updatedAt!: Date;
+  
+  @ApiProperty()
+  createdBy!: number;
+      
+  @ApiProperty()
+  updatedBy!: number;
 }

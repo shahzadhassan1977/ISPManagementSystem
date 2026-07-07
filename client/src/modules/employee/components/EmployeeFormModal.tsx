@@ -21,7 +21,7 @@ import { Controller } from "react-hook-form";
 
 const schema = z.object({
   name: z.string().min(2, "min length > 2"),
-  email: z.string().email("invalid email"),
+  email: z.string().min(1, "Email is required"),
   phone: z.string().min(6, "min length > 6"),
   mobile: z.string().min(6, "min length > 6"),
   isActive: z.boolean(),
@@ -116,6 +116,7 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
       isDeleted: false,
       companyid: defaultCompanyId,
     });
+    setSelectedSubareas([]);
   }, [data, companies, defaultCompanyId, subareas.length, reset]);
 
   // 🎯 convert subareas for dropdown

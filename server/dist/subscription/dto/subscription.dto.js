@@ -44,6 +44,8 @@ class SubscriptionDto {
     areaRecoveryOfficerId;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     id;
 }
 exports.SubscriptionDto = SubscriptionDto;
@@ -193,14 +195,26 @@ __decorate([
 ], SubscriptionDto.prototype, "areaRecoveryOfficerId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], SubscriptionDto.prototype, "createdAt", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], SubscriptionDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], SubscriptionDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], SubscriptionDto.prototype, "updatedBy", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNumber)(),

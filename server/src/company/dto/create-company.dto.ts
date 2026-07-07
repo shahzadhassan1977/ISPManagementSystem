@@ -31,4 +31,16 @@ export class CreateCompanyDto {
 
   @ApiProperty()
   isOwner!: boolean;
+
+  @ApiProperty()
+  createdAt!: Date;
+  
+  @ApiProperty()
+  updatedAt!: Date;
+  
+  @ApiProperty()
+  createdBy!: number;
+      
+  @ApiProperty()
+  updatedBy!: number;
 }

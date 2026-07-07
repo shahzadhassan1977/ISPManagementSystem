@@ -8,6 +8,8 @@ export declare class Productdetail {
     product: Product;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
 }

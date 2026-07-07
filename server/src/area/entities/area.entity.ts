@@ -16,16 +16,22 @@ export class Area {
   @Column({ unique: true })
   name!: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ nullable: true })
   createdAt!: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true })
   updatedAt!: Date;
 
-  @Column()
+  @Column({ nullable: true })
+  createdBy!: number;
+    
+  @Column({ nullable: true })
+  updatedBy!: number;
+
+  @Column({ nullable: true })
   isActive!: boolean;
   
-  @Column()
+  @Column({ nullable: true })
   isDeleted!: boolean;
 
   @OneToMany(() => Subarea, (s) => s.area, {

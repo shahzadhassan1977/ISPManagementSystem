@@ -24,6 +24,10 @@ class CreateSmsConfigDto {
     smsTemplate;
     whatsappTemplate;
     isActive;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateSmsConfigDto = CreateSmsConfigDto;
 __decorate([
@@ -88,4 +92,20 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], CreateSmsConfigDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateSmsConfigDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateSmsConfigDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateSmsConfigDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateSmsConfigDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-sms-config.dto.js.map

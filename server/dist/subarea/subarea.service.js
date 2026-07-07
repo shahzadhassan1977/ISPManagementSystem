@@ -31,7 +31,12 @@ let SubareaService = class SubareaService {
             area: { areaid: createSubareaDto.areaId },
             isActive: createSubareaDto.isActive ?? true,
             isDeleted: createSubareaDto.isDeleted ?? false,
+            createdAt: new Date(createSubareaDto.createdAt),
+            updatedAt: new Date(createSubareaDto.updatedAt),
+            createdBy: createSubareaDto.createdBy,
+            updatedBy: createSubareaDto.updatedBy,
         });
+        console.log("subarea --- ", subarea);
         return this.subareaRepo.save(subarea);
     }
     async findAll() {

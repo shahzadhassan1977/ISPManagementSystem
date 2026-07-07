@@ -17,6 +17,8 @@ let Area = class Area {
     name;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     isActive;
     isDeleted;
     subAreas;
@@ -31,19 +33,27 @@ __decorate([
     __metadata("design:type", String)
 ], Area.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)(),
+    (0, typeorm_1.CreateDateColumn)({ nullable: true }),
     __metadata("design:type", Date)
 ], Area.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.UpdateDateColumn)(),
+    (0, typeorm_1.UpdateDateColumn)({ nullable: true }),
     __metadata("design:type", Date)
 ], Area.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Area.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Area.prototype, "updatedBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], Area.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], Area.prototype, "isDeleted", void 0);
 __decorate([

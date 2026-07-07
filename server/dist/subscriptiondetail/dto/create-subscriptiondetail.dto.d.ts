@@ -1,16 +1,16 @@
 export declare class CreateSubscriptiondetailDto {
-    installationDate: Date;
+    installationDate?: Date;
     installationCharges: number;
     wireCharges: number;
-    deviceCharges: number;
-    splitterCharges: number;
-    fee: number;
-    otherCharges: number;
-    paid: number;
-    remainingBalance: number;
-    deviceMac: string;
-    userId: string;
-    password: string;
+    deviceCharges?: number;
+    splitterCharges?: number;
+    fee?: number;
+    otherCharges?: number;
+    paid?: number;
+    remainingBalance?: number;
+    deviceMac?: string;
+    userId?: string;
+    password?: string;
     staticIP: string;
     olt: string;
     oltPort: string;
@@ -19,6 +19,10 @@ export declare class CreateSubscriptiondetailDto {
     subscriptionId: number;
     linemanId: number;
     areaRecoveryOfficerId: number;
-    isActive: boolean;
-    isDeleted: boolean;
+    isActive?: boolean;
+    isDeleted?: boolean;
+    createdAt?: Date;
+    updatedAt?: Date;
+    createdBy?: number;
+    updatedBy?: number;
 }

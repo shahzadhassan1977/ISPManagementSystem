@@ -9,6 +9,8 @@ export declare class Product {
     subscriptions: Subscription[];
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
 }

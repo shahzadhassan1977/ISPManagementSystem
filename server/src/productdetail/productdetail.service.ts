@@ -16,8 +16,12 @@ export class ProductdetailService {
     const entity = this.repo.create({
       ...dto,
       product: { productid: dto.productId },
+      createdAt: new Date(dto.createdAt),
+      updatedAt: new Date(dto.updatedAt),
+      createdBy: dto.createdBy,
+      updatedBy: dto.updatedBy,
     });
-
+    console.log("entity --- ",entity);
     return this.repo.save(entity);
   }
 

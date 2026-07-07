@@ -13,7 +13,11 @@ export class CompanyService {
   ) {}
 
   create(dto: CreateCompanyDto) {
-    const company = this.repo.create(dto);
+    const company = this.repo.create({
+      ...dto,
+      createdAt: new Date(dto.createdAt),
+      updatedAt: new Date(dto.updatedAt),
+    });
     return this.repo.save(company);
   }
 

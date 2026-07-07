@@ -21,6 +21,8 @@ let Productdetail = class Productdetail {
     product;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     isActive;
     isDeleted;
 };
@@ -60,6 +62,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Productdetail.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Productdetail.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Productdetail.prototype, "updatedBy", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)

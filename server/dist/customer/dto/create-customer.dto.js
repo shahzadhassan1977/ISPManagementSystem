@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCustomerDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_validator_1 = require("class-validator");
 class CreateCustomerDto {
     name;
     phone;
@@ -21,36 +20,34 @@ class CreateCustomerDto {
     email;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateCustomerDto = CreateCustomerDto;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "phone", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "address", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "cnic", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "mobile", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsEmail)(),
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "email", void 0);
 __decorate([
@@ -61,4 +58,20 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreateCustomerDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateCustomerDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateCustomerDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateCustomerDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateCustomerDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-customer.dto.js.map

@@ -6,4 +6,8 @@ export declare class ChangeLog {
     old_value?: string;
     new_value?: string;
     changed_at: Date;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

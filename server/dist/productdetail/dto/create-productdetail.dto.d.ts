@@ -5,4 +5,8 @@ export declare class CreateProductdetailDto {
     productId: number;
     isActive: boolean;
     isDeleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

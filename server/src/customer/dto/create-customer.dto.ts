@@ -1,29 +1,23 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateCustomerDto {
   @ApiProperty()
-  @IsString()
   name!: string;
 
   @ApiProperty()
-  @IsString()
   phone!: string;
   
   @ApiProperty()
-  @IsString()
   address!: string;
 
   @ApiProperty()
-  @IsString()
   cnic!: string;
 
   @ApiProperty()
-  @IsString()
   mobile!: string;
 
   @ApiProperty()
-  @IsEmail()
   email!: string;
 
   @ApiProperty()
@@ -31,4 +25,16 @@ export class CreateCustomerDto {
 
   @ApiProperty()
   isDeleted!: boolean;
+
+  @ApiProperty()
+  createdAt!: Date;
+  
+  @ApiProperty()
+  updatedAt!: Date;
+  
+  @ApiProperty()
+  createdBy!: number;
+      
+  @ApiProperty()
+  updatedBy!: number;
 }

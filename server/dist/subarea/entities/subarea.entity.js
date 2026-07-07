@@ -18,6 +18,8 @@ let Subarea = class Subarea {
     name;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     isActive;
     isDeleted;
     areaId;
@@ -41,6 +43,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Subarea.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Subarea.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Subarea.prototype, "updatedBy", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)

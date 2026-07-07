@@ -19,6 +19,8 @@ let AuthOTP = class AuthOTP {
     expiresAt;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.AuthOTP = AuthOTP;
 __decorate([
@@ -49,6 +51,14 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Date)
 ], AuthOTP.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], AuthOTP.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], AuthOTP.prototype, "updatedBy", void 0);
 exports.AuthOTP = AuthOTP = __decorate([
     (0, typeorm_1.Entity)()
 ], AuthOTP);

@@ -24,6 +24,9 @@ let ApiLog = class ApiLog {
     duration;
     errorMessage;
     createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.ApiLog = ApiLog;
 __decorate([
@@ -74,6 +77,18 @@ __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], ApiLog.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], ApiLog.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], ApiLog.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], ApiLog.prototype, "updatedBy", void 0);
 exports.ApiLog = ApiLog = __decorate([
     (0, typeorm_1.Entity)()
 ], ApiLog);

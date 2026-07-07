@@ -34,6 +34,8 @@ export class SubscriptionController {
     subscriptionDto.status = dto.status;
     subscriptionDto.isActive = dto.isActive;
     subscriptionDto.isDeleted = dto.isDeleted;
+    subscriptionDto.createdBy = dto.createdBy;
+    subscriptionDto.updatedBy = dto.updatedBy;
     const result = await this.service.create(subscriptionDto);
     const subscriptiondetailDto = new CreateSubscriptiondetailDto();
     subscriptiondetailDto.installationDate = new Date(dto.installationDate);
@@ -58,6 +60,8 @@ export class SubscriptionController {
     subscriptiondetailDto.areaRecoveryOfficerId = dto.areaRecoveryOfficerId;
     subscriptiondetailDto.isActive = dto.isActive;
     subscriptiondetailDto.isDeleted = dto.isDeleted;
+    subscriptiondetailDto.createdBy = dto.createdBy;
+    subscriptiondetailDto.updatedBy = dto.updatedBy;
     const subscriptionDetail = await this.SubscriptiondetailService.create(
       subscriptiondetailDto,
     );
@@ -68,26 +72,7 @@ export class SubscriptionController {
 
   @Get()
   async findAll() {
-    const result = await this.service.findAll();
-
-    const subscriptions = await Promise.all(
-      result.map(async (subscription) => {
-
-        const subscriptionDetails =
-          await this.SubscriptiondetailService.findOne(
-            subscription.subscriptionid,
-          );
-
-        return {
-          ...subscription,
-          subscriptiondetails: subscriptionDetails || null,
-        };
-      }),
-    );
-
-    //console.log("Found all subscriptions:", subscriptions);
-
-    return subscriptions;
+    return this.service.findAll();
   }
 
   @Get("/:customerId")
@@ -140,6 +125,8 @@ export class SubscriptionController {
     subscriptiondetailDto.areaRecoveryOfficerId = dto.areaRecoveryOfficerId;
     subscriptiondetailDto.isActive = dto.isActive;
     subscriptiondetailDto.isDeleted = dto.isDeleted;
+    subscriptiondetailDto.createdBy = dto.createdBy;
+    subscriptiondetailDto.updatedBy = dto.updatedBy;
     const subscriptionDetail = await this.SubscriptiondetailService.update(
        subscriptiondetailDto.id,
        subscriptiondetailDto,

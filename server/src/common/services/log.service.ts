@@ -14,7 +14,11 @@ export class LogService {
     try {
       const safeBody =  logData.responseBody;
       if (safeBody.password) delete safeBody.password;
-      const log = this.logRepo.create(logData);
+      const log = this.logRepo.create({
+        ...logData,
+        createdBy: logData.createdBy ?? 0,
+        updatedBy: logData.updatedBy ?? 0,
+      });
       await this.logRepo.save(log);
     } catch (err) {
         if(err instanceof QueryFailedError){

@@ -22,6 +22,8 @@ let Company = class Company {
     employees;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     isActive;
     isDeleted;
     isOwner;
@@ -65,6 +67,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Company.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Company.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Company.prototype, "updatedBy", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)

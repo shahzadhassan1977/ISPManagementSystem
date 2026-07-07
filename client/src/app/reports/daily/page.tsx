@@ -3,6 +3,7 @@
 import PageWrapper from "@/components/ui/PageWrapper";
 import DataTable from "@/components/ui/DataTable";
 import { useCustomers } from "@/modules/customer/hooks/useCustomers";
+import { useExpenses } from "@/modules/expense/hooks/useExpenses";
 import { usePayments } from "@/modules/payment/hooks/usePayments";
 import { useSubscriptions } from "@/modules/subscription/hooks/useSubscription";
 
@@ -27,6 +28,7 @@ export default function DailyReportPage() {
   const { data: customers = [], isLoading: loadingCustomers } = useCustomers();
   const { data: payments = [], isLoading: loadingPayments } = usePayments();
   const { data: subscriptions = [], isLoading: loadingSubscriptions } = useSubscriptions();
+  const { data: expenses = [], isLoading: loadingExpenses } = useExpenses();
 
   const today = new Date();
 
@@ -35,14 +37,19 @@ export default function DailyReportPage() {
   const subscriptionRows = subscriptions.filter(
     (subscription: any) => subscription.isActive && isSameDay(subscription.startDate, today)
   );
+  const expenseRows = expenses.filter((expense: any) => isSameDay(expense.expenseDate || expense.createdAt, today));
 
   const totalRevenue = paymentRows.reduce(
     (sum: number, payment: any) =>
       sum + Number(payment.amount || 0) + Number(payment.otherAmount || 0),
     0
   );
+  const totalExpenses = expenseRows.reduce(
+    (sum: number, expense: any) => sum + Number(expense.amount || 0),
+    0
+  );
 
-  const isLoading = loadingCustomers || loadingPayments || loadingSubscriptions;
+  const isLoading = loadingCustomers || loadingPayments || loadingSubscriptions || loadingExpenses;
 
   const customerColumns = [
     { accessorKey: "name", header: "Customer Name" },
@@ -83,14 +90,26 @@ export default function DailyReportPage() {
     { accessorKey: "status", header: "Status" },
   ];
 
+  const expenseColumns = [
+    { accessorKey: "title", header: "Title" },
+    { accessorKey: "category", header: "Category" },
+    { accessorKey: "status", header: "Status" },
+    { accessorKey: "amount", header: "Amount" },
+    {
+      accessorKey: "expenseDate",
+      header: "Expense Date",
+      cell: ({ row }: any) => formatDate(row.original.expenseDate || row.original.createdAt),
+    },
+  ];
+
   return (
     <PageWrapper
       title="Daily Reports"
-      description="Review today's customer registration, revenue, and subscription activity."
+      description="Review today's customer registration, revenue, expense, and subscription activity."
       pagePermission="reportdaily"
     >
       <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
             <p className="text-sm text-slate-500">New customer registrations</p>
             <p className="mt-4 text-4xl font-semibold">{customerRows.length}</p>
@@ -104,6 +123,11 @@ export default function DailyReportPage() {
           <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
             <p className="text-sm text-slate-500">Active subscriptions</p>
             <p className="mt-4 text-4xl font-semibold">{subscriptionRows.length}</p>
+          </div>
+
+          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
+            <p className="text-sm text-slate-500">Daily expenses</p>
+            <p className="mt-4 text-4xl font-semibold">Rs.{totalExpenses.toFixed(2)}</p>
           </div>
         </div>
 
@@ -121,6 +145,11 @@ export default function DailyReportPage() {
           <div>
             <h2 className="text-xl font-semibold mb-4">Active Subscriptions</h2>
             <DataTable data={subscriptionRows} columns={subscriptionColumns} loading={isLoading} />
+          </div>
+
+          <div>
+            <h2 className="text-xl font-semibold mb-4">Expenses</h2>
+            <DataTable data={expenseRows} columns={expenseColumns} loading={isLoading} />
           </div>
         </div>
       </div>

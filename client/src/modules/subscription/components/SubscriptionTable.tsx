@@ -72,6 +72,12 @@ export default function SubscriptionTable({ onEdit }: any) {
     return employee?.name ?? "N/A";
   };
 
+  const detail = viewData?.subscriptiondetails
+    ? Array.isArray(viewData.subscriptiondetails)
+      ? viewData.subscriptiondetails[0] || {}
+      : viewData.subscriptiondetails
+    : {};
+
   const columns: ColumnDef<Subscription>[] = [
     {
       accessorKey: "customer.name",
@@ -192,137 +198,137 @@ export default function SubscriptionTable({ onEdit }: any) {
               {/* Customer Id */}
               <div>
                 <p className="text-sm text-gray-500">Customer Name</p>
-                <p className="font-semibold">{viewData.customer.name? viewData.customer.name : "N/A"}</p>
+                <p className="font-semibold">{viewData?.customer?.name ? viewData.customer.name : "N/A"}</p>
               </div>
               {/* Product Id */}
               <div>
                 <p className="text-sm text-gray-500">Product Name</p>
-                <p className="font-semibold">{viewData.product.name?viewData.product.name : "N/A"}</p>
+                <p className="font-semibold">{viewData?.product?.name ? viewData.product.name : "N/A"}</p>
               </div>
               {/* Installation Date */}
               <div>
                 <p className="text-sm text-gray-500">Installation Date</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.installationDate? formatDate(viewData.subscriptiondetails.installationDate) : "N/A"}
+                  {detail?.installationDate ? formatDate(detail.installationDate) : "N/A"}
                 </p>
               </div>
               {/* Installation Charges */}
               <div>
                 <p className="text-sm text-gray-500">Installation Charges</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.installationCharges? viewData.subscriptiondetails.installationCharges : "N/A"}
+                  {detail?.installationCharges ? detail.installationCharges : "N/A"}
                 </p>
               </div>
               {/* Wire Charges */}
               <div>
                 <p className="text-sm text-gray-500">Wire Charges</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.wireCharges? viewData.subscriptiondetails.wireCharges : "N/A"}
+                  {detail?.wireCharges ? detail.wireCharges : "N/A"}
                 </p>
               </div>
               {/* Device Charges */}
               <div>
                 <p className="text-sm text-gray-500">Device Charges</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.deviceCharges? viewData.subscriptiondetails.deviceCharges : "N/A"}
+                  {detail?.deviceCharges ? detail.deviceCharges : "N/A"}
                 </p>
               </div>
               {/* Splitter Charges */}
               <div>
                 <p className="text-sm text-gray-500">Splitter Charges</p>
-                <p className="font-semibold">{viewData.subscriptiondetails.splitterCharges? viewData.subscriptiondetails.splitterCharges : "N/A"}</p>
+                <p className="font-semibold">{detail?.splitterCharges ? detail.splitterCharges : "N/A"}</p>
               </div>
               {/* Fee */}
               <div>
                 <p className="text-sm text-gray-500">Fee</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.fee? viewData.subscriptiondetails.fee : "N/A"}
+                  {detail?.fee ? detail.fee : "N/A"}
                 </p>
               </div>
               {/* Other Charges */}
               <div>
                 <p className="text-sm text-gray-500">Other Charges</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.otherCharges? viewData.subscriptiondetails.otherCharges : "N/A"}
+                  {detail?.otherCharges ? detail.otherCharges : "N/A"}
                 </p>
               </div>
               {/* Paid */}
               <div>
                 <p className="text-sm text-gray-500">Paid</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.paid? viewData.subscriptiondetails.paid : "N/A"}
+                  {detail?.paid ? detail.paid : "N/A"}
                 </p>
               </div>
               {/* Remaining Balance */}
               <div>
                 <p className="text-sm text-gray-500">Remaining Balance</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.remainingBalance? viewData.subscriptiondetails.remainingBalance : "N/A"}
+                  {detail?.remainingBalance ? detail.remainingBalance : "N/A"}
                 </p>
               </div>
               {/* Device MAC */}
               <div>
                 <p className="text-sm text-gray-500">Device MAC</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.deviceMac? viewData.subscriptiondetails.deviceMac : "N/A"}
+                  {detail?.deviceMac ? detail.deviceMac : "N/A"}
                 </p>
               </div>
               {/* User ID */}
               <div>
                 <p className="text-sm text-gray-500">User ID</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.userId? viewData.subscriptiondetails.userId : "N/A"}
+                  {detail?.userId ? detail.userId : "N/A"}
                 </p>
               </div>
               {/* Password */}
               <div>
                 <p className="text-sm text-gray-500">Password</p>
-                <p className="font-semibold">{viewData.password? viewData.password : "N/A"}</p>
+                <p className="font-semibold">{detail?.password ? detail.password : "N/A"}</p>
               </div>
               {/* Static IP */}
               <div>
                 <p className="text-sm text-gray-500">Static IP</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.staticIP? viewData.subscriptiondetails.staticIP : "N/A"}
+                  {detail?.staticIP ? detail.staticIP : "N/A"}
                 </p>
               </div>
               {/* OLT */}
               <div>
                 <p className="text-sm text-gray-500">OLT</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.olt? viewData.subscriptiondetails.olt : "N/A"}
+                  {detail?.olt ? detail.olt : "N/A"}
                 </p>
               </div>
               {/* OLT Port */}
               <div>
                 <p className="text-sm text-gray-500">OLT Port</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.oltPort? viewData.subscriptiondetails.oltPort : "N/A"}
+                  {detail?.oltPort ? detail.oltPort : "N/A"}
                 </p>
               </div>
               {/* Splitter */}
               <div>
                 <p className="text-sm text-gray-500">Splitter</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.splitter? viewData.subscriptiondetails.splitter : "N/A"}
+                  {detail?.splitter ? detail.splitter : "N/A"}
                 </p>
               </div>
               {/* Splitter Port */}
               <div>
                 <p className="text-sm text-gray-500">Splitter Port</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.splitterPort? viewData.subscriptiondetails.splitterPort : "N/A"}
+                  {detail?.splitterPort ? detail.splitterPort : "N/A"}
                 </p>
               </div>
               {/* Lineman */}
               <div>
                 <p className="text-sm text-gray-500">Lineman Id</p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.linemanId ? viewData.subscriptiondetails.linemanId : "N/A"}
+                  {detail?.linemanId ? detail.linemanId : "N/A"}
                 </p>
                 <p className="text-sm text-gray-500">Lineman Name</p>
                 <p className="font-semibold">
-                  {getEmployeeName(viewData.subscriptiondetails.linemanId)}
+                  {getEmployeeName(detail?.linemanId)}
                 </p>
               </div>
               {/* Area Recovery Officer */}
@@ -331,11 +337,11 @@ export default function SubscriptionTable({ onEdit }: any) {
                   Area Recovery Officer Id
                 </p>
                 <p className="font-semibold">
-                  {viewData.subscriptiondetails.areaRecoveryOfficerId ? viewData.subscriptiondetails.areaRecoveryOfficerId : "N/A"}
+                  {detail?.areaRecoveryOfficerId ? detail.areaRecoveryOfficerId : "N/A"}
                 </p>
                 <p className="text-sm text-gray-500">Area Recovery Officer Name</p>
                 <p className="font-semibold">
-                  {getEmployeeName(viewData.subscriptiondetails.areaRecoveryOfficerId)}
+                  {getEmployeeName(detail?.areaRecoveryOfficerId)}
                 </p>
               </div>
               {/* Is Active */}

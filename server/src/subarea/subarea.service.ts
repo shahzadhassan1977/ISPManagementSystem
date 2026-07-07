@@ -22,7 +22,12 @@ export class SubareaService {
              area: { areaid: createSubareaDto.areaId } as Area,
              isActive: createSubareaDto.isActive ?? true,
              isDeleted: createSubareaDto.isDeleted ?? false,
+             createdAt: new Date(createSubareaDto.createdAt),
+             updatedAt: new Date(createSubareaDto.updatedAt),
+             createdBy: createSubareaDto.createdBy,
+             updatedBy: createSubareaDto.updatedBy,
            });
+           console.log("subarea --- ",subarea)
        
            return this.subareaRepo.save(subarea);
      }

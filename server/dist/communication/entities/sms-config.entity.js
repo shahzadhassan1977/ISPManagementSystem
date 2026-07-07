@@ -26,6 +26,8 @@ let SmsConfig = class SmsConfig {
     isActive;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.SmsConfig = SmsConfig;
 __decorate([
@@ -84,6 +86,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], SmsConfig.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], SmsConfig.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], SmsConfig.prototype, "updatedBy", void 0);
 exports.SmsConfig = SmsConfig = __decorate([
     (0, typeorm_1.Entity)()
 ], SmsConfig);

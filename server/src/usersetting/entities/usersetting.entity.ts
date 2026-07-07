@@ -26,4 +26,10 @@ export class Usersetting {
     @Column()
     isDeleted!: boolean;
 
+    @Column()
+    createdBy!: number;
+    
+    @Column()
+    updatedBy!: number;
+
 }

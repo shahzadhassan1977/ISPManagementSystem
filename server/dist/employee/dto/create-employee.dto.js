@@ -21,6 +21,10 @@ class CreateEmployeeDto {
     isActive;
     isDeleted;
     companyId;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateEmployeeDto = CreateEmployeeDto;
 __decorate([
@@ -37,7 +41,7 @@ __decorate([
 ], CreateEmployeeDto.prototype, "phone", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateEmployeeDto.prototype, "email", void 0);
@@ -67,4 +71,20 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateEmployeeDto.prototype, "companyId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateEmployeeDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateEmployeeDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateEmployeeDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateEmployeeDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-employee.dto.js.map

@@ -14,4 +14,6 @@ export declare class Customer {
     payments: Payment[];
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

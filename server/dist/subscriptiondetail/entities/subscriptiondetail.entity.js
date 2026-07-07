@@ -37,6 +37,8 @@ let Subscriptiondetail = class Subscriptiondetail {
     areaRecoveryOfficerId;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     isActive;
     isDeleted;
 };
@@ -140,6 +142,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Subscriptiondetail.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Subscriptiondetail.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Subscriptiondetail.prototype, "updatedBy", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)

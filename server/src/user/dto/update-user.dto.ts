@@ -4,14 +4,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-        @ApiProperty()
-        @IsNotEmpty()
-        name?: string;
+        // @ApiProperty()
+        // @IsNotEmpty()
+        // name?: string;
     
-        @ApiProperty()
-        @IsEmail()
-        @IsNotEmpty()
-        email?: string;
+        // @ApiProperty()
+        // @IsEmail()
+        // @IsNotEmpty()
+        // email?: string;
     
         @ApiProperty()
         @IsString()
@@ -19,9 +19,9 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
         @MinLength(6)
         password?: string;
 
-        @ApiProperty()
-        isActive!: boolean;
+        // @ApiProperty()
+        // isActive!: boolean;
     
-        @ApiProperty()
-        isDeleted!: boolean;
+        // @ApiProperty()
+        // isDeleted!: boolean;
 }

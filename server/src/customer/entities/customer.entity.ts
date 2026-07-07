@@ -23,13 +23,13 @@ export class Customer {
   @Column()
   address!: string;
 
-  @Column({ unique: true })
+  @Column({ nullable: true })
   cnic!: string;
 
   @Column({ nullable: true })
   mobile!: string;
 
-  @Column({ unique: true })
+  @Column({ nullable: true })
   email!: string;
 
   @Column()
@@ -49,5 +49,10 @@ export class Customer {
     
   @UpdateDateColumn()
   updatedAt!: Date;
-  
+
+  @Column()
+  createdBy!: number;
+    
+  @Column()
+  updatedBy!: number;
 }

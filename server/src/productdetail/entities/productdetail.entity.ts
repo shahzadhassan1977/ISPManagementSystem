@@ -41,6 +41,12 @@ export class Productdetail {
   updatedAt!: Date;
 
   @Column()
+  createdBy!: number;
+    
+  @Column()
+  updatedBy!: number;
+
+  @Column()
   isActive!: boolean;
   
   @Column()

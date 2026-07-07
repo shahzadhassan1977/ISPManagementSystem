@@ -4,4 +4,8 @@ export declare class CreateUserSettingDto {
     userId: number;
     isActive: boolean;
     isDeleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

@@ -28,9 +28,11 @@ let Payment = class Payment {
     subscription;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     isActive;
     isDeleted;
-    ;
+    paymentMethod;
 };
 exports.Payment = Payment;
 __decorate([
@@ -97,12 +99,24 @@ __decorate([
 ], Payment.prototype, "updatedAt", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Payment.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Payment.prototype, "updatedBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Payment.prototype, "isActive", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Payment.prototype, "isDeleted", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Payment.prototype, "paymentMethod", void 0);
 exports.Payment = Payment = __decorate([
     (0, typeorm_1.Entity)()
 ], Payment);

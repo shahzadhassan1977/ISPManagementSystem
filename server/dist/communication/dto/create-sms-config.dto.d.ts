@@ -10,4 +10,8 @@ export declare class CreateSmsConfigDto {
     smsTemplate?: string;
     whatsappTemplate?: string;
     isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

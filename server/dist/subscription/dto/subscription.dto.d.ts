@@ -28,7 +28,9 @@ export declare class SubscriptionDto {
     subscriptionId: number;
     linemanId: number;
     areaRecoveryOfficerId: number;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
+    createdBy?: number;
+    updatedBy?: number;
     id: number;
 }

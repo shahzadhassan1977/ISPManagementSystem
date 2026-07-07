@@ -26,6 +26,7 @@ const schema = z.object({
   comments: z.string().optional(),
   isActive: z.boolean(),
   isDeleted: z.boolean(),
+  paymentMethod: z.string(),
 });
 
 export default function PaymentFormModal({ open, onClose, data }: any) {
@@ -52,6 +53,7 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
       comments: "",
       isActive: true,
       isDeleted: false,
+      paymentMethod: "",
     },
   });
 
@@ -86,6 +88,7 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
         id: data.id ? data.id : 0,
         isActive: !!data.isActive,
         isDeleted: !!data.isDeleted,
+        paymentMethod: data.paymentMethod ? data.paymentMethod : "",
       });
     }
   }, [data, reset]);
@@ -177,6 +180,16 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
     { value: "InProcess", label: "InProcess" },
   ];
 
+  // 🔥 PAYMENT METHODS OPTIONS
+  const paymentMethodOptions = [
+    { value: "Cash", label: "Cash" },
+    { value: "Bank Transfer", label: "Bank Transfer" },
+    { value: "Credit Card", label: "Credit Card" },
+    { value: "Debit Card", label: "Debit Card" },
+    { value: "JazzCash", label: "JazzCash" },
+    { value: "EasyPaisa", label: "EasyPaisa" },
+  ];
+
   const onSubmit = async (formData: any) => {
     try {
       let Id = data?.id;
@@ -194,6 +207,7 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
         comments: formData.comments,
         isActive: formData.isActive,
         isDeleted: formData.isDeleted,
+        paymentMethod: formData.paymentMethod || "Cash",
       };
 
       // 🔥 CREATE / UPDATE PAYMENT
@@ -457,6 +471,31 @@ export default function PaymentFormModal({ open, onClose, data }: any) {
               {errors.status && (
                 <p className="text-red-500 text-xs mt-1">
                   {errors.status.message as string}
+                </p>
+              )}
+            </div>
+            {/* PAYMENT METHOD */}
+            <div>
+              <label className="text-sm text-gray-500 mb-1 block">Payment Method</label>
+              <Controller
+                name="paymentMethod"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    options={paymentMethodOptions}
+                    value={
+                      paymentMethodOptions.find((o: any) => o.value === field.value) ||
+                      null
+                    }
+                    onChange={(val: any) => field.onChange(val?.value)}
+                    className="text-black"
+                    placeholder="Select payment method..."
+                  />
+                )}
+              />
+              {errors.paymentMethod && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.paymentMethod.message as string}
                 </p>
               )}
             </div>

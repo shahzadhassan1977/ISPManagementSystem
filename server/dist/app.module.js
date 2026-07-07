@@ -22,6 +22,7 @@ const role_module_1 = require("./role/role.module");
 const permission_module_1 = require("./permission/permission.module");
 const api_log_entity_1 = require("./common/entities/api-log.entity");
 const logging_interceptor_1 = require("./common/interceptors/logging.interceptor");
+const audit_fields_interceptor_1 = require("./common/interceptors/audit-fields.interceptor");
 const log_service_1 = require("./common/services/log.service");
 const bullmq_1 = require("@nestjs/bullmq");
 const log_queue_module_1 = require("./common/log-queue.module");
@@ -64,6 +65,7 @@ const portalsetting_controller_1 = require("./portalsetting/portalsetting.contro
 const portalsetting_module_1 = require("./portalsetting/portalsetting.module");
 const communication_module_1 = require("./communication/communication.module");
 const change_log_entity_1 = require("./common/entities/change-log.entity");
+const expenses_module_1 = require("./expenses/expenses.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -107,7 +109,8 @@ exports.AppModule = AppModule = __decorate([
             communication_module_1.CommunicationModule,
             employeesubarea_module_1.EmployeeSubareaModule,
             usersetting_module_1.UsersettingModule,
-            portalsetting_module_1.PortalsettingModule
+            portalsetting_module_1.PortalsettingModule,
+            expenses_module_1.ExpensesModule
         ],
         controllers: [
             app_controller_1.AppController,
@@ -135,6 +138,10 @@ exports.AppModule = AppModule = __decorate([
             {
                 provide: 'APP_INTERCEPTOR',
                 useClass: logging_interceptor_1.LoggingInterceptor,
+            },
+            {
+                provide: 'APP_INTERCEPTOR',
+                useClass: audit_fields_interceptor_1.AuditFieldsInterceptor,
             },
             area_service_1.AreaService,
             subarea_service_1.SubareaService,

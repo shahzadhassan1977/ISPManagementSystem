@@ -6,4 +6,6 @@ export declare class AuthOTP {
     expiresAt: Date;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

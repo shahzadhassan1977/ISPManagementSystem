@@ -53,6 +53,12 @@ export class Employee {
   @UpdateDateColumn()
   updatedAt!: Date;
 
+  @Column({ default: 0 })
+  createdBy!: number;
+    
+  @Column({ default: 0 })
+  updatedBy!: number;
+
   @OneToMany(() => EmployeeSubarea, (esa) => esa.employee)
   employeeSubAreas!: EmployeeSubarea[];
 }

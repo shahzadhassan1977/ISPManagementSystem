@@ -29,6 +29,11 @@ const cards = [
     description: "View payment, purchase price, sale price, and profit by product.",
     href: "/reports/product-wise",
   },
+  {
+    label: "Expenses Report",
+    description: "Review expense activity, totals, and status across the organization.",
+    href: "/reports/expenses",
+  },
 ];
 
 export default function ReportsPage() {

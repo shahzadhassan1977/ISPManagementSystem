@@ -11,4 +11,7 @@ export declare class ApiLog {
     duration?: number;
     errorMessage?: string;
     createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

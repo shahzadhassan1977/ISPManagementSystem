@@ -52,4 +52,10 @@ export class EmailConfig {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @Column()
+  createdBy!: number;
+    
+  @Column()
+  updatedBy!: number;
 }

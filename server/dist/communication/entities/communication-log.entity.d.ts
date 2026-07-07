@@ -11,4 +11,7 @@ export declare class CommunicationLog {
     relatedId?: number;
     payload?: any;
     createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

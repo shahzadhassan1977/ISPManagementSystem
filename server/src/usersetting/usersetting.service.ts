@@ -11,7 +11,12 @@ export class UsersettingService {
   ) {}
 
   create(dto: any) {
-    return this.repo.save(dto);
+    const entity = this.repo.create({
+      ...dto,
+      createdAt: new Date(dto.createdAt),
+      updatedAt: new Date(dto.updatedAt),
+    });
+    return this.repo.save(entity);
   }
 
   findAll() {

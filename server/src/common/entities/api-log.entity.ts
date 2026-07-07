@@ -3,6 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -41,5 +42,14 @@ export class ApiLog {
   errorMessage?: string;
 
   @CreateDateColumn()
-  createdAt!: Date;
+    createdAt!: Date;
+  
+    @UpdateDateColumn()
+    updatedAt!: Date;
+  
+    @Column({ default: 0 })
+    createdBy!: number;
+      
+    @Column({ default: 0 })
+    updatedBy!: number;
 }

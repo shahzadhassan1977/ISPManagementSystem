@@ -31,7 +31,11 @@ export class User {
 
     @UpdateDateColumn()
     updatedAt!: Date;
-    
-      
+
+    @Column()
+    createdBy!: number;
+          
+    @Column()
+    updatedBy!: number;      
 
 }

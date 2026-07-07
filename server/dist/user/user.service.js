@@ -71,8 +71,12 @@ let UserService = class UserService {
             name: createUserDto.name,
             isActive: createUserDto.isActive,
             isDeleted: createUserDto.isDeleted,
-            createdAt: createUserDto.createdAt,
+            createdAt: new Date(createUserDto.createdAt),
+            updatedAt: new Date(createUserDto.updatedAt),
+            createdBy: createUserDto.createdBy,
+            updatedBy: createUserDto.updatedBy,
         });
+        console.log("user ----", user);
         return this.userRepo.save(user);
     }
     async findAll() {
@@ -133,10 +137,6 @@ let UserService = class UserService {
             if (existing && existing.userid !== id) {
                 throw new common_1.BadRequestException('Email already in use');
             }
-            user.email = dto.email;
-            user.name = dto.name;
-            user.isActive = dto.isActive;
-            user.isDeleted = dto.isDeleted;
         }
         if (dto.password) {
             user.password = await bcrypt.hash(dto.password, 10);

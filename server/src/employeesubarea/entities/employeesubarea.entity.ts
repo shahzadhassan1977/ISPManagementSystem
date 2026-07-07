@@ -4,6 +4,9 @@ import {
   ManyToOne,
   JoinColumn,
   Unique,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Column,
 } from 'typeorm';
 import { Employee } from '../../employee/entities/employee.entity';
 import { Subarea } from '../../subarea/entities/subarea.entity';
@@ -13,6 +16,18 @@ import { Subarea } from '../../subarea/entities/subarea.entity';
 export class EmployeeSubarea {
   @PrimaryGeneratedColumn()
   id!: number;
+
+  @CreateDateColumn()
+  createdAt!: Date;
+  
+  @UpdateDateColumn()
+  updatedAt!: Date;
+  
+  @Column({ default: 0 })
+  createdBy!: number;
+      
+  @Column({ default: 0 })
+  updatedBy!: number;
 
   @ManyToOne(() => Employee, {
     onDelete: 'CASCADE',

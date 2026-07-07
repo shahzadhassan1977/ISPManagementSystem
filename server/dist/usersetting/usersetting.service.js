@@ -23,7 +23,12 @@ let UsersettingService = class UsersettingService {
         this.repo = repo;
     }
     create(dto) {
-        return this.repo.save(dto);
+        const entity = this.repo.create({
+            ...dto,
+            createdAt: new Date(dto.createdAt),
+            updatedAt: new Date(dto.updatedAt),
+        });
+        return this.repo.save(entity);
     }
     findAll() {
         return this.repo.find({});

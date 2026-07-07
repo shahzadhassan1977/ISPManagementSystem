@@ -24,6 +24,8 @@ export declare class Subscriptiondetail {
     areaRecoveryOfficerId: number;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
 }

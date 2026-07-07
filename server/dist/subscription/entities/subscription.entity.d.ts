@@ -16,6 +16,8 @@ export declare class Subscription {
     payments: Payment[];
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
 }

@@ -26,7 +26,11 @@ export class AreaService {
       throw new BadRequestException('Area already exists');
     }
 
-    const area = this.areaRepo.create(dto);
+    const area = this.areaRepo.create({
+      ...dto,
+      createdAt: new Date(dto.createdAt),
+      updatedAt: new Date(dto.updatedAt),
+    });
     return this.areaRepo.save(area);
   }
 

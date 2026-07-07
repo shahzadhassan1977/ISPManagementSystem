@@ -9,4 +9,6 @@ export declare class User {
     createdAt: Date;
     userRoles: UserRole[];
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

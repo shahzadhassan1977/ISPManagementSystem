@@ -118,12 +118,22 @@ export class SubscriptionDto {
   areaRecoveryOfficerId!: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsDateString()
-  createdAt!: Date;
+  createdAt?: Date;
 
   @ApiProperty()
+  @IsOptional()
   @IsDateString()
-  updatedAt!: Date;
+  updatedAt?: Date;
+
+  @ApiProperty()
+  @IsOptional()
+  createdBy?: number;
+
+  @ApiProperty()
+  @IsOptional()
+  updatedBy?: number;
 
   @ApiProperty()
   @IsNumber()

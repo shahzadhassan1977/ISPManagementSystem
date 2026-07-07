@@ -9,4 +9,16 @@ export class CreateEmployeeSubareaDto {
   @ApiProperty()
   @IsNumber()
   subareaId!: number;
+
+  @ApiProperty()
+  createdAt!: Date;
+  
+  @ApiProperty()
+  updatedAt!: Date;
+  
+  @ApiProperty()
+  createdBy!: number;
+      
+  @ApiProperty()
+  updatedBy!: number;
 }

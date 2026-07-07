@@ -4,6 +4,8 @@ export declare class Permission {
     name: string;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
     rolePermissions: RolePermission[];

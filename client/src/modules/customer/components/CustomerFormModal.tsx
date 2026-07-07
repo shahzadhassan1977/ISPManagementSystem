@@ -11,11 +11,11 @@ import { is } from "zod/locales";
 
 const schema = z.object({
   name: z.string().min(2, "min legnth > 2"),
-  email: z.string().email("Please enter correct email address"),
+  email: z.string(),
   address: z.string().min(2, "min legnth > 2"),
-  phone: z.string().min(11, "min legnth = 11").max(11, "max legnth = 11"),
-  cnic: z.string().min(14, "min legnth = 14").max(14, "max legnth = 14"),
-  mobile: z.string().min(11, "min legnth = 11").max(11, "max legnth = 11"),
+  phone: z.string(),
+  cnic: z.string(),
+  mobile: z.string(),
   // ✅ FIX HERE
   isActive: z.boolean(),
   isDeleted: z.boolean(),

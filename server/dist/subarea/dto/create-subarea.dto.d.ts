@@ -3,4 +3,8 @@ export declare class CreateSubareaDto {
     areaId: number;
     isActive: boolean;
     isDeleted: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

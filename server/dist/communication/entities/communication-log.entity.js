@@ -24,6 +24,9 @@ let CommunicationLog = class CommunicationLog {
     relatedId;
     payload;
     createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.CommunicationLog = CommunicationLog;
 __decorate([
@@ -74,6 +77,18 @@ __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], CommunicationLog.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], CommunicationLog.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], CommunicationLog.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], CommunicationLog.prototype, "updatedBy", void 0);
 exports.CommunicationLog = CommunicationLog = __decorate([
     (0, typeorm_1.Entity)()
 ], CommunicationLog);

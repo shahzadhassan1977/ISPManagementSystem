@@ -43,4 +43,19 @@ export class CreatePaymentDto {
       
   @ApiProperty()
   isDeleted!: boolean;
+
+  @ApiProperty()
+  createdAt!: Date;
+  
+  @ApiProperty()
+  updatedAt!: Date;
+  
+  @ApiProperty()
+  createdBy!: number;
+      
+  @ApiProperty()
+  updatedBy!: number;
+
+  @ApiProperty()
+  paymentMethod!: string;
 }

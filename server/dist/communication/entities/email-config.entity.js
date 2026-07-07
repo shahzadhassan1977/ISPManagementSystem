@@ -27,6 +27,8 @@ let EmailConfig = class EmailConfig {
     isActive;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.EmailConfig = EmailConfig;
 __decorate([
@@ -89,6 +91,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], EmailConfig.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], EmailConfig.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], EmailConfig.prototype, "updatedBy", void 0);
 exports.EmailConfig = EmailConfig = __decorate([
     (0, typeorm_1.Entity)()
 ], EmailConfig);

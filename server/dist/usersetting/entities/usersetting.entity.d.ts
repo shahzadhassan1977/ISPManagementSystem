@@ -7,4 +7,6 @@ export declare class Usersetting {
     updatedAt: Date;
     isActive: boolean;
     isDeleted: boolean;
+    createdBy: number;
+    updatedBy: number;
 }

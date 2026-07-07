@@ -16,6 +16,12 @@ export class Permission {
   @UpdateDateColumn()
   updatedAt!: Date;
 
+  @Column()
+  createdBy!: number;
+    
+  @Column()
+  updatedBy!: number;
+
   @Column({ default: true })
   isActive!: boolean;
   

@@ -3,7 +3,7 @@ import { Usersetting } from './entities/usersetting.entity';
 export declare class UsersettingService {
     private repo;
     constructor(repo: Repository<Usersetting>);
-    create(dto: any): Promise<any>;
+    create(dto: any): Promise<Usersetting[]>;
     findAll(): Promise<Usersetting[]>;
     findOne(id: number): Promise<Usersetting | null>;
     update(id: number, dto: any): Promise<import("typeorm").UpdateResult>;

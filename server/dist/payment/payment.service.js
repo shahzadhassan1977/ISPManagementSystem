@@ -22,11 +22,16 @@ let PaymentService = class PaymentService {
     constructor(repo) {
         this.repo = repo;
     }
-    create(dto) {
+    async create(dto) {
         const payment = this.repo.create({
             ...dto,
             customer: { customerid: dto.customerId },
             subscription: { subscriptionid: dto.subscriptionId },
+            createdAt: dto.createdAt ? new Date(dto.createdAt) : new Date(),
+            updatedAt: dto.updatedAt ? new Date(dto.updatedAt) : new Date(),
+            createdBy: dto.createdBy ?? 0,
+            updatedBy: dto.updatedBy ?? 0,
+            paymentMethod: dto.paymentMethod ?? dto.paymentMethod ?? 'Cash',
         });
         return this.repo.save(payment);
     }
@@ -51,13 +56,16 @@ let PaymentService = class PaymentService {
             ],
         });
     }
-    update(id, dto) {
+    async update(id, dto) {
         return this.repo.update(id, {
             ...dto,
             customer: dto.customerId ? { customerid: dto.customerId } : undefined,
             subscription: dto.subscriptionId
                 ? { subscriptionid: dto.subscriptionId }
                 : undefined,
+            updatedAt: dto.updatedAt ? new Date(dto.updatedAt) : new Date(),
+            updatedBy: dto.updatedBy ?? 0,
+            paymentMethod: dto.paymentMethod ?? dto.paymentMethod ?? 'Cash',
         });
     }
     remove(id) {

@@ -109,45 +109,48 @@ export default function SubscriptionFormModal({ open, onClose, data }: any) {
   const remainingBalance = watch("remainingBalance");
 
   useEffect(() => {
-    
-    if (data)
+    if (data) {
+      const detail = Array.isArray(data.subscriptiondetails)
+        ? data.subscriptiondetails[0]
+        : data.subscriptiondetails || {};
+
       reset({
         ...data,
-        subscriptionid: data.subscriptionid  ? data.subscriptionid : 0,
+        subscriptionid: data.subscriptionid ? data.subscriptionid : 0,
         startDate: data.startDate ? formatDateForInput(data.startDate) : formatDateForInput(new Date()),
         renewalDate: data.renewalDate ? formatDateForInput(data.renewalDate) : formatDateForInput(new Date()),
-        billingCycle: data.billingCycle? data.billingCycle : "",
+        billingCycle: data.billingCycle ? data.billingCycle : "",
         customerId: data.customerId ? Number(data.customerId) : undefined,
         productId: data.productId ? Number(data.productId) : undefined,
-        deviceCharges: data.subscriptiondetails.deviceCharges ? data.subscriptiondetails.deviceCharges : 0,
-        deviceMac: data.subscriptiondetails.deviceMac? data.subscriptiondetails.deviceMac : "",
-        fee: data.subscriptiondetails.fee? data.subscriptiondetails.fee : 0,
-        installationCharges: data.subscriptiondetails.installationCharges? data.subscriptiondetails.installationCharges : 0,
-        installationDate: data.subscriptiondetails.installationDate ? formatDateForInput(data.subscriptiondetails.installationDate) : formatDateForInput(new Date()),
-        otherCharges: data.subscriptiondetails.otherCharges? data.subscriptiondetails.otherCharges : 0,
-        splitterCharges: data.subscriptiondetails.splitterCharges? data.subscriptiondetails.splitterCharges : 0,
-        remainingBalance: data.subscriptiondetails.remainingBalance? data.subscriptiondetails.remainingBalance : 0,
-        paid: data.subscriptiondetails.paid? data.subscriptiondetails.paid : 0,
-        password: data.subscriptiondetails.password? data.subscriptiondetails.password : "",
-        staticIP: data.subscriptiondetails.staticIP ? data.subscriptiondetails.staticIP : "",
-        olt: data.subscriptiondetails.olt ? data.subscriptiondetails.olt : "",
-        oltPort: data.subscriptiondetails.oltPort ? data.subscriptiondetails.oltPort : "",
-        splitter: data.subscriptiondetails.splitter ? data.subscriptiondetails.splitter : "",
-        splitterPort: data.subscriptiondetails.splitterPort ? data.subscriptiondetails.splitterPort : "",
-        subscriptionId: data.subscriptiondetails.subscriptionId ? data.subscriptiondetails.subscriptionId : 0,
-        id: data.subscriptiondetails.id ? data.subscriptiondetails.id : 0,
-        userId: data.subscriptiondetails.userId ? data.subscriptiondetails.userId : "",
-        wireCharges: data.subscriptiondetails.wireCharges? data.subscriptiondetails.wireCharges : 0,
-        linemanId: data.subscriptiondetails.linemanId ? Number(data.subscriptiondetails.linemanId) : undefined,
-        areaRecoveryOfficerId: data.subscriptiondetails.areaRecoveryOfficerId ? Number(data.subscriptiondetails.areaRecoveryOfficerId) : undefined,
+        deviceCharges: detail.deviceCharges ? detail.deviceCharges : 0,
+        deviceMac: detail.deviceMac ? detail.deviceMac : "",
+        fee: detail.fee ? detail.fee : 0,
+        installationCharges: detail.installationCharges ? detail.installationCharges : 0,
+        installationDate: detail.installationDate ? formatDateForInput(detail.installationDate) : formatDateForInput(new Date()),
+        otherCharges: detail.otherCharges ? detail.otherCharges : 0,
+        splitterCharges: detail.splitterCharges ? detail.splitterCharges : 0,
+        remainingBalance: detail.remainingBalance ? detail.remainingBalance : 0,
+        paid: detail.paid ? detail.paid : 0,
+        password: detail.password ? detail.password : "",
+        staticIP: detail.staticIP ? detail.staticIP : "",
+        olt: detail.olt ? detail.olt : "",
+        oltPort: detail.oltPort ? detail.oltPort : "",
+        splitter: detail.splitter ? detail.splitter : "",
+        splitterPort: detail.splitterPort ? detail.splitterPort : "",
+        subscriptionId: detail.subscriptionId ? detail.subscriptionId : 0,
+        id: detail.id ? detail.id : 0,
+        userId: detail.userId ? detail.userId : "",
+        linemanId: detail.linemanId ? Number(detail.linemanId) : undefined,
+        areaRecoveryOfficerId: detail.areaRecoveryOfficerId ? Number(detail.areaRecoveryOfficerId) : undefined,
         isActive: !!data.isActive,
         isDeleted: !!data.isDeleted,
-        createdAt: data.createdAt ?  new Date(data.createdAt) : new Date(),
+        createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
         updatedAt: data.updatedAt ? new Date(data.updatedAt) : new Date(),
       });
+    }
   }, [
     data,
-    reset,    
+    reset,
   ]);
 
   useEffect(() => {

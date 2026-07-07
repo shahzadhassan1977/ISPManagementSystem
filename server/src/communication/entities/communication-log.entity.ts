@@ -3,6 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -42,4 +43,13 @@ export class CommunicationLog {
 
   @CreateDateColumn()
   createdAt!: Date;
+  
+  @UpdateDateColumn()
+  updatedAt!: Date;
+  
+  @Column()
+  createdBy!: number;
+      
+  @Column()
+  updatedBy!: number;
 }

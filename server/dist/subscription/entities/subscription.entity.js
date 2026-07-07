@@ -29,6 +29,8 @@ let Subscription = class Subscription {
     payments;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     isActive;
     isDeleted;
 };
@@ -38,19 +40,19 @@ __decorate([
     __metadata("design:type", Number)
 ], Subscription.prototype, "subscriptionid", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'timestamp' }),
+    (0, typeorm_1.Column)({ type: 'timestamp', nullable: true }),
     __metadata("design:type", Date)
 ], Subscription.prototype, "startDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'timestamp' }),
+    (0, typeorm_1.Column)({ type: 'timestamp', nullable: true }),
     __metadata("design:type", Date)
 ], Subscription.prototype, "renewalDate", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Subscription.prototype, "billingCycle", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Subscription.prototype, "status", void 0);
 __decorate([
@@ -92,11 +94,19 @@ __decorate([
     __metadata("design:type", Date)
 ], Subscription.prototype, "updatedAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Subscription.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Subscription.prototype, "updatedBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], Subscription.prototype, "isActive", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Boolean)
 ], Subscription.prototype, "isDeleted", void 0);
 exports.Subscription = Subscription = __decorate([

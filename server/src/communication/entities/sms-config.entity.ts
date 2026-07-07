@@ -49,4 +49,10 @@ export class SmsConfig {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @Column()
+  createdBy!: number;
+    
+  @Column()
+  updatedBy!: number;
 }

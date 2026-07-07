@@ -24,6 +24,11 @@ class CreatePaymentDto {
     subscriptionId;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
+    paymentMethod;
 }
 exports.CreatePaymentDto = CreatePaymentDto;
 __decorate([
@@ -79,4 +84,24 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreatePaymentDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreatePaymentDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreatePaymentDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreatePaymentDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreatePaymentDto.prototype, "updatedBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", String)
+], CreatePaymentDto.prototype, "paymentMethod", void 0);
 //# sourceMappingURL=create-payment.dto.js.map

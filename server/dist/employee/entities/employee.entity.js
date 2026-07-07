@@ -26,6 +26,8 @@ let Employee = class Employee {
     company;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
     employeeSubAreas;
 };
 exports.Employee = Employee;
@@ -80,6 +82,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Employee.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], Employee.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], Employee.prototype, "updatedBy", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => employeesubarea_entity_1.EmployeeSubarea, (esa) => esa.employee),
     __metadata("design:type", Array)

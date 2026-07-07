@@ -3,8 +3,9 @@ import { IsNumber, IsString, IsDateString, IsOptional } from 'class-validator';
 
 export class CreateSubscriptiondetailDto {
   @ApiProperty()
+  @IsOptional()
   @IsDateString()
-  installationDate!: Date;
+  installationDate?: Date;
 
   @ApiProperty()
   @IsNumber()
@@ -15,40 +16,49 @@ export class CreateSubscriptiondetailDto {
   wireCharges!: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
-  deviceCharges!: number;
+  deviceCharges?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
-  splitterCharges!: number;
+  splitterCharges?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
-  fee!: number;
+  fee?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
-  otherCharges!: number;
+  otherCharges?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
-  paid!: number;
+  paid?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsNumber()
-  remainingBalance!: number;
+  remainingBalance?: number;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  deviceMac!: string;
+  deviceMac?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  userId!: string;
+  userId?: string;
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  password!: string;
+  password?: string;
 
   @ApiProperty()
   @IsOptional()
@@ -84,8 +94,26 @@ export class CreateSubscriptiondetailDto {
   areaRecoveryOfficerId!: number;
 
   @ApiProperty()
-  isActive!: boolean;
+  @IsOptional()
+  isActive?: boolean;
       
   @ApiProperty()
-  isDeleted!: boolean;
+  @IsOptional()
+  isDeleted?: boolean;
+
+  @ApiProperty()
+  @IsOptional()
+  createdAt?: Date;
+  
+  @ApiProperty()
+  @IsOptional()
+  updatedAt?: Date;
+  
+  @ApiProperty()
+  @IsOptional()
+  createdBy?: number;
+      
+  @ApiProperty()
+  @IsOptional()
+  updatedBy?: number;
 }

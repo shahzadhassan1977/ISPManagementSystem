@@ -13,7 +13,12 @@ export class ProductService {
   ) {}
 
   create(dto: CreateProductDto) {
-    const product = this.repo.create(dto);
+    const product = this.repo.create({
+      ...dto,
+      createdAt: new Date(dto.createdAt),
+      updatedAt: new Date(dto.updatedAt),
+    });
+    console.log("product --- ",product);
     return this.repo.save(product);
   }
 

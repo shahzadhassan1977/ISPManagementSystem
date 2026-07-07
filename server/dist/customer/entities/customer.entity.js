@@ -27,6 +27,8 @@ let Customer = class Customer {
     payments;
     createdAt;
     updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.Customer = Customer;
 __decorate([
@@ -46,7 +48,7 @@ __decorate([
     __metadata("design:type", String)
 ], Customer.prototype, "address", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Customer.prototype, "cnic", void 0);
 __decorate([
@@ -54,7 +56,7 @@ __decorate([
     __metadata("design:type", String)
 ], Customer.prototype, "mobile", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Customer.prototype, "email", void 0);
 __decorate([
@@ -81,6 +83,14 @@ __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
 ], Customer.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Customer.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Customer.prototype, "updatedBy", void 0);
 exports.Customer = Customer = __decorate([
     (0, typeorm_1.Entity)()
 ], Customer);

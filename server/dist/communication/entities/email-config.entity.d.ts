@@ -14,4 +14,6 @@ export declare class EmailConfig {
     isActive: boolean;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

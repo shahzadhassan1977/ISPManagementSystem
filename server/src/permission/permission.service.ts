@@ -18,6 +18,8 @@ export class PermissionService {
                 name: createPermissionDto.name,
                 isActive: createPermissionDto.isActive ?? true,
                 isDeleted: createPermissionDto.isDeleted ?? false,
+                createdAt: new Date(createPermissionDto.createdAt),
+                updatedAt: new Date(createPermissionDto.updatedAt),
               });
           
               return this.permissionRepo.save(permission);

@@ -14,4 +14,6 @@ export declare class PaymentNotification {
     sentAt?: Date;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
 }

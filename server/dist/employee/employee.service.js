@@ -29,6 +29,7 @@ let EmployeeService = class EmployeeService {
         this.employeeSubareaRepo = employeeSubareaRepo;
     }
     async create(createEmployeeDto) {
+        const companyId = createEmployeeDto.companyId ?? createEmployeeDto.companyid;
         const emp = this.employeeRepo.create({
             email: createEmployeeDto.email,
             name: createEmployeeDto.name,
@@ -37,8 +38,14 @@ let EmployeeService = class EmployeeService {
             designation: createEmployeeDto.designation,
             isActive: createEmployeeDto.isActive,
             isDeleted: createEmployeeDto.isDeleted,
-            company: { companyid: createEmployeeDto.companyId },
+            company: companyId ? { companyid: companyId } : undefined,
+            companyId,
+            createdAt: createEmployeeDto.createdAt ? new Date(createEmployeeDto.createdAt) : new Date(),
+            updatedAt: createEmployeeDto.updatedAt ? new Date(createEmployeeDto.updatedAt) : new Date(),
+            createdBy: createEmployeeDto.createdBy ?? 0,
+            updatedBy: createEmployeeDto.updatedBy ?? 0,
         });
+        console.log("emp ---", emp);
         return this.employeeRepo.save(emp);
     }
     async findAll() {
@@ -141,6 +148,8 @@ let EmployeeService = class EmployeeService {
         const employeeSubarea = this.employeeSubareaRepo.create({
             employee,
             subarea,
+            createdBy: 0,
+            updatedBy: 0,
         });
         const exists = await this.employeeSubareaRepo.findOne({
             where: {
@@ -168,6 +177,8 @@ let EmployeeService = class EmployeeService {
         const employeeSubareas = subareas.map((subarea) => this.employeeSubareaRepo.create({
             employee,
             subarea,
+            createdBy: 0,
+            updatedBy: 0,
         }));
         return await this.employeeSubareaRepo.save(employeeSubareas);
     }

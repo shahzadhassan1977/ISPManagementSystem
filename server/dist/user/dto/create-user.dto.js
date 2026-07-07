@@ -19,6 +19,9 @@ class CreateUserDto {
     isActive;
     isDeleted;
     createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([
@@ -51,4 +54,16 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Date)
 ], CreateUserDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateUserDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateUserDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateUserDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-user.dto.js.map

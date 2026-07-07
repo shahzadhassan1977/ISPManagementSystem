@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateSubscriptionDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_validator_1 = require("class-validator");
 class CreateSubscriptionDto {
     customerId;
     productId;
@@ -21,36 +20,34 @@ class CreateSubscriptionDto {
     status;
     isActive;
     isDeleted;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateSubscriptionDto = CreateSubscriptionDto;
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptionDto.prototype, "customerId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateSubscriptionDto.prototype, "productId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], CreateSubscriptionDto.prototype, "startDate", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], CreateSubscriptionDto.prototype, "renewalDate", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateSubscriptionDto.prototype, "billingCycle", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateSubscriptionDto.prototype, "status", void 0);
 __decorate([
@@ -61,4 +58,20 @@ __decorate([
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Boolean)
 ], CreateSubscriptionDto.prototype, "isDeleted", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateSubscriptionDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateSubscriptionDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateSubscriptionDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateSubscriptionDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-subscription.dto.js.map

@@ -13,6 +13,7 @@ import { RoleModule } from './role/role.module';
 import { PermissionModule } from './permission/permission.module';
 import { ApiLog } from './common/entities/api-log.entity';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { AuditFieldsInterceptor } from './common/interceptors/audit-fields.interceptor';
 import { LogService } from './common/services/log.service';
 import { BullModule } from '@nestjs/bullmq';
 import { LogQueueModule } from './common/log-queue.module';
@@ -55,6 +56,7 @@ import { PortalsettingController } from './portalsetting/portalsetting.controlle
 import { PortalsettingModule } from './portalsetting/portalsetting.module';
 import { CommunicationModule } from './communication/communication.module';
 import { ChangeLog } from './common/entities/change-log.entity';
+import { ExpensesModule } from './expenses/expenses.module';
 
 
 
@@ -97,7 +99,8 @@ import { ChangeLog } from './common/entities/change-log.entity';
     CommunicationModule,
     EmployeeSubareaModule,
     UsersettingModule,
-    PortalsettingModule
+    PortalsettingModule,
+    ExpensesModule
     ],
   controllers: [
     AppController,
@@ -125,6 +128,10 @@ import { ChangeLog } from './common/entities/change-log.entity';
     {
     provide: 'APP_INTERCEPTOR',
     useClass: LoggingInterceptor,
+    },
+    {
+      provide: 'APP_INTERCEPTOR',
+      useClass: AuditFieldsInterceptor,
     },
     AreaService,
     SubareaService,

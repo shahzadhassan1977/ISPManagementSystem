@@ -17,7 +17,13 @@ export class SubscriptionService {
       ...dto,
       customer: { customerid: dto.customerId },
       product: { productid: dto.productId },
+      createdAt: dto.createdAt,
+      updatedAt: dto.updatedAt,
+      createdBy: dto.createdBy,
+      updatedBy: dto.updatedBy,
     });
+
+    console.log("entity ---",entity);
 
     return this.repo.save(entity);
   }

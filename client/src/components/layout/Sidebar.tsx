@@ -36,6 +36,7 @@ export default function Sidebar() {
   const showProduct = canAccessPage(user, "/product");
   const showSubscription = canAccessPage(user, "/subscription");
   const showPayment = canAccessPage(user, "/payment");
+  const showExpense = canAccessPage(user, "/expense");
   const showRepCustomerInvoice = canAccessPage(user, "/repCustomerInvoice");
   const showReportsHome = canAccessPage(user, "/reports");
   const showDailyReports = canAccessPage(user, "/reports/daily");
@@ -43,6 +44,7 @@ export default function Sidebar() {
   const showYearlyReports = canAccessPage(user, "/reports/yearly");
   const showEmployeeWiseReports = canAccessPage(user, "/reports/employee-wise");
   const showProductWiseReports = canAccessPage(user, "/reports/product-wise");
+  const showExpenseReports = canAccessPage(user, "/reports/expenses");
   const showSetting = canAccessPage(user, "/setting");
 
   const showAdminSection =
@@ -55,7 +57,7 @@ export default function Sidebar() {
     showSubarea;
 
   const showSalesSection =
-    showCustomer || showProduct || showSubscription || showPayment;
+    showCustomer || showProduct || showSubscription || showPayment || showExpense;
 
   const showReportsSection =
     showRepCustomerInvoice ||
@@ -64,7 +66,8 @@ export default function Sidebar() {
     showMonthlyReports ||
     showYearlyReports ||
     showEmployeeWiseReports ||
-    showProductWiseReports;
+    showProductWiseReports ||
+    showExpenseReports;
 
   return (
     <aside className="w-64 bg-slate-900 text-white h-full">
@@ -210,6 +213,14 @@ export default function Sidebar() {
                     Payments & Billing
                   </Link>
                 )}
+                {showExpense && (
+                  <Link
+                    href="/expense"
+                    className="block p-2 hover:bg-white/10 rounded"
+                  >
+                    Expenses
+                  </Link>
+                )}
               </div>
             )}
           </div>
@@ -275,7 +286,7 @@ export default function Sidebar() {
                     href="/reports/employee-wise"
                     className="block p-2 hover:bg-white/10 rounded"
                   >
-                    Employee Wise Report
+                    Employee Report
                   </Link>
                 )}
                 {showProductWiseReports && (
@@ -283,7 +294,15 @@ export default function Sidebar() {
                     href="/reports/product-wise"
                     className="block p-2 hover:bg-white/10 rounded"
                   >
-                    Product Wise Report
+                    Product Report
+                  </Link>
+                )}
+                {showExpenseReports && (
+                  <Link
+                    href="/reports/expenses"
+                    className="block p-2 hover:bg-white/10 rounded"
+                  >
+                    Expense Report
                   </Link>
                 )}
               </div>

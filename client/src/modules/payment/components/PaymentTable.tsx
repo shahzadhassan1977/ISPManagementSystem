@@ -76,7 +76,8 @@ export default function PaymentTable({ onEdit }: any) {
     doc.text(`Subscription: ${payment.subscription?.product?.name || "N/A"}`, 20, 100);
     doc.text(`Amount: ${payment.amount ?? "0"}`, 20, 108);
     doc.text(`Other Amount: ${payment.otherAmount ?? "0"}`, 20, 116);
-    doc.text(`Comments: ${payment.comments || "-"}`, 20, 124);
+    doc.text(`Payment Method: ${payment.paymentMethod || "N/A"}`, 20, 124);
+    doc.text(`Comments: ${payment.comments || "-"}`, 20, 132);
 
     doc.save(`invoice-${payment.invoiceNumber ?? payment.id}.pdf`);
   };
@@ -211,6 +212,12 @@ console.log("table data ----", data);
                 <div>
                     <p className="text-sm text-gray-500">Other Amount</p>
                     <p className="font-semibold">{viewData.otherAmount}</p>
+                </div>
+
+                {/* PAYMENT METHOD */}
+                <div>
+                    <p className="text-sm text-gray-500">Payment Method</p>
+                    <p className="font-semibold">{viewData.paymentMethod}</p>
                 </div>
                 
                 {/* BILLING MONTH */}

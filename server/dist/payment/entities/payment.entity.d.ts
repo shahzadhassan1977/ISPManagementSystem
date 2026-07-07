@@ -15,6 +15,9 @@ export declare class Payment {
     subscription: Subscription;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
+    paymentMethod: string;
 }

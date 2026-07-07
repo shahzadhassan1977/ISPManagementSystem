@@ -9,6 +9,8 @@ export declare class Company {
     employees: Employee[];
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
     isOwner: boolean;

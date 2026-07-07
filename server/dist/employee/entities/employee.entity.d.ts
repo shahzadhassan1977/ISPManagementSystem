@@ -13,5 +13,7 @@ export declare class Employee {
     company: Company;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     employeeSubAreas: EmployeeSubarea[];
 }

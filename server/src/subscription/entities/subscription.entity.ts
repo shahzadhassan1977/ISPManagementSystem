@@ -19,17 +19,17 @@ export class Subscription {
   subscriptionid!: number;
 
   // ✅ Dates
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   startDate!: Date;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true })
   renewalDate!: Date;
 
   // ✅ Billing
-  @Column()
+  @Column({ nullable: true })
   billingCycle!: string; // Monthly / Weekly
 
-  @Column()
+  @Column({ nullable: true })
   status!: string; // Active / Suspended / Cancelled
 
   // ✅ FK columns
@@ -64,9 +64,15 @@ export class Subscription {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Column()
+  @Column({ nullable: true })
+  createdBy!: number;
+    
+  @Column({ nullable: true })
+  updatedBy!: number;
+
+  @Column({ nullable: true })
   isActive!: boolean;
   
-  @Column()
+  @Column({ nullable: true })
   isDeleted!: boolean;
 }

@@ -54,4 +54,16 @@ export class CreateEmailConfigDto {
   @ApiProperty({ default: true })
   @IsBoolean()
   isActive!: boolean;
+
+  @ApiProperty()
+  createdAt!: Date;
+  
+  @ApiProperty()
+  updatedAt!: Date;
+  
+  @ApiProperty()
+  createdBy!: number;
+      
+  @ApiProperty()
+  updatedBy!: number;
 }

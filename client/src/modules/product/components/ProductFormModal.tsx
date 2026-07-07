@@ -4,11 +4,11 @@ import Modal from "@/components/ui/Modal";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useCreateProduct, useUpdateProduct, useCreateProductDetail } from "../hooks/useProducts";
+import { useCreateProduct, useUpdateProduct, useCreateProductDetail, useUpdateProductDetail } from "../hooks/useProducts";
 import { useCompanies } from "@/modules/company/hooks/useCompany";
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { is } from "zod/locales";
+// removed unused import
 import Select from "react-select";
 
 const schema = z.object({
@@ -17,7 +17,7 @@ const schema = z.object({
   purchasePrice: z.coerce.number().min(1),
   package: z.string().min(1, "Package is required"),
   bandwidth: z.string().min(1, "Bandwidth is required"),
-  companyid: z.number(), 
+  companyid: z.number().optional(), 
   // ✅ FIX HERE
   isActive: z.boolean(),
   isDeleted: z.boolean(),
@@ -58,11 +58,14 @@ export default function ProductFormModal({ open, onClose, data }: any) {
 
         companyid: data.companyid
           ? Number(data.companyid)
+          : data?.productdetails?.[0]?.companyId
+          ? Number(data.productdetails[0].companyId)
           : undefined,
 
-        package: data?.productDetail?.package || "",
+          // productdetails is an array on the API; pick the first detail when editing
+          package: data?.productdetails?.[0]?.package || "",
 
-        bandwidth: data?.productDetail?.bandwidth || "",
+          bandwidth: data?.productdetails?.[0]?.bandwidth || "",
 
         isActive: !!data.isActive,
 
@@ -77,6 +80,7 @@ export default function ProductFormModal({ open, onClose, data }: any) {
   const { mutateAsync: updateProduct } = useUpdateProduct();
   const { data: companies = [] } = useCompanies();
   const { mutateAsync: createProductDetail } =  useCreateProductDetail();
+  const { mutateAsync: updateProductDetail } = useUpdateProductDetail();
 
    // 🔥 COMPANY OPTIONS
   const companyOptions = companies.map((c: any) => ({
@@ -115,14 +119,21 @@ export default function ProductFormModal({ open, onClose, data }: any) {
 
       // 🔥 PRODUCT DETAIL PAYLOAD
       const detailPayload = {
-        productid: productId,
+        productId: productId as number,
         companyId: formData.companyid,
         package: formData.package,
         bandwidth: formData.bandwidth,
+        isActive: formData.isActive,
+        isDeleted: formData.isDeleted,
       };
 
-      // 🔥 STORE PRODUCT DETAIL
-      await createProductDetail(detailPayload);
+      // 🔥 STORE / UPDATE PRODUCT DETAIL
+      const existingDetailId = data?.productdetails?.[0]?.id;
+      if (existingDetailId) {
+        await updateProductDetail({ id: existingDetailId, data: detailPayload });
+      } else {
+        await createProductDetail(detailPayload);
+      }
 
       toast.success(
         data?.productid

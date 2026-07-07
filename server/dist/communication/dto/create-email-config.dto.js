@@ -25,6 +25,10 @@ class CreateEmailConfigDto {
     subjectTemplate;
     bodyTemplate;
     isActive;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateEmailConfigDto = CreateEmailConfigDto;
 __decorate([
@@ -92,4 +96,20 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], CreateEmailConfigDto.prototype, "isActive", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateEmailConfigDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateEmailConfigDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateEmailConfigDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateEmailConfigDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-email-config.dto.js.map

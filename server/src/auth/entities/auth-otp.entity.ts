@@ -30,4 +30,10 @@ export class AuthOTP {
     @Column()
     updatedAt!: Date;
 
+    @Column()
+    createdBy!: number;
+    
+    @Column()
+    updatedBy!: number;
+
 }

@@ -5,6 +5,8 @@ export declare class Role {
     name: string;
     createdAt: Date;
     updatedAt: Date;
+    createdBy: number;
+    updatedBy: number;
     isActive: boolean;
     isDeleted: boolean;
     userRoles: UserRole[];

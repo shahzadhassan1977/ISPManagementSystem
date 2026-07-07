@@ -19,6 +19,10 @@ let ChangeLog = class ChangeLog {
     old_value;
     new_value;
     changed_at;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 };
 exports.ChangeLog = ChangeLog;
 __decorate([
@@ -49,6 +53,22 @@ __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], ChangeLog.prototype, "changed_at", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], ChangeLog.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], ChangeLog.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], ChangeLog.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], ChangeLog.prototype, "updatedBy", void 0);
 exports.ChangeLog = ChangeLog = __decorate([
     (0, typeorm_1.Entity)()
 ], ChangeLog);

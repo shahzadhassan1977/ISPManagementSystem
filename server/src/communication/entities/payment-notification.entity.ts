@@ -52,4 +52,10 @@ export class PaymentNotification {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @Column()
+  createdBy!: number;
+    
+  @Column()
+  updatedBy!: number;
 }

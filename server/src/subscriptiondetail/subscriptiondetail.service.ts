@@ -16,7 +16,11 @@ export class SubscriptiondetailService {
     const entity = this.repo.create({
       ...dto,
       subscription: { subscriptionid: dto.subscriptionId },
+      createdBy: dto.createdBy ?? 0,
+      updatedBy: dto.updatedBy ?? 0,
     });
+
+    console.log("entity --- ", entity);
 
     return this.repo.save(entity);
   }
@@ -40,6 +44,7 @@ export class SubscriptiondetailService {
       subscription: dto.subscriptionId
         ? { subscriptionid: dto.subscriptionId }
         : undefined,
+      updatedBy: dto.updatedBy ?? 0,
     });
   }
 

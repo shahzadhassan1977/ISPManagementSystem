@@ -15,6 +15,10 @@ const employee_entity_1 = require("../../employee/entities/employee.entity");
 const subarea_entity_1 = require("../../subarea/entities/subarea.entity");
 let EmployeeSubarea = class EmployeeSubarea {
     id;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
     employee;
     subarea;
 };
@@ -23,6 +27,22 @@ __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
 ], EmployeeSubarea.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], EmployeeSubarea.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], EmployeeSubarea.prototype, "updatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], EmployeeSubarea.prototype, "createdBy", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 0 }),
+    __metadata("design:type", Number)
+], EmployeeSubarea.prototype, "updatedBy", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => employee_entity_1.Employee, {
         onDelete: 'CASCADE',

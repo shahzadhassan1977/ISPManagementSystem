@@ -15,6 +15,10 @@ const class_validator_1 = require("class-validator");
 class CreateEmployeeSubareaDto {
     employeeId;
     subareaId;
+    createdAt;
+    updatedAt;
+    createdBy;
+    updatedBy;
 }
 exports.CreateEmployeeSubareaDto = CreateEmployeeSubareaDto;
 __decorate([
@@ -27,4 +31,20 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateEmployeeSubareaDto.prototype, "subareaId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateEmployeeSubareaDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Date)
+], CreateEmployeeSubareaDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateEmployeeSubareaDto.prototype, "createdBy", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", Number)
+], CreateEmployeeSubareaDto.prototype, "updatedBy", void 0);
 //# sourceMappingURL=create-employeesubarea.dto.js.map

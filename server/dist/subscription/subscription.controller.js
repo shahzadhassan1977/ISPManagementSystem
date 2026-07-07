@@ -38,6 +38,8 @@ let SubscriptionController = class SubscriptionController {
         subscriptionDto.status = dto.status;
         subscriptionDto.isActive = dto.isActive;
         subscriptionDto.isDeleted = dto.isDeleted;
+        subscriptionDto.createdBy = dto.createdBy;
+        subscriptionDto.updatedBy = dto.updatedBy;
         const result = await this.service.create(subscriptionDto);
         const subscriptiondetailDto = new create_subscriptiondetail_dto_1.CreateSubscriptiondetailDto();
         subscriptiondetailDto.installationDate = new Date(dto.installationDate);
@@ -62,21 +64,15 @@ let SubscriptionController = class SubscriptionController {
         subscriptiondetailDto.areaRecoveryOfficerId = dto.areaRecoveryOfficerId;
         subscriptiondetailDto.isActive = dto.isActive;
         subscriptiondetailDto.isDeleted = dto.isDeleted;
+        subscriptiondetailDto.createdBy = dto.createdBy;
+        subscriptiondetailDto.updatedBy = dto.updatedBy;
         const subscriptionDetail = await this.SubscriptiondetailService.create(subscriptiondetailDto);
         console.log("Created subscription detail:", subscriptionDetail);
         console.log("Subscription creation result:", result);
         return result;
     }
     async findAll() {
-        const result = await this.service.findAll();
-        const subscriptions = await Promise.all(result.map(async (subscription) => {
-            const subscriptionDetails = await this.SubscriptiondetailService.findOne(subscription.subscriptionid);
-            return {
-                ...subscription,
-                subscriptiondetails: subscriptionDetails || null,
-            };
-        }));
-        return subscriptions;
+        return this.service.findAll();
     }
     findAllByCustomer(customerId) {
         if (customerId)
@@ -124,6 +120,8 @@ let SubscriptionController = class SubscriptionController {
         subscriptiondetailDto.areaRecoveryOfficerId = dto.areaRecoveryOfficerId;
         subscriptiondetailDto.isActive = dto.isActive;
         subscriptiondetailDto.isDeleted = dto.isDeleted;
+        subscriptiondetailDto.createdBy = dto.createdBy;
+        subscriptiondetailDto.updatedBy = dto.updatedBy;
         const subscriptionDetail = await this.SubscriptiondetailService.update(subscriptiondetailDto.id, subscriptiondetailDto);
         return "Update successful";
     }

@@ -26,6 +26,8 @@ export class EmployeeSubareaService {
     const entity = this.repo.create({
       employee: { employeeid: dto.employeeId },
       subarea: { subareaid: dto.subareaId },
+      createdAt: new Date(dto.createdAt),
+      updatedAt: new Date(dto.updatedAt),
     });
 
     return this.repo.save(entity);

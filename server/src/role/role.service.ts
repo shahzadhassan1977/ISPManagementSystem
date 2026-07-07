@@ -27,6 +27,8 @@ export class RoleService {
             name: createRoleDto.name,
             isActive: createRoleDto.isActive ?? true,
             isDeleted: createRoleDto.isDeleted ?? false,
+            createdAt: new Date(createRoleDto.createdAt),
+            updatedAt: new Date(createRoleDto.updatedAt),
           });
       
           return this.roleRepo.save(role);

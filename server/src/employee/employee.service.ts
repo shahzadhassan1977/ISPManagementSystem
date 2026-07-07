@@ -25,7 +25,8 @@ export class EmployeeService {
   
 
   async create(createEmployeeDto: CreateEmployeeDto) {
-    //console.log('Received DTO:', createEmployeeDto); // Debug log
+    const companyId = createEmployeeDto.companyId ?? (createEmployeeDto as any).companyid;
+
     const emp = this.employeeRepo.create({
       email: createEmployeeDto.email,
       name: createEmployeeDto.name,
@@ -34,9 +35,14 @@ export class EmployeeService {
       designation: createEmployeeDto.designation,
       isActive: createEmployeeDto.isActive,
       isDeleted: createEmployeeDto.isDeleted,
-      company: { companyid: createEmployeeDto.companyId },
+      company: companyId ? { companyid: companyId } : undefined,
+      companyId,
+      createdAt: createEmployeeDto.createdAt ? new Date(createEmployeeDto.createdAt) : new Date(),
+      updatedAt: createEmployeeDto.updatedAt ? new Date(createEmployeeDto.updatedAt) : new Date(),
+      createdBy: createEmployeeDto.createdBy ?? 0,
+      updatedBy: createEmployeeDto.updatedBy ?? 0,
     });
-
+    console.log("emp ---",emp);
     return this.employeeRepo.save(emp);
   }
 
@@ -163,6 +169,8 @@ export class EmployeeService {
     const employeeSubarea = this.employeeSubareaRepo.create({
       employee,
       subarea,
+      createdBy: 0,
+      updatedBy: 0,
     });
 
     const exists = await this.employeeSubareaRepo.findOne({
@@ -202,6 +210,8 @@ export class EmployeeService {
       this.employeeSubareaRepo.create({
         employee,
         subarea,
+        createdBy: 0,
+        updatedBy: 0,
       }),
     );
 

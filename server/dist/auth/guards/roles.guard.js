@@ -29,7 +29,9 @@ let RolesGuard = class RolesGuard {
         const userRoles = Array.isArray(user.roles)
             ? user.roles
             : [];
-        return requiredRoles.some((role) => userRoles.includes(role));
+        return requiredRoles.some((role) => userRoles
+            .map((userRole) => userRole.toString().trim().toLowerCase())
+            .includes(role.toString().trim().toLowerCase()));
     }
 };
 exports.RolesGuard = RolesGuard;

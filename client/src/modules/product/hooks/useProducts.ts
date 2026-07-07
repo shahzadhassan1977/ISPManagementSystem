@@ -68,3 +68,14 @@ export const useProductBySearch = (term: string) =>
     },
   });
 };
+
+  export const useUpdateProductDetail = () => {
+    const qc = useQueryClient();
+
+    return useMutation({
+      mutationFn: ({ id, data }: any) => updateProductDetails(id, data),
+      onSuccess: () => {
+        qc.invalidateQueries({ queryKey: ["products"] });
+      },
+    });
+  };

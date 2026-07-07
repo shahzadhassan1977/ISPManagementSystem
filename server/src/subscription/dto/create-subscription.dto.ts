@@ -3,27 +3,21 @@ import { IsNumber, IsString, IsDateString } from 'class-validator';
 
 export class CreateSubscriptionDto {
   @ApiProperty()
-  @IsNumber()
   customerId!: number;
 
   @ApiProperty()
-  @IsNumber()
   productId!: number;
 
   @ApiProperty()
-  @IsDateString()
   startDate!: Date;
 
   @ApiProperty()
-  @IsDateString()
   renewalDate!: Date;
 
   @ApiProperty()
-  @IsString()
   billingCycle!: string;
 
   @ApiProperty()
-  @IsString()
   status!: string;
 
   @ApiProperty()
@@ -31,4 +25,16 @@ export class CreateSubscriptionDto {
       
   @ApiProperty()
   isDeleted!: boolean;
+
+  @ApiProperty()
+  createdAt?: Date;
+  
+  @ApiProperty()
+  updatedAt?: Date;
+  
+  @ApiProperty()
+  createdBy?: number;
+      
+  @ApiProperty()
+  updatedBy?: number;
 }
