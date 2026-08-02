@@ -42,6 +42,9 @@ let PermissionService = class PermissionService {
                 'rolePermissions',
                 'rolePermissions.permission',
             ],
+            order: {
+                permissionid: 'DESC',
+            }
         });
     }
     async findOne(id) {

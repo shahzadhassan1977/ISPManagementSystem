@@ -48,7 +48,10 @@ let RoleService = class RoleService {
             relations: [
                 'rolePermissions',
                 'rolePermissions.permission',
-            ]
+            ],
+            order: {
+                roleid: 'DESC',
+            }
         });
     }
     async findOne(id) {

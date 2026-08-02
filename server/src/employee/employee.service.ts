@@ -66,6 +66,9 @@ export class EmployeeService {
         'employeeSubAreas.subarea',
         'employeeSubAreas.subarea.area',
       ],
+      order: {
+        employeeid: 'DESC',
+      }
     });
   }
 

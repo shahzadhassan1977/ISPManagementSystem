@@ -43,6 +43,9 @@ let EmployeeSubareaService = class EmployeeSubareaService {
     findAll() {
         return this.repo.find({
             relations: ['employee', 'subarea'],
+            order: {
+                id: 'DESC',
+            }
         });
     }
     findOne(id) {

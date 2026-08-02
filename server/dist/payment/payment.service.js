@@ -43,6 +43,9 @@ let PaymentService = class PaymentService {
                 'subscription.product',
                 'subscription.subscriptiondetails',
             ],
+            order: {
+                id: 'DESC',
+            }
         });
     }
     findOne(id) {

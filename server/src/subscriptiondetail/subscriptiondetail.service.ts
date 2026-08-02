@@ -28,6 +28,9 @@ export class SubscriptiondetailService {
   findAll() {
     return this.repo.find({
       relations: ['subscription'],
+      order: {
+        id: 'DESC',
+      }
     });
   }
 

@@ -47,7 +47,10 @@ export class RoleService {
              // 'userRoles.role.rolePermissions.permission',              
               'rolePermissions',
               'rolePermissions.permission',
-            ]
+            ],
+            order: {
+              roleid: 'DESC',
+            }
           });
     }
       

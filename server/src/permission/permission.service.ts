@@ -35,6 +35,9 @@ export class PermissionService {
                   'rolePermissions',
                   'rolePermissions.permission',
                 ],
+                order: {
+                  permissionid: 'DESC',
+                }
               });
             }
           

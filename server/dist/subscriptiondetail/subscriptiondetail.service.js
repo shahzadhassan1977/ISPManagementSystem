@@ -35,6 +35,9 @@ let SubscriptiondetailService = class SubscriptiondetailService {
     findAll() {
         return this.repo.find({
             relations: ['subscription'],
+            order: {
+                id: 'DESC',
+            }
         });
     }
     findOne(id) {

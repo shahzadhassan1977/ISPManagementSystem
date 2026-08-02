@@ -28,6 +28,9 @@ export class ProductdetailService {
   findAll() {
     return this.repo.find({
       relations: ['product'],
+      order: {
+        id: 'DESC',
+      }
     });
   }
 

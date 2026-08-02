@@ -55,6 +55,9 @@ export class UserService {
         'userRoles.role.rolePermissions',
         'userRoles.role.rolePermissions.permission',
       ],
+      order: {
+        userid: 'DESC',
+      }
     });
   }
 

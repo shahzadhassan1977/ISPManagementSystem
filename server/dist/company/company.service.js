@@ -33,6 +33,9 @@ let CompanyService = class CompanyService {
     findAll() {
         return this.repo.find({
             relations: ['employees'],
+            order: {
+                companyid: 'DESC',
+            }
         });
     }
     findOne(id) {

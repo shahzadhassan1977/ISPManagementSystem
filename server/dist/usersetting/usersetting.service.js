@@ -31,7 +31,11 @@ let UsersettingService = class UsersettingService {
         return this.repo.save(entity);
     }
     findAll() {
-        return this.repo.find({});
+        return this.repo.find({
+            order: {
+                id: 'DESC',
+            }
+        });
     }
     findOne(id) {
         return this.repo.findOne({

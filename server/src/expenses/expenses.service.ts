@@ -24,7 +24,7 @@ export class ExpensesService {
 
   findAll() {
     return this.repo.find({
-      order: { createdAt: 'DESC' },
+      order: { id: 'DESC' },
     });
   }
 

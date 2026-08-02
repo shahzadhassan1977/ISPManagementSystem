@@ -31,7 +31,11 @@ let PortalsettingService = class PortalsettingService {
         return this.repo.save(dto);
     }
     findAll() {
-        return this.repo.find({});
+        return this.repo.find({
+            order: {
+                id: 'DESC',
+            }
+        });
     }
     findOne(id) {
         return this.repo.findOne({

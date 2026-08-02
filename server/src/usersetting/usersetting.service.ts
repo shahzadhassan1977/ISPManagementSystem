@@ -20,7 +20,11 @@ export class UsersettingService {
   }
 
   findAll() {
-    return this.repo.find({});
+    return this.repo.find({
+      order: {
+        id: 'DESC',
+      }
+    });
   }
 
   findOne(id: number) {

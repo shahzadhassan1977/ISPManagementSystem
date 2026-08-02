@@ -23,12 +23,19 @@ let CustomerService = class CustomerService {
         this.repo = repo;
     }
     create(dto) {
-        const customer = this.repo.create(dto);
+        const customer = this.repo.create({
+            ...dto,
+            createdAt: new Date(dto.createdAt),
+            updatedAt: new Date(dto.updatedAt),
+        });
         return this.repo.save(customer);
     }
     findAll() {
         return this.repo.find({
             relations: ['subscriptions', 'payments'],
+            order: {
+                customerid: 'DESC',
+            }
         });
     }
     findOne(id) {

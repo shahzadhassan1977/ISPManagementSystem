@@ -67,6 +67,9 @@ let EmployeeService = class EmployeeService {
                 'employeeSubAreas.subarea',
                 'employeeSubAreas.subarea.area',
             ],
+            order: {
+                employeeid: 'DESC',
+            }
         });
     }
     async findOne(id) {

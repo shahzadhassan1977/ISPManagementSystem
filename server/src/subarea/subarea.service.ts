@@ -40,6 +40,9 @@ export class SubareaService {
               areaId: true,
             },
             relations: ['area'],
+            order: {
+              subareaid: 'DESC',
+            }
           });
         }
       

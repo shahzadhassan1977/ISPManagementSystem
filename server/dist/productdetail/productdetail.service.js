@@ -37,6 +37,9 @@ let ProductdetailService = class ProductdetailService {
     findAll() {
         return this.repo.find({
             relations: ['product'],
+            order: {
+                id: 'DESC',
+            }
         });
     }
     findOne(id) {
