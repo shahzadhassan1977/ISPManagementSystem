@@ -13,17 +13,22 @@ export class PermissionService {
           ){}
     
            async create(createPermissionDto: CreatePermissionDto) {
-              
-            const permission=this.permissionRepo.create({
-                name: createPermissionDto.name,
-                isActive: createPermissionDto.isActive ?? true,
-                isDeleted: createPermissionDto.isDeleted ?? false,
-                createdAt: new Date(createPermissionDto.createdAt),
-                updatedAt: new Date(createPermissionDto.updatedAt),
-              });
-          
-              return this.permissionRepo.save(permission);
-            }
+            const permission = this.permissionRepo.create({
+              name: createPermissionDto.name,
+              isActive: createPermissionDto.isActive ?? true,
+              isDeleted: createPermissionDto.isDeleted ?? false,
+              createdAt: createPermissionDto.createdAt
+                ? new Date(createPermissionDto.createdAt)
+                : new Date(),
+              updatedAt: createPermissionDto.updatedAt
+                ? new Date(createPermissionDto.updatedAt)
+                : new Date(),
+              createdBy: createPermissionDto.createdBy ?? 0,
+              updatedBy: createPermissionDto.updatedBy ?? 0,
+            });
+
+            return this.permissionRepo.save(permission);
+          }
           
             async findAll() {
               return this.permissionRepo.find({

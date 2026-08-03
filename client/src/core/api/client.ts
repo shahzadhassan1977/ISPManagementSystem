@@ -37,29 +37,21 @@ api.interceptors.response.use(
     
     let message =
       error?.response?.data?.message ||
+      error?.response?.data?.error ||
       error?.message ||
       "Something went wrong";
 
-      if(!message)
-      {
-        message = "Network error";
-      }
-      else if(message == 400)
-      {
-        message="Bad request";
-      }
-       else if(message == 401)
-      {
-        message="Unauthorized";
-      }
-       else if(message == 500)
-      {
-        message="Server error";
-      }
-      else
-      {
-         message="Unknown error";
-      }
+    if (!message) {
+      message = "Network error";
+    } else if (message === 400) {
+      message = "Bad request";
+    } else if (message === 401) {
+      message = "Unauthorized";
+    } else if (message === 500) {
+      message = "Server error";
+    } else if (message === "Unknown error") {
+      message = "Unknown error";
+    }
     // 🔥 GLOBAL TOAST HANDLING
     toast.error(message);
 

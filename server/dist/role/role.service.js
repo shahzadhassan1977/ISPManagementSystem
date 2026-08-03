@@ -30,12 +30,15 @@ let RoleService = class RoleService {
         this.rolePermissionRepo = rolePermissionRepo;
     }
     async create(createRoleDto) {
+        const now = new Date();
         const role = this.roleRepo.create({
             name: createRoleDto.name,
             isActive: createRoleDto.isActive ?? true,
             isDeleted: createRoleDto.isDeleted ?? false,
-            createdAt: new Date(createRoleDto.createdAt),
-            updatedAt: new Date(createRoleDto.updatedAt),
+            createdAt: createRoleDto.createdAt ? new Date(createRoleDto.createdAt) : now,
+            updatedAt: createRoleDto.updatedAt ? new Date(createRoleDto.updatedAt) : now,
+            createdBy: createRoleDto.createdBy ?? 0,
+            updatedBy: createRoleDto.updatedBy ?? 0,
         });
         return this.roleRepo.save(role);
     }

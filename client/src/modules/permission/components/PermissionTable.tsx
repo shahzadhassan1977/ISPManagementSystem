@@ -2,6 +2,7 @@
 
 import ViewModal from "@/components/ui/ViewModal";
 import DataTable from "@/components/ui/DataTable";
+import PermissionActionButtons from "@/components/ui/PermissionActionButtons";
 import { ColumnDef } from "@tanstack/react-table";
 import { usePermission, useDeletePermission } from "../hooks/usePermission";
 import { useState } from "react";
@@ -22,8 +23,7 @@ export default function PermissionTable({ onEdit }: any) {
 
   const [viewData, setViewData] = useState<any>(null);
   const [openView, setOpenView] = useState(false);
-
-  console.log("viewData ---", viewData);
+  const pagePermission = "permission";
 
   const columns: ColumnDef<Permission>[] = [
     {
@@ -34,30 +34,18 @@ export default function PermissionTable({ onEdit }: any) {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => (
-        <div className="space-x-2">
-          <button onClick={() => {            
-          setViewData(row.original);
-          setOpenView(true);
+        <PermissionActionButtons
+          pagePermission={pagePermission}
+          onView={() => {
+            setViewData(row.original);
+            setOpenView(true);
           }}
-          className="text-blue-500">View</button>
-
-          <button
-            onClick={() => onEdit(row.original)}
-            className="text-green-500"
-          >
-            Edit
-          </button>
-
-          <button
-            onClick={() => {
-              setSelectedId(row.original.permissionid);
-              setOpenConfirm(true);
-            }}
-            className="text-red-500"
-          >
-            Delete
-          </button>
-        </div>
+          onEdit={() => onEdit(row.original)}
+          onDelete={() => {
+            setSelectedId(row.original.permissionid);
+            setOpenConfirm(true);
+          }}
+        />
       ),
     },
   ];
@@ -70,6 +58,10 @@ export default function PermissionTable({ onEdit }: any) {
       onSuccess: () => {
         toast.success("Deleted successfully");
         setOpenConfirm(false);
+      },
+      onError: (error: any) => {
+        const message = error?.response?.data?.message || error?.message || "Delete failed";
+        toast.error(message);
       },
     });
   };

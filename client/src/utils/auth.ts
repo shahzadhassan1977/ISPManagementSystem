@@ -222,6 +222,7 @@ export const getPagePermissionFromPathname = (pathname: string) => {
     "/reports/yearly": "reportyearly",
     "/reports/employee-wise": "reportemployee-wise",
     "/reports/product-wise": "reportproduct-wise",
+    "/reports/expenses": "reportexpenses",
   };
 
   if (mapping[path]) {

@@ -2,6 +2,7 @@
 
 import ViewModal from "@/components/ui/ViewModal";
 import DataTable from "@/components/ui/DataTable";
+import PermissionActionButtons from "@/components/ui/PermissionActionButtons";
 import { ColumnDef } from "@tanstack/react-table";
 import { useCompanies, useDeleteCompany } from "../hooks/useCompany";
 import { useState } from "react";
@@ -25,8 +26,7 @@ export default function CompanyTable({ onEdit }: any) {
 
   const [viewData, setViewData] = useState<any>(null);
   const [openView, setOpenView] = useState(false);
-
-  console.log("viewData ---", viewData);
+  const pagePermission = "company";
 
   const columns: ColumnDef<Company>[] = [
     {
@@ -49,30 +49,18 @@ export default function CompanyTable({ onEdit }: any) {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => (
-        <div className="space-x-2">
-          <button onClick={() => {            
-          setViewData(row.original);
-          setOpenView(true);
+        <PermissionActionButtons
+          pagePermission={pagePermission}
+          onView={() => {
+            setViewData(row.original);
+            setOpenView(true);
           }}
-          className="text-blue-500">View</button>
-
-          <button
-            onClick={() => onEdit(row.original)}
-            className="text-green-500"
-          >
-            Edit
-          </button>
-
-          <button
-            onClick={() => {
-              setSelectedId(row.original.companyid);
-              setOpenConfirm(true);
-            }}
-            className="text-red-500"
-          >
-            Delete
-          </button>
-        </div>
+          onEdit={() => onEdit(row.original)}
+          onDelete={() => {
+            setSelectedId(row.original.companyid);
+            setOpenConfirm(true);
+          }}
+        />
       ),
     },
   ];

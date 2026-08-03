@@ -16,6 +16,6 @@ export const updatePermission = async (id: number, data: any) => {
 };
 
 export const deletePermission = async (id: number) => {
-  const res = await api.delete('/permission/${id}');
+  const res = await api.delete(`/permission/${id}`);
   return res.data.data;
 };

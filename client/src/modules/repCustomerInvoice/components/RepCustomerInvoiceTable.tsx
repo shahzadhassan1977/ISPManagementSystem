@@ -2,6 +2,7 @@
 
 import DataTable from "@/components/ui/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
+import Select from "react-select";
 import { useCustomers } from "../../customer/hooks/useCustomers";
 import { usePayments } from "../../payment/hooks/usePayments";
 import { useCompanies } from "@/modules/company/hooks/useCompany";
@@ -73,6 +74,17 @@ export default function RepCustomerInvoiceTable() {
   const ownerCompany = useMemo(
     () => companies.find((company: any) => company.isOwner) ?? companies[0] ?? null,
     [companies]
+  );
+
+  const customerOptions = useMemo(
+    () => [
+      { value: "", label: "All Customers" },
+      ...customers.map((customer: any) => ({
+        value: customer.customerid,
+        label: customer.name,
+      })),
+    ],
+    [customers]
   );
 
   const handleSearch = () => {
@@ -211,50 +223,40 @@ export default function RepCustomerInvoiceTable() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <label className="block text-sm text-gray-600 mb-1">Customer</label>
-            <select
-              value={customerId}
-              onChange={(e) => setCustomerId(e.target.value === "" ? "" : Number(e.target.value))}
-              className="w-full border rounded p-2"
-            >
-              <option value="">All Customers</option>
-              {customers.map((customer: any) => (
-                <option key={customer.customerid} value={customer.customerid}>
-                  {customer.name}
-                </option>
-              ))}
-            </select>
+            <Select
+              options={customerOptions}
+              value={customerOptions.find((option) => option.value === customerId) ?? null}
+              onChange={(option: any) => setCustomerId(option?.value ?? "")}
+              isSearchable
+              placeholder="Select customer"
+              className="text-sm"
+            />
           </div>
 
           <div>
             <label className="block text-sm text-gray-600 mb-1">Month</label>
-            <select
-              value={billingMonth}
-              onChange={(e) => setBillingMonth(e.target.value)}
-              className="w-full border rounded p-2"
-            >
-              <option value="">All Months</option>
-              {monthOptions.map((month) => (
-                <option key={month.value} value={month.value}>
-                  {month.label}
-                </option>
-              ))}
-            </select>
+            <Select
+              options={monthOptions}
+              value={monthOptions.find((option) => option.value === billingMonth) ?? null}
+              onChange={(option: any) => setBillingMonth(option?.value ?? "")}
+              isSearchable
+              placeholder="Select month"
+              className="text-sm"
+            />
           </div>
 
           <div>
             <label className="block text-sm text-gray-600 mb-1">Year</label>
-            <select
-              value={billingYear}
-              onChange={(e) => setBillingYear(e.target.value)}
-              className="w-full border rounded p-2"
-            >
-              <option value="">All Years</option>
-              {yearOptions.map((year) => (
-                <option key={year} value={String(year)}>
-                  {year}
-                </option>
-              ))}
-            </select>
+            <Select
+              options={yearOptions.map((year) => ({ value: String(year), label: String(year) }))}
+              value={yearOptions
+                .map((year) => ({ value: String(year), label: String(year) }))
+                .find((option) => option.value === billingYear) ?? null}
+              onChange={(option: any) => setBillingYear(option?.value ?? "")}
+              isSearchable
+              placeholder="Select year"
+              className="text-sm"
+            />
           </div>
 
           <div className="flex items-end">

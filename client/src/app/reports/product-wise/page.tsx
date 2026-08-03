@@ -2,10 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
+import Select from "react-select";
 import PageWrapper from "@/components/ui/PageWrapper";
 import DataTable from "@/components/ui/DataTable";
 import { useProducts } from "@/modules/product/hooks/useProducts";
 import { usePayments } from "@/modules/payment/hooks/usePayments";
+import { useAuthStore } from "@/core/store/auth.store";
+import { isAdminUser } from "@/utils/auth";
 
 const monthOptions = [
   { value: "", label: "All Months" },
@@ -45,6 +48,8 @@ const formatCurrency = (value: number) => `Rs.${value.toFixed(2)}`;
 export default function ProductWiseReportPage() {
   const { data: products = [], isLoading: loadingProducts } = useProducts();
   const { data: payments = [], isLoading: loadingPayments } = usePayments();
+  const user = useAuthStore((state) => state.user);
+  const canViewAdminFinancials = isAdminUser(user);
 
   const [productId, setProductId] = useState<number | "">("");
   const [billingMonth, setBillingMonth] = useState<string>("");
@@ -53,11 +58,13 @@ export default function ProductWiseReportPage() {
   const [hasSearched, setHasSearched] = useState(false);
 
   const productOptions = useMemo(
-    () =>
-      products.map((product: any) => ({
+    () => [
+      { value: "", label: "All Products" },
+      ...products.map((product: any) => ({
         value: product.productid,
         label: product.name,
       })),
+    ],
     [products]
   );
 
@@ -108,11 +115,15 @@ export default function ProductWiseReportPage() {
       header: "Payment",
       cell: ({ row }) => formatCurrency(getPaymentAmount(row.original)),
     },
-    {
-      id: "profit",
-      header: "Profit",
-      cell: ({ row }) => formatCurrency(getProfit(row.original)),
-    },
+    ...(canViewAdminFinancials
+      ? [
+          {
+            id: "profit",
+            header: "Profit",
+            cell: ({ row }: { row: any }) => formatCurrency(getProfit(row.original)),
+          },
+        ]
+      : []),
     { accessorKey: "billingMonth", header: "Billing Month" },
     { accessorKey: "billingYear", header: "Billing Year" },
     {
@@ -132,51 +143,40 @@ export default function ProductWiseReportPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm text-gray-600 mb-1">Product</label>
-              <select
-                value={productId}
-                onChange={(e) =>
-                  setProductId(e.target.value === "" ? "" : Number(e.target.value))
-                }
-                className="w-full border rounded p-2"
-              >
-                <option value="">All Products</option>
-                {productOptions.map((product: any) => (
-                  <option key={product.value} value={product.value}>
-                    {product.label}
-                  </option>
-                ))}
-              </select>
+              <Select
+                options={productOptions}
+                value={productOptions.find((option) => option.value === productId) ?? null}
+                onChange={(option: any) => setProductId(option?.value ?? "")}
+                isSearchable
+                placeholder="Select product"
+                className="text-sm"
+              />
             </div>
 
             <div>
               <label className="block text-sm text-gray-600 mb-1">Month</label>
-              <select
-                value={billingMonth}
-                onChange={(e) => setBillingMonth(e.target.value)}
-                className="w-full border rounded p-2"
-              >
-                {monthOptions.map((month) => (
-                  <option key={month.value} value={month.value}>
-                    {month.label}
-                  </option>
-                ))}
-              </select>
+              <Select
+                options={monthOptions}
+                value={monthOptions.find((option) => option.value === billingMonth) ?? null}
+                onChange={(option: any) => setBillingMonth(option?.value ?? "")}
+                isSearchable
+                placeholder="Select month"
+                className="text-sm"
+              />
             </div>
 
             <div>
               <label className="block text-sm text-gray-600 mb-1">Year</label>
-              <select
-                value={billingYear}
-                onChange={(e) => setBillingYear(e.target.value)}
-                className="w-full border rounded p-2"
-              >
-                <option value="">All Years</option>
-                {yearOptions.map((year) => (
-                  <option key={year} value={String(year)}>
-                    {year}
-                  </option>
-                ))}
-              </select>
+              <Select
+                options={yearOptions.map((year) => ({ value: String(year), label: String(year) }))}
+                value={yearOptions
+                  .map((year) => ({ value: String(year), label: String(year) }))
+                  .find((option) => option.value === billingYear) ?? null}
+                onChange={(option: any) => setBillingYear(option?.value ?? "")}
+                isSearchable
+                placeholder="Select year"
+                className="text-sm"
+              />
             </div>
 
             <div className="flex items-end">
@@ -200,10 +200,12 @@ export default function ProductWiseReportPage() {
               <p className="text-sm text-slate-500">Total payment</p>
               <p className="mt-4 text-4xl font-semibold">{formatCurrency(totalPayments)}</p>
             </div>
-            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
-              <p className="text-sm text-slate-500">Total profit</p>
-              <p className="mt-4 text-4xl font-semibold">{formatCurrency(totalProfit)}</p>
-            </div>
+            {canViewAdminFinancials && (
+              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
+                <p className="text-sm text-slate-500">Total profit</p>
+                <p className="mt-4 text-4xl font-semibold">{formatCurrency(totalProfit)}</p>
+              </div>
+            )}
           </div>
         )}
 

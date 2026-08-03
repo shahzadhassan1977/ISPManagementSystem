@@ -35,6 +35,7 @@ export default function PaymentTable({ onEdit }: any) {
 
   const [viewData, setViewData] = useState<any>(null);
   const [openView, setOpenView] = useState(false);
+  const pagePermission = "payment";
   const { data: companies = [] } = useCompanies();
 
   const getOwnerCompany = () =>

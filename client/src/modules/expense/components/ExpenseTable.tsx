@@ -46,6 +46,7 @@ export default function ExpenseTable({ onEdit }: any) {
 
   const [viewData, setViewData] = useState<any>(null);
   const [openView, setOpenView] = useState(false);
+  const pagePermission = "expense";
   
   const columns: ColumnDef<Expense>[] = [
     {

@@ -22,16 +22,19 @@ export class RoleService {
     ){}
 
     async create(createRoleDto: CreateRoleDto) {
-          
-        const role=this.roleRepo.create({
+        const now = new Date();
+
+        const role = this.roleRepo.create({
             name: createRoleDto.name,
             isActive: createRoleDto.isActive ?? true,
             isDeleted: createRoleDto.isDeleted ?? false,
-            createdAt: new Date(createRoleDto.createdAt),
-            updatedAt: new Date(createRoleDto.updatedAt),
-          });
-      
-          return this.roleRepo.save(role);
+            createdAt: createRoleDto.createdAt ? new Date(createRoleDto.createdAt) : now,
+            updatedAt: createRoleDto.updatedAt ? new Date(createRoleDto.updatedAt) : now,
+            createdBy: createRoleDto.createdBy ?? 0,
+            updatedBy: createRoleDto.updatedBy ?? 0,
+        });
+
+        return this.roleRepo.save(role);
     }
       
     async findAll() {
