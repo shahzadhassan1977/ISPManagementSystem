@@ -5,7 +5,7 @@ import { useCustomers } from "@/modules/customer/hooks/useCustomers";
 import { usePayments } from "@/modules/payment/hooks/usePayments";
 import { useSubscriptions } from "@/modules/subscription/hooks/useSubscription";
 import { useExpenses } from "@/modules/expense/hooks/useExpenses";
-import { Users, CreditCard, Activity, BarChart3, Wallet } from "lucide-react";
+import { Users, CreditCard, Activity, Wallet } from "lucide-react";
 
 const parseDate = (value: any) => (value ? new Date(value) : null);
 
@@ -60,9 +60,143 @@ const formatDate = (value: any) => {
 
 const formatCurrency = (value: number) => `Rs.${value.toFixed(2)}`;
 
-const barPercentage = (value: number, max: number) => {
-  if (max === 0) return "10%";
-  return `${Math.max(10, Math.round((value / max) * 100))}%`;
+type MetricChartType = "bar" | "line" | "pie";
+
+type MetricChartCardProps = {
+  title: string;
+  type: MetricChartType;
+  data: number[];
+  labels: string[];
+  color: string;
+};
+
+const MetricChartCard = ({ title, type, data, labels, color }: MetricChartCardProps) => {
+  const safeData = data.length > 0 ? data : [0];
+  const maxValue = Math.max(...safeData, 1);
+  const total = safeData.reduce((sum, value) => sum + value, 0);
+
+  const renderBarChart = () => (
+    <div className="mt-4">
+      <svg viewBox="0 0 260 120" className="h-32 w-full">
+        {[0, 0.25, 0.5, 0.75, 1].map((value) => (
+          <line
+            key={value}
+            x1="16"
+            x2="244"
+            y1={18 + value * 84}
+            y2={18 + value * 84}
+            stroke="#e2e8f0"
+            strokeDasharray="4 4"
+          />
+        ))}
+        {safeData.map((value, index) => {
+          const barHeight = maxValue === 0 ? 0 : (value / maxValue) * 70;
+          const x = 24 + index * 36;
+          const y = 90 - barHeight;
+          return (
+            <g key={`${title}-${labels[index]}`}>
+              <rect x={x} y={y} width="24" height={barHeight} rx="6" fill={color} opacity="0.9" />
+              <text x={x + 12} y="108" textAnchor="middle" fontSize="10" fill="#64748b">
+                {labels[index]}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+
+  const renderLineChart = () => {
+    const width = 240;
+    const height = 120;
+    const padding = 20;
+    const innerWidth = width - padding * 2;
+    const innerHeight = height - padding * 2;
+    const points = safeData.map((value, index) => {
+      const x = padding + (index / Math.max(safeData.length - 1, 1)) * innerWidth;
+      const y = padding + innerHeight - (value / maxValue) * innerHeight;
+      return `${x},${y}`;
+    });
+
+    return (
+      <div className="mt-4">
+        <svg viewBox={`0 0 ${width} ${height}`} className="h-32 w-full">
+          {[0, 0.25, 0.5, 0.75, 1].map((value) => (
+            <line
+              key={value}
+              x1={padding}
+              x2={width - padding}
+              y1={padding + value * innerHeight}
+              y2={padding + value * innerHeight}
+              stroke="#e2e8f0"
+              strokeDasharray="4 4"
+            />
+          ))}
+          <polyline points={points.join(" ")} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" />
+          {safeData.map((value, index) => {
+            const x = padding + (index / Math.max(safeData.length - 1, 1)) * innerWidth;
+            const y = padding + innerHeight - (value / maxValue) * innerHeight;
+            return <circle key={`${title}-${labels[index]}`} cx={x} cy={y} r="4" fill={color} />;
+          })}
+        </svg>
+      </div>
+    );
+  };
+
+  const renderPieChart = () => {
+    const size = 140;
+    const radius = 44;
+    const center = size / 2;
+    let currentAngle = -Math.PI / 2;
+    const totalValue = safeData.reduce((sum, value) => sum + value, 0);
+
+    const createSlicePath = (start: number, end: number) => {
+      const startX = center + radius * Math.cos(start);
+      const startY = center + radius * Math.sin(start);
+      const endX = center + radius * Math.cos(end);
+      const endY = center + radius * Math.sin(end);
+      const largeArc = end - start > Math.PI ? 1 : 0;
+      return `M ${center} ${center} L ${startX} ${startY} A ${radius} ${radius} 0 ${largeArc} 1 ${endX} ${endY} Z`;
+    };
+
+    return (
+      <div className="mt-4 flex flex-col items-center gap-3">
+        <svg viewBox={`0 0 ${size} ${size}`} className="h-36 w-36">
+          {safeData.map((value, index) => {
+            if (value <= 0) return null;
+            const sliceAngle = (value / Math.max(totalValue, 1)) * Math.PI * 2;
+            const startAngle = currentAngle;
+            const endAngle = currentAngle + sliceAngle;
+            currentAngle = endAngle;
+            return <path key={`${title}-${labels[index]}`} d={createSlicePath(startAngle, endAngle)} fill={color} opacity="0.8" />;
+          })}
+          <circle cx={center} cy={center} r="24" fill="#fff" />
+        </svg>
+        <div className="flex flex-wrap justify-center gap-2 text-[11px] text-gray-500">
+          {labels.map((label, index) => (
+            <span key={`${label}-${index}`} className="rounded-full bg-slate-100 px-2 py-1">
+              {label}: {safeData[index]}
+            </span>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-sm text-gray-500">{title}</p>
+          <p className="text-lg font-semibold">{total}</p>
+        </div>
+        <div className="rounded-2xl bg-slate-100 px-3 py-2 text-sm font-medium text-slate-600">{type}</div>
+      </div>
+      {type === "bar" && renderBarChart()}
+      {type === "line" && renderLineChart()}
+      {type === "pie" && renderPieChart()}
+    </div>
+  );
 };
 
 export default function DashboardPage() {
@@ -198,9 +332,12 @@ export default function DashboardPage() {
     }).length,
   }));
 
-  const chartMax = Math.max(
-    ...dailyTrend.map((item) => Math.max(item.customers, item.revenue, item.subscriptions)),
-    10
+  const renderMetricCards = (metrics: MetricChartCardProps[]) => (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      {metrics.map((metric) => (
+        <MetricChartCard key={metric.title} {...metric} />
+      ))}
+    </div>
   );
 
   return (
@@ -228,55 +365,6 @@ export default function DashboardPage() {
             <p className="mt-3 text-lg font-semibold text-slate-900">{report.title}</p>
           </Link>
         ))}
-      </section>
-
-      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <p className="text-sm text-gray-500 uppercase tracking-[0.2em]">Expense Overview</p>
-            <h2 className="text-2xl font-semibold">Business spend this month</h2>
-          </div>
-          <div className="rounded-2xl bg-amber-100 p-3 text-amber-700">
-            <Wallet size={20} />
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="rounded-2xl bg-slate-50 p-4">
-            <p className="text-sm text-gray-500">This month</p>
-            <p className="mt-2 text-2xl font-semibold">{formatCurrency(monthlyExpenses)}</p>
-          </div>
-          <div className="rounded-2xl bg-slate-50 p-4">
-            <p className="text-sm text-gray-500">Pending</p>
-            <p className="mt-2 text-2xl font-semibold">{formatCurrency(pendingExpenses)}</p>
-          </div>
-          <div className="rounded-2xl bg-slate-50 p-4">
-            <p className="text-sm text-gray-500">Recent entries</p>
-            <p className="mt-2 text-2xl font-semibold">{recentExpenses.length}</p>
-          </div>
-        </div>
-
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold">Recent expenses</h3>
-          <div className="mt-3 space-y-2">
-            {recentExpenses.length === 0 ? (
-              <p className="text-sm text-gray-500">No expense records available yet.</p>
-            ) : (
-              recentExpenses.map((expense: any) => (
-                <div key={expense.id} className="flex items-center justify-between rounded-2xl border border-slate-200 px-4 py-3">
-                  <div>
-                    <p className="font-medium">{expense.title}</p>
-                    <p className="text-sm text-gray-500">{expense.category} • {expense.status}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold">{formatCurrency(Number(expense.amount || 0))}</p>
-                    <p className="text-sm text-gray-500">{formatDate(expense.expenseDate || expense.createdAt)}</p>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
       </section>
 
       <section className="space-y-6">
@@ -331,40 +419,29 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {[
-            { title: "Customer Growth", data: dailyTrend.map((item) => item.customers), color: "bg-blue-600" },
-            { title: "Revenue Trend", data: dailyTrend.map((item) => item.revenue), color: "bg-emerald-600" },
-            { title: "Subscription Starts", data: dailyTrend.map((item) => item.subscriptions), color: "bg-sky-600" },
-          ].map((metric) => (
-            <div key={metric.title} className="bg-white rounded-3xl shadow p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-sm text-gray-500">{metric.title}</p>
-                  <p className="text-lg font-semibold">{metric.data.reduce((sum, value) => sum + value, 0)}</p>
-                </div>
-                <BarChart3 className="text-slate-400" size={24} />
-              </div>
-
-              <div className="space-y-3">
-                {dailyTrend.map((item, index) => (
-                  <div key={item.label} className="space-y-1">
-                    <div className="flex justify-between text-xs text-gray-500">
-                      <span>{item.label}</span>
-                      <span>{metric.data[index]}</span>
-                    </div>
-                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div
-                        className={`${metric.color} h-full rounded-full`}
-                        style={{ width: barPercentage(metric.data[index], chartMax) }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        {renderMetricCards([
+          {
+            title: "Customer Growth",
+            type: "bar",
+            data: dailyTrend.map((item) => item.customers),
+            labels: dailyTrend.map((item) => item.label),
+            color: "#2563eb",
+          },
+          {
+            title: "Revenue Trend",
+            type: "line",
+            data: dailyTrend.map((item) => item.revenue),
+            labels: dailyTrend.map((item) => item.label),
+            color: "#10b981",
+          },
+          {
+            title: "Subscription Starts",
+            type: "pie",
+            data: dailyTrend.map((item) => item.subscriptions),
+            labels: dailyTrend.map((item) => item.label),
+            color: "#38bdf8",
+          },
+        ])}
       </section>
 
       <section className="space-y-6">
@@ -417,40 +494,29 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {[
-            { title: "Customer Growth", data: monthlyTrend.map((item) => item.customers), color: "bg-blue-600" },
-            { title: "Revenue Trend", data: monthlyTrend.map((item) => item.revenue), color: "bg-emerald-600" },
-            { title: "Subscription Starts", data: monthlyTrend.map((item) => item.subscriptions), color: "bg-sky-600" },
-          ].map((metric) => (
-            <div key={metric.title} className="bg-white rounded-3xl shadow p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-sm text-gray-500">{metric.title}</p>
-                  <p className="text-lg font-semibold">{metric.data.reduce((sum, value) => sum + value, 0)}</p>
-                </div>
-                <BarChart3 className="text-slate-400" size={24} />
-              </div>
-
-              <div className="space-y-3">
-                {monthlyTrend.map((item, index) => (
-                  <div key={item.label} className="space-y-1">
-                    <div className="flex justify-between text-xs text-gray-500">
-                      <span>{item.label}</span>
-                      <span>{metric.data[index]}</span>
-                    </div>
-                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div
-                        className={`${metric.color} h-full rounded-full`}
-                        style={{ width: barPercentage(metric.data[index], chartMax) }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        {renderMetricCards([
+          {
+            title: "Customer Growth",
+            type: "bar",
+            data: monthlyTrend.map((item) => item.customers),
+            labels: monthlyTrend.map((item) => item.label),
+            color: "#2563eb",
+          },
+          {
+            title: "Revenue Trend",
+            type: "line",
+            data: monthlyTrend.map((item) => item.revenue),
+            labels: monthlyTrend.map((item) => item.label),
+            color: "#10b981",
+          },
+          {
+            title: "Subscription Starts",
+            type: "pie",
+            data: monthlyTrend.map((item) => item.subscriptions),
+            labels: monthlyTrend.map((item) => item.label),
+            color: "#38bdf8",
+          },
+        ])}
       </section>
 
       <section className="space-y-6">
@@ -503,39 +569,77 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {[
-            { title: "Customer Growth", data: yearlyTrend.map((item) => item.customers), color: "bg-blue-600" },
-            { title: "Revenue Trend", data: yearlyTrend.map((item) => item.revenue), color: "bg-emerald-600" },
-            { title: "Subscription Starts", data: yearlyTrend.map((item) => item.subscriptions), color: "bg-sky-600" },
-          ].map((metric) => (
-            <div key={metric.title} className="bg-white rounded-3xl shadow p-6 border border-slate-200">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-sm text-gray-500">{metric.title}</p>
-                  <p className="text-lg font-semibold">{metric.data.reduce((sum, value) => sum + value, 0)}</p>
-                </div>
-                <BarChart3 className="text-slate-400" size={24} />
-              </div>
+        {renderMetricCards([
+          {
+            title: "Customer Growth",
+            type: "bar",
+            data: yearlyTrend.map((item) => item.customers),
+            labels: yearlyTrend.map((item) => item.label),
+            color: "#2563eb",
+          },
+          {
+            title: "Revenue Trend",
+            type: "line",
+            data: yearlyTrend.map((item) => item.revenue),
+            labels: yearlyTrend.map((item) => item.label),
+            color: "#10b981",
+          },
+          {
+            title: "Subscription Starts",
+            type: "pie",
+            data: yearlyTrend.map((item) => item.subscriptions),
+            labels: yearlyTrend.map((item) => item.label),
+            color: "#38bdf8",
+          },
+        ])}
+      </section>
 
-              <div className="space-y-3">
-                {yearlyTrend.map((item, index) => (
-                  <div key={item.label} className="space-y-1">
-                    <div className="flex justify-between text-xs text-gray-500">
-                      <span>{item.label}</span>
-                      <span>{metric.data[index]}</span>
-                    </div>
-                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <div
-                        className={`${metric.color} h-full rounded-full`}
-                        style={{ width: barPercentage(metric.data[index], chartMax) }}
-                      />
-                    </div>
+      <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-sm text-gray-500 uppercase tracking-[0.2em]">Expense Overview</p>
+            <h2 className="text-2xl font-semibold">Business spend this month</h2>
+          </div>
+          <div className="rounded-2xl bg-amber-100 p-3 text-amber-700">
+            <Wallet size={20} />
+          </div>
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-sm text-gray-500">This month</p>
+            <p className="mt-2 text-2xl font-semibold">{formatCurrency(monthlyExpenses)}</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-sm text-gray-500">Pending</p>
+            <p className="mt-2 text-2xl font-semibold">{formatCurrency(pendingExpenses)}</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-sm text-gray-500">Recent entries</p>
+            <p className="mt-2 text-2xl font-semibold">{recentExpenses.length}</p>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold">Recent expenses</h3>
+          <div className="mt-3 space-y-2">
+            {recentExpenses.length === 0 ? (
+              <p className="text-sm text-gray-500">No expense records available yet.</p>
+            ) : (
+              recentExpenses.map((expense: any) => (
+                <div key={expense.id} className="flex items-center justify-between rounded-2xl border border-slate-200 px-4 py-3">
+                  <div>
+                    <p className="font-medium">{expense.title}</p>
+                    <p className="text-sm text-gray-500">{expense.category} • {expense.status}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-          ))}
+                  <div className="text-right">
+                    <p className="font-semibold">{formatCurrency(Number(expense.amount || 0))}</p>
+                    <p className="text-sm text-gray-500">{formatDate(expense.expenseDate || expense.createdAt)}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </section>
     </div>

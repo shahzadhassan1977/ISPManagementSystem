@@ -96,6 +96,11 @@ export default function ProductWiseReportPage() {
   const columns: ColumnDef<any>[] = [
     { accessorKey: "invoiceNumber", header: "Invoice #" },
     {
+      header: "Customer",
+      cell: ({ row }) =>
+        row.original.customer?.name ?? row.original.subscription?.customer?.name ?? "N/A",
+    },
+    {
       accessorKey: "subscription.product.name",
       header: "Product",
       cell: ({ row }) => row.original.subscription?.product?.name ?? "N/A",
@@ -149,6 +154,7 @@ export default function ProductWiseReportPage() {
                 onChange={(option: any) => setProductId(option?.value ?? "")}
                 isSearchable
                 placeholder="Select product"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -161,6 +167,7 @@ export default function ProductWiseReportPage() {
                 onChange={(option: any) => setBillingMonth(option?.value ?? "")}
                 isSearchable
                 placeholder="Select month"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -175,6 +182,7 @@ export default function ProductWiseReportPage() {
                 onChange={(option: any) => setBillingYear(option?.value ?? "")}
                 isSearchable
                 placeholder="Select year"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>

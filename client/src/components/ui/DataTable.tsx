@@ -70,22 +70,22 @@ export default function DataTable<T>({
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow space-y-4">
+    <div className="bg-white dark:bg-slate-950 p-4 rounded-xl shadow space-y-4 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700">
 
       {/* 🔍 SEARCH + EXPORT */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
 
         <input
           value={globalFilter ?? ""}
           onChange={(e) => setGlobalFilter(e.target.value)}
           placeholder="Search..."
-          className="border px-3 py-2 rounded w-64"
+          className="border px-3 py-2 rounded w-full md:w-64 bg-slate-50 text-slate-900 border-slate-300 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
         />
 
         <div className="space-x-2">
           <button
             onClick={exportCSV}
-            className="px-3 py-1 border rounded"
+            className="px-3 py-1 border rounded bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
           >
             Export CSV
           </button>
@@ -101,9 +101,9 @@ export default function DataTable<T>({
       </div>
 
       {/* 📊 TABLE */}
-      <table className="w-full border">
+      <table className="w-full border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100">
 
-        <thead className="bg-gray-100">
+        <thead className="bg-gray-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -142,9 +142,9 @@ export default function DataTable<T>({
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="border-t">
+              <tr key={row.id} className="border-t border-slate-200 dark:border-slate-700">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-2">
+                  <td key={cell.id} className="p-2 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-700">
                     {flexRender(
                       cell.column.columnDef.cell,
                       cell.getContext()
@@ -159,18 +159,17 @@ export default function DataTable<T>({
       </table>
 
       {/* 📄 PAGINATION */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-slate-900 dark:text-slate-100">
 
         <div className="text-sm">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
+          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
 
         <div className="space-x-2">
           <button
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="px-3 py-1 border rounded"
+            className="px-3 py-1 border rounded bg-slate-100 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
           >
             Prev
           </button>
@@ -178,7 +177,7 @@ export default function DataTable<T>({
           <button
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="px-3 py-1 border rounded"
+            className="px-3 py-1 border rounded bg-slate-100 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
           >
             Next
           </button>

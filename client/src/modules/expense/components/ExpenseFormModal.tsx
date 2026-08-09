@@ -151,6 +151,7 @@ export default function ExpenseFormModal({ open, onClose, data }: any) {
     { value: "Salary", label: "Salary" },
     { value: "Electricity", label: "Electricity" },
     { value: "Internet", label: "Internet" },
+    { value: "FreeCard", label: "FreeCard" },
     { value: "Fuel", label: "Fuel" },
     { value: "Maintenance", label: "Maintenance" },
     { value: "Office", label: "Office" },

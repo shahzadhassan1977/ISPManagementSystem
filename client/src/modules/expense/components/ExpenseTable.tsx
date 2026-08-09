@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye, Edit3, Trash2 } from "lucide-react";
 import ViewModal from "@/components/ui/ViewModal";
 import DataTable from "@/components/ui/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
@@ -78,32 +79,41 @@ export default function ExpenseTable({ onEdit }: any) {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => (
-        <div className="space-x-2">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => {
               setViewData(row.original);
               setOpenView(true);
             }}
-            className="text-blue-500"
+            className="text-blue-500 hover:text-blue-700"
+            aria-label="View"
+            title="View"
           >
-            View
+            <Eye className="h-4 w-4" />
+            <span className="sr-only">View</span>
           </button>
 
           <button
             onClick={() => onEdit(row.original)}
-            className="text-green-500"
+            className="text-green-500 hover:text-green-700"
+            aria-label="Edit"
+            title="Edit"
           >
-            Edit
-          </button>          
+            <Edit3 className="h-4 w-4" />
+            <span className="sr-only">Edit</span>
+          </button>
 
           <button
             onClick={() => {
               setSelectedId(row.original.id);
               setOpenConfirm(true);
             }}
-            className="text-red-500"
+            className="text-red-500 hover:text-red-700"
+            aria-label="Delete"
+            title="Delete"
           >
-            Delete
+            <Trash2 className="h-4 w-4" />
+            <span className="sr-only">Delete</span>
           </button>
         </div>
       ),

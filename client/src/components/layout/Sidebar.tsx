@@ -14,7 +14,13 @@ import {
 import { useAuthStore } from "@/core/store/auth.store";
 import { canAccessPage } from "@/utils/auth";
 
-export default function Sidebar() {
+export default function Sidebar({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
 
@@ -70,14 +76,34 @@ export default function Sidebar() {
     showExpenseReports;
 
   return (
-    <aside className="w-64 bg-slate-900 text-white h-full">
+    <>
+      <div
+        className={`fixed inset-0 z-20 bg-black/40 transition-opacity duration-300 md:hidden ${
+          open ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={onClose}
+      />
 
-      {/* HEADER */}
-      <div className="p-4 font-bold text-lg border-b border-white/10">
-        ISP Panel
-      </div>
+      <aside
+        className={`fixed inset-y-0 left-0 z-30 w-64 transform overflow-y-auto bg-slate-900 text-white transition duration-300 md:static md:translate-x-0 md:w-64 ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
 
-      <nav className="p-2 space-y-1">
+        {/* HEADER */}
+        <div className="flex items-center justify-between p-4 font-bold text-lg border-b border-white/10 md:justify-center">
+          <span>ISP Panel</span>
+          <button
+            type="button"
+            onClick={onClose}
+            className="md:hidden rounded-lg bg-white/10 p-2 transition hover:bg-white/20"
+            aria-label="Close sidebar"
+          >
+            ✕
+          </button>
+        </div>
+
+        <nav className="p-2 space-y-1">
         {showDashboard && (
           <Link
             href="/dashboard"
@@ -323,5 +349,6 @@ export default function Sidebar() {
 
       </nav>
     </aside>
+    </>
   );
 }

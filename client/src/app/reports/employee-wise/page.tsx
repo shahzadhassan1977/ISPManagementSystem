@@ -105,6 +105,11 @@ export default function EmployeeWiseReportPage() {
   const columns: ColumnDef<any>[] = [
     { accessorKey: "invoiceNumber", header: "Invoice #" },
     {
+      header: "Customer",
+      cell: ({ row }) =>
+        row.original.customer?.name ?? row.original.subscription?.customer?.name ?? "N/A",
+    },
+    {
       accessorKey: "subscription.product.name",
       header: "Product",
       cell: ({ row }) => row.original.subscription?.product?.name ?? "N/A",
@@ -158,6 +163,7 @@ export default function EmployeeWiseReportPage() {
                 onChange={(option: any) => setEmployeeId(option?.value ?? "")}
                 isSearchable
                 placeholder="Select employee"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -170,6 +176,7 @@ export default function EmployeeWiseReportPage() {
                 onChange={(option: any) => setBillingMonth(option?.value ?? "")}
                 isSearchable
                 placeholder="Select month"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -184,6 +191,7 @@ export default function EmployeeWiseReportPage() {
                 onChange={(option: any) => setBillingYear(option?.value ?? "")}
                 isSearchable
                 placeholder="Select year"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>

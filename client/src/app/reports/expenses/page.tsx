@@ -140,6 +140,7 @@ export default function ExpensesReportPage() {
                 onChange={(option: any) => setCategory(option?.value ?? "")}
                 isSearchable
                 placeholder="Select category"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -151,6 +152,7 @@ export default function ExpensesReportPage() {
                 onChange={(option: any) => setStatus(option?.value ?? "")}
                 isSearchable
                 placeholder="Select status"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -162,6 +164,7 @@ export default function ExpensesReportPage() {
                 onChange={(option: any) => setPaymentMethod(option?.value ?? "")}
                 isSearchable
                 placeholder="Select method"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -173,6 +176,7 @@ export default function ExpensesReportPage() {
                 onChange={(option: any) => setBillingMonth(option?.value ?? "")}
                 isSearchable
                 placeholder="Select month"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>
@@ -186,6 +190,7 @@ export default function ExpensesReportPage() {
                 onChange={(option: any) => setBillingYear(option?.value ?? "")}
                 isSearchable
                 placeholder="Select year"
+                classNamePrefix="react-select"
                 className="text-sm"
               />
             </div>

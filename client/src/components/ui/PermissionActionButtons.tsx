@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye, Edit3, Trash2 } from "lucide-react";
 import { useAuthStore } from "@/core/store/auth.store";
 import { canPerformAction } from "@/utils/auth";
 
@@ -37,20 +38,41 @@ export default function PermissionActionButtons({
   return (
     <div className={className}>
       {canView ? (
-        <button type="button" onClick={onView} className="text-blue-500">
-          {viewLabel}
+        <button
+          type="button"
+          onClick={onView}
+          className="text-blue-500 hover:text-blue-700"
+          aria-label={viewLabel}
+          title={viewLabel}
+        >
+          <Eye className="h-4 w-4" />
+          <span className="sr-only">{viewLabel}</span>
         </button>
       ) : null}
 
       {canEdit ? (
-        <button type="button" onClick={onEdit} className="text-green-500">
-          {editLabel}
+        <button
+          type="button"
+          onClick={onEdit}
+          className="text-green-500 hover:text-green-700"
+          aria-label={editLabel}
+          title={editLabel}
+        >
+          <Edit3 className="h-4 w-4" />
+          <span className="sr-only">{editLabel}</span>
         </button>
       ) : null}
 
       {canDelete ? (
-        <button type="button" onClick={onDelete} className="text-red-500">
-          {deleteLabel}
+        <button
+          type="button"
+          onClick={onDelete}
+          className="text-red-500 hover:text-red-700"
+          aria-label={deleteLabel}
+          title={deleteLabel}
+        >
+          <Trash2 className="h-4 w-4" />
+          <span className="sr-only">{deleteLabel}</span>
         </button>
       ) : null}
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { FileText } from "lucide-react";
 import DataTable from "@/components/ui/DataTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Select from "react-select";
@@ -209,9 +210,12 @@ export default function RepCustomerInvoiceTable() {
       cell: ({ row }) => (
         <button
           onClick={() => downloadInvoicePdf(row.original)}
-          className="px-3 py-1 bg-blue-600 text-white rounded"
+          className="inline-flex items-center justify-center gap-2 px-3 py-1 bg-blue-600 text-white rounded"
+          aria-label="Download Invoice"
+          title="Download Invoice"
         >
-          Download Invoice
+          <FileText className="h-4 w-4" />
+          <span className="sr-only">Download Invoice</span>
         </button>
       ),
     },
@@ -229,6 +233,7 @@ export default function RepCustomerInvoiceTable() {
               onChange={(option: any) => setCustomerId(option?.value ?? "")}
               isSearchable
               placeholder="Select customer"
+              classNamePrefix="react-select"
               className="text-sm"
             />
           </div>
@@ -241,6 +246,7 @@ export default function RepCustomerInvoiceTable() {
               onChange={(option: any) => setBillingMonth(option?.value ?? "")}
               isSearchable
               placeholder="Select month"
+              classNamePrefix="react-select"
               className="text-sm"
             />
           </div>
@@ -255,6 +261,7 @@ export default function RepCustomerInvoiceTable() {
               onChange={(option: any) => setBillingYear(option?.value ?? "")}
               isSearchable
               placeholder="Select year"
+              classNamePrefix="react-select"
               className="text-sm"
             />
           </div>

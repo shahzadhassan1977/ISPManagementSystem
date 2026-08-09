@@ -16,6 +16,7 @@ export default function DashboardLayout({
   const setUser = useAuthStore((s) => s.setUser);
   const clearAndRedirect = useAuthStore((s) => s.clearAndRedirect);
   const [isReady, setIsReady] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const token =
@@ -50,27 +51,27 @@ export default function DashboardLayout({
 
   if (!isReady) {
     return (
-      <div className="h-screen flex items-center justify-center bg-slate-50">
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow dark:border-slate-700 dark:bg-slate-900">
           Checking authentication...
         </div>
       </div>
     );
   }
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
 
       {/* SIDEBAR */}
-      <Sidebar />
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       {/* MAIN */}
-      <div className="flex-1 flex flex-col bg-gray-100">
+      <div className="flex-1 flex flex-col">
 
         {/* HEADER */}
-        <Header />
+        <Header onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
 
         {/* CONTENT */}
-        <main className="p-6 overflow-y-auto">
+        <main className="p-4 md:p-6 overflow-y-auto">
           {children}
         </main>
 

@@ -67,6 +67,11 @@ export default function MonthlyReportPage() {
 
   const paymentColumns = [
     { accessorKey: "invoiceNumber", header: "Invoice #" },
+    {
+      header: "Customer",
+      cell: ({ row }: any) =>
+        row.original.customer?.name ?? row.original.subscription?.customer?.name ?? "N/A",
+    },
     { accessorKey: "amount", header: "Amount" },
     { accessorKey: "otherAmount", header: "Other Amount" },
     { accessorKey: "status", header: "Status" },
