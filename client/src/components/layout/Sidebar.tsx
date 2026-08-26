@@ -44,8 +44,10 @@ export default function Sidebar({
   const showPayment = canAccessPage(user, "/payment");
   const showExpense = canAccessPage(user, "/expense");
   const showRepCustomerInvoice = canAccessPage(user, "/repCustomerInvoice");
+  const showCustomerReport = canAccessPage(user, "/reports/customer");
   const showReportsHome = canAccessPage(user, "/reports");
   const showDailyReports = canAccessPage(user, "/reports/daily");
+  const showRevenueReports = canAccessPage(user, "/reports/revenue");
   const showMonthlyReports = canAccessPage(user, "/reports/monthly");
   const showYearlyReports = canAccessPage(user, "/reports/yearly");
   const showEmployeeWiseReports = canAccessPage(user, "/reports/employee-wise");
@@ -69,6 +71,7 @@ export default function Sidebar({
     showRepCustomerInvoice ||
     showReportsHome ||
     showDailyReports ||
+    showRevenueReports ||
     showMonthlyReports ||
     showYearlyReports ||
     showEmployeeWiseReports ||
@@ -267,14 +270,6 @@ export default function Sidebar({
 
             {openReports && (
               <div className="ml-6 space-y-1 mt-1">
-                {showRepCustomerInvoice && (
-                  <Link
-                    href="/repCustomerInvoice"
-                    className="block p-2 hover:bg-white/10 rounded"
-                  >
-                    Customers Invoice
-                  </Link>
-                )}
                 {showReportsHome && (
                   <Link
                     href="/reports"
@@ -282,7 +277,7 @@ export default function Sidebar({
                   >
                     Reports Home
                   </Link>
-                )}
+                )}                                
                 {showDailyReports && (
                   <Link
                     href="/reports/daily"
@@ -307,6 +302,30 @@ export default function Sidebar({
                     Yearly Reports
                   </Link>
                 )}
+                {showRepCustomerInvoice && (
+                  <Link
+                    href="/repCustomerInvoice"
+                    className="block p-2 hover:bg-white/10 rounded"
+                  >
+                    Customers Invoice
+                  </Link>
+                )}
+                {showCustomerReport && (
+                  <Link
+                    href="/reports/customer"
+                    className="block p-2 hover:bg-white/10 rounded"
+                  >
+                    Customer Report
+                  </Link>
+                )}
+                {showRevenueReports && (
+                  <Link
+                    href="/reports/revenue"
+                    className="block p-2 hover:bg-white/10 rounded"
+                  >
+                    Revenue Report
+                  </Link>
+                )}                
                 {showEmployeeWiseReports && (
                   <Link
                     href="/reports/employee-wise"

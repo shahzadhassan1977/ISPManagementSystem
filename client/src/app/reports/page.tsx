@@ -10,6 +10,11 @@ const cards = [
     href: "/reports/daily",
   },
   {
+    label: "Revenue Report",
+    description: "Review revenue totals between a date range and by payment status.",
+    href: "/reports/revenue",
+  },
+  {
     label: "Monthly Reports",
     description: "Monthly customer, revenue, and subscription summaries.",
     href: "/reports/monthly",
@@ -28,6 +33,11 @@ const cards = [
     label: "Product Wise Report",
     description: "View payment, purchase price, sale price, and profit by product.",
     href: "/reports/product-wise",
+  },
+  {
+    label: "Customer Report",
+    description: "Customer payment, unpaid and subscription status between dates.",
+    href: "/reports/customer",
   },
   {
     label: "Expenses Report",
