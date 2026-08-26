@@ -299,30 +299,21 @@ export default function RevenueReportPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 xl:grid-cols-6">
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Revenue</p>
-            <p className="mt-3 text-2xl font-semibold dark:text-slate-100">{summary.totalRevenue.toFixed(2)}</p>
-          </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Customers</p>
-            <p className="mt-3 text-2xl font-semibold dark:text-slate-100">{summary.totalCustomer}</p>
-          </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Subscriptions</p>
-            <p className="mt-3 text-2xl font-semibold dark:text-slate-100">{summary.totalSubscription}</p>
-          </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Paid</p>
-            <p className="mt-3 text-2xl font-semibold dark:text-slate-100">{summary.totalPaid.toFixed(2)}</p>
-          </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Pending</p>
-            <p className="mt-3 text-2xl font-semibold dark:text-slate-100">{summary.totalPending.toFixed(2)}</p>
-          </div>
-          <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow dark:border-slate-700 dark:bg-slate-900">
-            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Expenses</p>
-            <p className="mt-3 text-2xl font-semibold dark:text-slate-100">{summary.totalExpense.toFixed(2)}</p>
-          </div>
+          {[
+            { k: "Revenue", v: summary.totalRevenue.toFixed(2) },
+            { k: "Customers", v: String(summary.totalCustomer) },
+            { k: "Subscriptions", v: String(summary.totalSubscription) },
+            { k: "Paid", v: summary.totalPaid.toFixed(2) },
+            { k: "Pending", v: summary.totalPending.toFixed(2) },
+            { k: "Expenses", v: summary.totalExpense.toFixed(2) },
+          ].map((item) => (
+            <div key={item.k} className="rounded-3xl border border-slate-200 bg-white p-5 shadow dark:border-slate-700 dark:bg-slate-900">
+              <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">{item.k}</p>
+              <p className="mt-3 text-2xl font-semibold dark:text-slate-100 truncate max-w-full break-words">
+                <span className="inline-block max-w-full break-words">{item.v}</span>
+              </p>
+            </div>
+          ))}
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white p-6 shadow dark:border-slate-700 dark:bg-slate-900">

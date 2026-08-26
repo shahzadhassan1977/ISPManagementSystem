@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import React, { useState } from "react";
 import Link from "next/link";
 import { useCustomers } from "@/modules/customer/hooks/useCustomers";
 import { usePayments } from "@/modules/payment/hooks/usePayments";
@@ -60,7 +61,7 @@ const formatDate = (value: any) => {
 
 const formatCurrency = (value: number) => `Rs.${value.toFixed(2)}`;
 
-type MetricChartType = "bar" | "line" | "pie";
+type MetricChartType = "bar" | "line";
 
 type MetricChartCardProps = {
   title: string;
@@ -74,127 +75,119 @@ const MetricChartCard = ({ title, type, data, labels, color }: MetricChartCardPr
   const safeData = data.length > 0 ? data : [0];
   const maxValue = Math.max(...safeData, 1);
   const total = safeData.reduce((sum, value) => sum + value, 0);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [hoverPos, setHoverPos] = useState<{ x: number; y: number } | null>(null);
 
-  const renderBarChart = () => (
-    <div className="mt-4">
-      <svg viewBox="0 0 260 120" className="h-32 w-full">
-        {[0, 0.25, 0.5, 0.75, 1].map((value) => (
-          <line
-            key={value}
-            x1="16"
-            x2="244"
-            y1={18 + value * 84}
-            y2={18 + value * 84}
-            stroke="#e2e8f0"
-            strokeDasharray="4 4"
-          />
-        ))}
-        {safeData.map((value, index) => {
-          const barHeight = maxValue === 0 ? 0 : (value / maxValue) * 70;
-          const x = 24 + index * 36;
-          const y = 90 - barHeight;
-          return (
-            <g key={`${title}-${labels[index]}`}>
-              <rect x={x} y={y} width="24" height={barHeight} rx="6" fill={color} opacity="0.9" />
-              <text x={x + 12} y="108" textAnchor="middle" fontSize="10" fill="#64748b">
-                {labels[index]}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
-    </div>
-  );
+  const renderBarChart = () => renderLineChart();
 
   const renderLineChart = () => {
-    const width = 240;
-    const height = 120;
-    const padding = 20;
+    const width = 320;
+    const height = 140;
+    const padding = 24;
     const innerWidth = width - padding * 2;
     const innerHeight = height - padding * 2;
     const points = safeData.map((value, index) => {
       const x = padding + (index / Math.max(safeData.length - 1, 1)) * innerWidth;
       const y = padding + innerHeight - (value / maxValue) * innerHeight;
-      return `${x},${y}`;
+      return { x, y, value };
     });
 
     return (
-      <div className="mt-4">
-        <svg viewBox={`0 0 ${width} ${height}`} className="h-32 w-full">
-          {[0, 0.25, 0.5, 0.75, 1].map((value) => (
+      <div className="mt-4 relative" onMouseLeave={() => { setHoverIndex(null); setHoverPos(null); }}>
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          className="h-36 w-full"
+          onMouseMove={(e) => {
+            const rect = (e.currentTarget as SVGElement).getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            // Map pixel x to viewBox coordinates
+            const svgX = (x / rect.width) * width;
+            let closest = 0;
+            let bestDist = Infinity;
+            points.forEach((p, i) => {
+              const d = Math.abs(p.x - svgX);
+              if (d < bestDist) {
+                bestDist = d;
+                closest = i;
+              }
+            });
+            setHoverIndex(closest);
+            setHoverPos({ x: (points[closest].x / width) * rect.width, y: points[closest].y });
+          }}
+        >
+          {[0, 0.25, 0.5, 0.75, 1].map((v) => (
             <line
-              key={value}
+              key={v}
               x1={padding}
               x2={width - padding}
-              y1={padding + value * innerHeight}
-              y2={padding + value * innerHeight}
-              stroke="#e2e8f0"
+              y1={padding + v * innerHeight}
+              y2={padding + v * innerHeight}
+              stroke="currentColor"
+              className="text-slate-200 dark:text-slate-700"
               strokeDasharray="4 4"
             />
           ))}
-          <polyline points={points.join(" ")} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" />
-          {safeData.map((value, index) => {
-            const x = padding + (index / Math.max(safeData.length - 1, 1)) * innerWidth;
-            const y = padding + innerHeight - (value / maxValue) * innerHeight;
-            return <circle key={`${title}-${labels[index]}`} cx={x} cy={y} r="4" fill={color} />;
-          })}
-        </svg>
-      </div>
-    );
-  };
-
-  const renderPieChart = () => {
-    const size = 140;
-    const radius = 44;
-    const center = size / 2;
-    let currentAngle = -Math.PI / 2;
-    const totalValue = safeData.reduce((sum, value) => sum + value, 0);
-
-    const createSlicePath = (start: number, end: number) => {
-      const startX = center + radius * Math.cos(start);
-      const startY = center + radius * Math.sin(start);
-      const endX = center + radius * Math.cos(end);
-      const endY = center + radius * Math.sin(end);
-      const largeArc = end - start > Math.PI ? 1 : 0;
-      return `M ${center} ${center} L ${startX} ${startY} A ${radius} ${radius} 0 ${largeArc} 1 ${endX} ${endY} Z`;
-    };
-
-    return (
-      <div className="mt-4 flex flex-col items-center gap-3">
-        <svg viewBox={`0 0 ${size} ${size}`} className="h-36 w-36">
-          {safeData.map((value, index) => {
-            if (value <= 0) return null;
-            const sliceAngle = (value / Math.max(totalValue, 1)) * Math.PI * 2;
-            const startAngle = currentAngle;
-            const endAngle = currentAngle + sliceAngle;
-            currentAngle = endAngle;
-            return <path key={`${title}-${labels[index]}`} d={createSlicePath(startAngle, endAngle)} fill={color} opacity="0.8" />;
-          })}
-          <circle cx={center} cy={center} r="24" fill="#fff" />
-        </svg>
-        <div className="flex flex-wrap justify-center gap-2 text-[11px] text-gray-500">
-          {labels.map((label, index) => (
-            <span key={`${label}-${index}`} className="rounded-full bg-slate-100 px-2 py-1">
-              {label}: {safeData[index]}
-            </span>
+          <polyline
+            points={points.map((p) => `${p.x},${p.y}`).join(" ")}
+            fill="none"
+            stroke={color}
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          {points.map((p, i) => (
+            <g key={`${title}-${i}`}>
+              <circle cx={p.x} cy={p.y} r="5" fill={color} />
+            </g>
           ))}
-        </div>
+          {hoverIndex !== null && (
+            <>
+              <line
+                x1={points[hoverIndex].x}
+                x2={points[hoverIndex].x}
+                y1={padding}
+                y2={height - padding}
+                stroke="rgba(100,116,139,0.5)"
+                strokeDasharray="4 2"
+              />
+              <line
+                x1={padding}
+                x2={width - padding}
+                y1={points[hoverIndex].y}
+                y2={points[hoverIndex].y}
+                stroke="rgba(100,116,139,0.5)"
+                strokeDasharray="4 2"
+              />
+            </>
+          )}
+        </svg>
+        {hoverIndex !== null && hoverPos && (
+          <div
+            className="absolute z-10 pointer-events-none"
+            style={{ left: hoverPos.x - 40, top: Math.max(8, hoverPos.y - 36) }}
+          >
+            <div className="rounded bg-white px-2 py-1 text-xs shadow dark:bg-slate-800 dark:text-slate-100">
+              <div className="font-medium">{labels[hoverIndex]}</div>
+              <div className="text-sm">{safeData[hoverIndex]}</div>
+            </div>
+          </div>
+        )}
       </div>
     );
   };
+
+  // Pie charts converted to line charts — pie renderer removed.
 
   return (
     <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="flex items-center justify-between gap-3">
         <div>
           <p className="text-sm text-gray-500">{title}</p>
-          <p className="text-lg font-semibold">{total}</p>
+          <p className="text-lg md:text-xl lg:text-2xl font-semibold">{total}</p>
         </div>
         <div className="rounded-2xl bg-slate-100 px-3 py-2 text-sm font-medium text-slate-600">{type}</div>
       </div>
       {type === "bar" && renderBarChart()}
       {type === "line" && renderLineChart()}
-      {type === "pie" && renderPieChart()}
     </div>
   );
 };
@@ -436,7 +429,7 @@ export default function DashboardPage() {
           },
           {
             title: "Subscription Starts",
-            type: "pie",
+            type: "line",
             data: dailyTrend.map((item) => item.subscriptions),
             labels: dailyTrend.map((item) => item.label),
             color: "#38bdf8",
@@ -511,7 +504,7 @@ export default function DashboardPage() {
           },
           {
             title: "Subscription Starts",
-            type: "pie",
+            type: "line",
             data: monthlyTrend.map((item) => item.subscriptions),
             labels: monthlyTrend.map((item) => item.label),
             color: "#38bdf8",
@@ -586,7 +579,7 @@ export default function DashboardPage() {
           },
           {
             title: "Subscription Starts",
-            type: "pie",
+            type: "line",
             data: yearlyTrend.map((item) => item.subscriptions),
             labels: yearlyTrend.map((item) => item.label),
             color: "#38bdf8",

@@ -133,13 +133,39 @@ export default function RoleFormModal({ open, onClose, data }: any) {
             Permissions
           </label>
 
-          <Select            
+          <Select
             isMulti
             options={options}
             value={selectedPermissions}
             onChange={(val) => setSelectedPermissions(val as any)}
             className="text-black"
             placeholder="Select permissions..."
+            styles={{
+              control: (base, state) => ({
+                ...base,
+                background: 'transparent',
+                color: 'inherit',
+                borderColor: state.isFocused ? undefined : base.borderColor,
+                boxShadow: 'none',
+              }),
+              menu: (base) => ({ ...base, background: 'white', color: '#0f172a' }),
+              multiValue: (base) => ({ ...base, background: '#e6eef8', color: '#0f172a' }),
+              option: (base, state) => ({
+                ...base,
+                background: state.isFocused ? '#f1f5f9' : 'transparent',
+                color: '#0f172a',
+              }),
+            }}
+            classNamePrefix="react-select"
+            theme={(theme) => ({
+              ...theme,
+              colors: {
+                ...theme.colors,
+                primary25: '#f1f5f9',
+                primary: '#2563eb',
+                neutral0: undefined as any,
+              },
+            })}
           />
         </div>
 
