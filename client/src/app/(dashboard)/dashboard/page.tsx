@@ -10,6 +10,17 @@ import { Users, CreditCard, Activity, Wallet } from "lucide-react";
 
 const parseDate = (value: any) => (value ? new Date(value) : null);
 
+const daysInMonth = (year: number, month: number) => new Date(year, month + 1, 0).getDate();
+
+const isRenewalOn = (renewalValue: any, targetDate: Date) => {
+  const d = parseDate(renewalValue);
+  if (!d) return false;
+  const renewalDay = d.getDate();
+  const dim = daysInMonth(targetDate.getFullYear(), targetDate.getMonth());
+  const effectiveDay = Math.min(renewalDay, dim);
+  return effectiveDay === targetDate.getDate();
+};
+
 const isSameDay = (value: any, compare: Date) => {
   const date = parseDate(value);
   return (
@@ -32,9 +43,9 @@ const getDateKeys = (days: number) => {
 const getMonthKeys = (months: number) => {
   const today = new Date();
   return Array.from({ length: months }).map((_, index) => {
-    const date = new Date(today);
-    date.setMonth(today.getMonth() - (months - 1 - index));
-    return date;
+    // Create month keys using year/month with day=1 to avoid JS date overflow
+    const monthIndex = today.getMonth() - (months - 1 - index);
+    return new Date(today.getFullYear(), monthIndex, 1);
   });
 };
 
@@ -179,12 +190,14 @@ const MetricChartCard = ({ title, type, data, labels, color }: MetricChartCardPr
 
   return (
     <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center justify-between gap-3">
         <div>
           <p className="text-sm text-gray-500">{title}</p>
           <p className="text-lg md:text-xl lg:text-2xl font-semibold">{total}</p>
         </div>
-        <div className="rounded-2xl bg-slate-100 px-3 py-2 text-sm font-medium text-slate-600">{type}</div>
+        <div className="rounded-2xl bg-slate-100 px-3 py-2 text-sm font-medium text-slate-600">
+          {type === "bar" ? "Bar chart" : "Line chart"}
+        </div>
       </div>
       {type === "bar" && renderBarChart()}
       {type === "line" && renderLineChart()}
@@ -325,6 +338,59 @@ export default function DashboardPage() {
     }).length,
   }));
 
+  // Renewal checks: yesterday / today / tomorrow (compare day-of-month, handle month lengths)
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const getCustomerNameFromSubscription = (sub: any) =>
+    sub?.customer?.name ||
+    customers.find((c: any) => c.customerid === sub.customerId || c.id === sub.customerId)?.name ||
+    "N/A";
+
+  const getCustomerDetailsFromSubscription = (sub: any) => {
+    const cust = sub?.customer || customers.find((c: any) => c.customerid === sub.customerId || c.id === sub.customerId) || {};
+    return {
+      name: cust.name || "N/A",
+      cnic: cust.cnic || cust.cnic_no || cust.cnicNo || "N/A",
+      phone: cust.phone || cust.mobile || "N/A",
+    };
+  };
+
+  const [renewalSearch, setRenewalSearch] = useState("");
+  const [pageYesterday, setPageYesterday] = useState(1);
+  const [pageToday, setPageToday] = useState(1);
+  const [pageTomorrow, setPageTomorrow] = useState(1);
+  const PAGE_SIZE = 3;
+
+  const filterAndPaginate = (items: any[], page: number) => {
+    const q = renewalSearch.trim().toLowerCase();
+    const filtered = q
+      ? items.filter((s: any) => {
+          const det = getCustomerDetailsFromSubscription(s);
+          const prod = s.product?.name || "";
+          return (
+            det.name.toLowerCase().includes(q) ||
+            (det.cnic || "").toLowerCase().includes(q) ||
+            (det.phone || "").toLowerCase().includes(q) ||
+            prod.toLowerCase().includes(q)
+          );
+        })
+      : items;
+
+    const total = filtered.length;
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    const safePage = Math.min(Math.max(1, page), totalPages);
+    const start = (safePage - 1) * PAGE_SIZE;
+    const paged = filtered.slice(start, start + PAGE_SIZE);
+    return { paged, total, totalPages };
+  };
+
+  const renewalSubsYesterday = subscriptions.filter((s: any) => isRenewalOn(s.renewalDate, yesterday));
+  const renewalSubsToday = subscriptions.filter((s: any) => isRenewalOn(s.renewalDate, today));
+  const renewalSubsTomorrow = subscriptions.filter((s: any) => isRenewalOn(s.renewalDate, tomorrow));
+
   const renderMetricCards = (metrics: MetricChartCardProps[]) => (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       {metrics.map((metric) => (
@@ -435,7 +501,141 @@ export default function DashboardPage() {
             color: "#38bdf8",
           },
         ])}
-      </section>
+        </section>
+
+        <section className="space-y-6">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <p className="text-sm text-gray-500 uppercase tracking-[0.2em]">Renewals</p>
+              <h2 className="text-2xl font-semibold">Renewals: Yesterday / Today / Tomorrow</h2>
+            </div>
+            <div className="text-sm text-gray-600 flex items-center gap-4">
+              <input
+                aria-label="Search renewals"
+                placeholder="Search name, CNIC, phone or product"
+                value={renewalSearch}
+                onChange={(e) => {
+                  setRenewalSearch(e.target.value);
+                  setPageYesterday(1); setPageToday(1); setPageTomorrow(1);
+                }}
+                className="input w-full md:w-80"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white rounded-3xl shadow p-6 border border-slate-200">
+              <p className="text-sm text-gray-500">{formatDayLabel(yesterday)} — Yesterday</p>
+              <div className="mt-3 divide-y divide-slate-200">
+                {(() => {
+                  const { paged, total, totalPages } = filterAndPaginate(renewalSubsYesterday, pageYesterday);
+                  if (total === 0) return <p className="text-sm text-gray-500 py-2">No renewals yesterday.</p>;
+                  return (
+                    <>
+                      {paged.map((s: any) => {
+                        const det = getCustomerDetailsFromSubscription(s);
+                        return (
+                          <div key={s.subscriptionid || s.id || s.subscriptionId} className="py-2 flex items-center justify-between">
+                            <div>
+                              <p className="font-medium">{det.name}</p>
+                              <p className="text-sm text-gray-500">{s.product?.name ?? "N/A"}</p>
+                            </div>
+                            <div className="text-sm text-gray-500 text-right">
+                              <div>{det.cnic}</div>
+                              <div>{det.phone}</div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <div className="flex items-center justify-between mt-3">
+                        <div className="text-sm text-gray-500">Total: {total}</div>
+                        <div className="flex items-center gap-2">
+                          <button disabled={pageYesterday<=1} onClick={() => setPageYesterday((p) => Math.max(1, p-1))} className="btn">Prev</button>
+                          <div className="text-sm text-gray-600">{pageYesterday}/{totalPages}</div>
+                          <button disabled={pageYesterday>=totalPages} onClick={() => setPageYesterday((p) => Math.min(totalPages, p+1))} className="btn">Next</button>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-3xl shadow p-6 border border-slate-200">
+              <p className="text-sm text-gray-500">{formatDayLabel(today)} — Today</p>
+              <div className="mt-3 divide-y divide-slate-200">
+                {(() => {
+                  const { paged, total, totalPages } = filterAndPaginate(renewalSubsToday, pageToday);
+                  if (total === 0) return <p className="text-sm text-gray-500 py-2">No renewals today.</p>;
+                  return (
+                    <>
+                      {paged.map((s: any) => {
+                        const det = getCustomerDetailsFromSubscription(s);
+                        return (
+                          <div key={s.subscriptionid || s.id || s.subscriptionId} className="py-2 flex items-center justify-between">
+                            <div>
+                              <p className="font-medium">{det.name}</p>
+                              <p className="text-sm text-gray-500">{s.product?.name ?? "N/A"}</p>
+                            </div>
+                            <div className="text-sm text-gray-500 text-right">
+                              <div>{det.cnic}</div>
+                              <div>{det.phone}</div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <div className="flex items-center justify-between mt-3">
+                        <div className="text-sm text-gray-500">Total: {total}</div>
+                        <div className="flex items-center gap-2">
+                          <button disabled={pageToday<=1} onClick={() => setPageToday((p) => Math.max(1, p-1))} className="btn">Prev</button>
+                          <div className="text-sm text-gray-600">{pageToday}/{totalPages}</div>
+                          <button disabled={pageToday>=totalPages} onClick={() => setPageToday((p) => Math.min(totalPages, p+1))} className="btn">Next</button>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-3xl shadow p-6 border border-slate-200">
+              <p className="text-sm text-gray-500">{formatDayLabel(tomorrow)} — Tomorrow</p>
+              <div className="mt-3 divide-y divide-slate-200">
+                {(() => {
+                  const { paged, total, totalPages } = filterAndPaginate(renewalSubsTomorrow, pageTomorrow);
+                  if (total === 0) return <p className="text-sm text-gray-500 py-2">No renewals tomorrow.</p>;
+                  return (
+                    <>
+                      {paged.map((s: any) => {
+                        const det = getCustomerDetailsFromSubscription(s);
+                        return (
+                          <div key={s.subscriptionid || s.id || s.subscriptionId} className="py-2 flex items-center justify-between">
+                            <div>
+                              <p className="font-medium">{det.name}</p>
+                              <p className="text-sm text-gray-500">{s.product?.name ?? "N/A"}</p>
+                            </div>
+                            <div className="text-sm text-gray-500 text-right">
+                              <div>{det.cnic}</div>
+                              <div>{det.phone}</div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <div className="flex items-center justify-between mt-3">
+                        <div className="text-sm text-gray-500">Total: {total}</div>
+                        <div className="flex items-center gap-2">
+                          <button disabled={pageTomorrow<=1} onClick={() => setPageTomorrow((p) => Math.max(1, p-1))} className="btn">Prev</button>
+                          <div className="text-sm text-gray-600">{pageTomorrow}/{totalPages}</div>
+                          <button disabled={pageTomorrow>=totalPages} onClick={() => setPageTomorrow((p) => Math.min(totalPages, p+1))} className="btn">Next</button>
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+          </div>
+        </section>
 
       <section className="space-y-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
