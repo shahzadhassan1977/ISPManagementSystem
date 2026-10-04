@@ -74,9 +74,9 @@ const formatDisplayDate = (value: any) => {
 const getTotalAmount = (payment: any) => Number(payment?.amount || 0) + Number(payment?.otherAmount || 0);
 
 export default function RepCustomerReportTable() {
-  const { data: customers = [], isLoading: loadingCustomers } = useCustomers();
-  const { data: payments = [], isLoading: loadingPayments } = usePayments();
-  const { data: subscriptions = [], isLoading: loadingSubscriptions } = useSubscriptions();
+  const { data: customers = [], isLoading: loadingCustomers, error: customersError, refetch: refetchCustomers } = useCustomers();
+  const { data: payments = [], isLoading: loadingPayments, error: paymentsError, refetch: refetchPayments } = usePayments();
+  const { data: subscriptions = [], isLoading: loadingSubscriptions, error: subscriptionsError, refetch: refetchSubscriptions } = useSubscriptions();
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -85,11 +85,16 @@ export default function RepCustomerReportTable() {
   const [subscriptionFilter, setSubscriptionFilter] = useState("");
 
   const defaultRange = useMemo(
-    () => ({
-      ...getDefaultDateRange(payments, "createdAt"),
-      ...getDefaultDateRange(customers, "createdAt"),
-      ...getDefaultDateRange(subscriptions, "startDate"),
-    }),
+    () => {
+      const ranges = [
+        getDefaultDateRange(payments, "createdAt"),
+        getDefaultDateRange(customers, "createdAt"),
+        getDefaultDateRange(subscriptions, "startDate"),
+      ];
+      const starts = ranges.map((range) => range.start).filter(Boolean).sort();
+      const ends = ranges.map((range) => range.end).filter(Boolean).sort();
+      return { start: starts[0] || "", end: ends[ends.length - 1] || "" };
+    },
     [payments, customers, subscriptions]
   );
 
@@ -213,11 +218,17 @@ export default function RepCustomerReportTable() {
   ];
 
   const isLoading = loadingCustomers || loadingPayments || loadingSubscriptions;
+  const reportError = customersError || paymentsError || subscriptionsError;
+  const retryReport = () => {
+    void refetchCustomers();
+    void refetchPayments();
+    void refetchSubscriptions();
+  };
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow space-y-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
+      <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
           <div>
             <label className="mb-1 block text-sm text-gray-600 dark:text-slate-200">Start Date</label>
             <input
@@ -264,8 +275,8 @@ export default function RepCustomerReportTable() {
             />
           </div>
 
-          <div className="flex items-end space-x-2">
-            <label className="flex items-center text-sm dark:text-slate-200">
+          <div className="flex flex-wrap items-end gap-3">
+            <label className="flex min-h-10 items-center text-sm text-slate-700 dark:text-slate-200">
               <input type="checkbox" checked={unpaidOnly} onChange={(e) => setUnpaidOnly(e.target.checked)} className="mr-2" />
               Unpaid Only
             </label>
@@ -278,7 +289,7 @@ export default function RepCustomerReportTable() {
                 setUnpaidOnly(false);
                 setSubscriptionFilter("");
               }}
-              className="rounded-md border border-slate-300 bg-slate-100 px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+              className="min-h-10 rounded-md border border-slate-300 bg-white px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
             >
               Reset
             </button>
@@ -286,9 +297,7 @@ export default function RepCustomerReportTable() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white p-6 shadow">
-        <DataTable data={reportRows} columns={columns} loading={isLoading} />
-      </div>
+      <DataTable data={reportRows} columns={columns} loading={isLoading} error={reportError} onRetry={retryReport} />
     </div>
   );
 }

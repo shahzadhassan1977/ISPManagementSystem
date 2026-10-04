@@ -77,21 +77,26 @@ const getDefaultDateRange = (items: any[], fieldName: string) => {
 };
 
 export default function RevenueReportPage() {
-  const { data: payments = [], isLoading: loadingPayments } = usePayments();
-  const { data: customers = [], isLoading: loadingCustomers } = useCustomers();
-  const { data: subscriptions = [], isLoading: loadingSubscriptions } = useSubscriptions();
-  const { data: expenses = [], isLoading: loadingExpenses } = useExpenses();
+  const { data: payments = [], isLoading: loadingPayments, error: paymentsError, refetch: refetchPayments } = usePayments();
+  const { data: customers = [], isLoading: loadingCustomers, error: customersError, refetch: refetchCustomers } = useCustomers();
+  const { data: subscriptions = [], isLoading: loadingSubscriptions, error: subscriptionsError, refetch: refetchSubscriptions } = useSubscriptions();
+  const { data: expenses = [], isLoading: loadingExpenses, error: expensesError, refetch: refetchExpenses } = useExpenses();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [status, setStatus] = useState("");
 
   const defaultRange = useMemo(
-    () => ({
-      ...getDefaultDateRange(payments, "createdAt"),
-      ...getDefaultDateRange(customers, "createdAt"),
-      ...getDefaultDateRange(subscriptions, "startDate"),
-      ...getDefaultDateRange(expenses, "expenseDate"),
-    }),
+    () => {
+      const ranges = [
+        getDefaultDateRange(payments, "createdAt"),
+        getDefaultDateRange(customers, "createdAt"),
+        getDefaultDateRange(subscriptions, "startDate"),
+        getDefaultDateRange(expenses, "expenseDate"),
+      ];
+      const starts = ranges.map((range) => range.start).filter(Boolean).sort();
+      const ends = ranges.map((range) => range.end).filter(Boolean).sort();
+      return { start: starts[0] || "", end: ends[ends.length - 1] || "" };
+    },
     [payments, customers, subscriptions, expenses]
   );
 
@@ -239,6 +244,13 @@ export default function RevenueReportPage() {
   ];
 
   const isLoading = loadingPayments || loadingCustomers || loadingSubscriptions || loadingExpenses;
+  const reportError = paymentsError || customersError || subscriptionsError || expensesError;
+  const retryReport = () => {
+    void refetchPayments();
+    void refetchCustomers();
+    void refetchSubscriptions();
+    void refetchExpenses();
+  };
 
   return (
     <PageWrapper
@@ -317,7 +329,7 @@ export default function RevenueReportPage() {
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white p-6 shadow dark:border-slate-700 dark:bg-slate-900">
-          <DataTable data={reportRows} columns={columns} loading={isLoading} />
+          <DataTable data={reportRows} columns={columns} loading={isLoading} error={reportError} onRetry={retryReport} />
         </div>
       </div>
     </PageWrapper>

@@ -15,7 +15,7 @@ type Area = {
 };
 
 export default function AreaTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useArea();
+  const { data = [], isLoading, isError, error, refetch } = useArea();
   const { mutate: deleteArea, isPending } = useDeleteArea();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -68,6 +68,8 @@ export default function AreaTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

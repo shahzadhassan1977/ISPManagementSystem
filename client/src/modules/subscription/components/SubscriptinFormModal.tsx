@@ -283,7 +283,7 @@ export default function SubscriptionFormModal({ open, onClose, data }: any) {
       open={open}
       onClose={onClose}
       title={data ? "Edit Subscription" : "Add Subscription"}
-      width="100"
+      width="max-w-6xl"
     >
       <div className="max-h-[80vh] overflow-y-auto pr-3">
         <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-5">
@@ -715,7 +715,7 @@ export default function SubscriptionFormModal({ open, onClose, data }: any) {
                 </p>
               )}
             </label>
-            {/* ACTIVE & DELETED TOGGLES */}
+            <input type="hidden" {...register("isDeleted")} />
             <div className="flex items-center gap-4">
               <label className="flex items-center gap-1">
                 <input
@@ -726,17 +726,9 @@ export default function SubscriptionFormModal({ open, onClose, data }: any) {
                 <span>Active</span>
               </label>
 
-              <label className="flex items-center gap-1">
-                <input
-                  type="checkbox"
-                  {...register("isDeleted")}
-                  className="checkbox"
-                />
-                <span>Deleted</span>
-              </label>
             </div>
 
-            <div className="flex justify-end gap-2 mt-4">
+            <div className="crud-form-actions flex justify-end gap-2 mt-4">
               <button
                 type="button"
                 onClick={onClose}
@@ -745,7 +737,7 @@ export default function SubscriptionFormModal({ open, onClose, data }: any) {
                 Cancel
               </button>
 
-              <button className="bg-blue-600 text-white px-3 py-1 rounded">
+              <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Save
               </button>
             </div>

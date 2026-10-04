@@ -18,9 +18,7 @@ const schema = z.object({
   package: z.string().min(1, "Package is required"),
   bandwidth: z.string().min(1, "Bandwidth is required"),
   companyid: z.number().optional(), 
-  // ✅ FIX HERE
   isActive: z.boolean(),
-  isDeleted: z.boolean(),
 });
 
 export default function ProductFormModal({ open, onClose, data }: any) {
@@ -41,7 +39,6 @@ export default function ProductFormModal({ open, onClose, data }: any) {
       bandwidth: "",
       companyid: undefined,
       isActive: true,
-      isDeleted: false,
     },
   });
 
@@ -98,7 +95,7 @@ export default function ProductFormModal({ open, onClose, data }: any) {
         salePrice: formData.salePrice,
         purchasePrice: formData.purchasePrice,
         isActive: formData.isActive,
-        isDeleted: formData.isDeleted,
+        isDeleted: data?.isDeleted ?? false,
       };
 
       // 🔥 CREATE / UPDATE PRODUCT
@@ -124,7 +121,7 @@ export default function ProductFormModal({ open, onClose, data }: any) {
         package: formData.package,
         bandwidth: formData.bandwidth,
         isActive: formData.isActive,
-        isDeleted: formData.isDeleted,
+        isDeleted: data?.productdetails?.[0]?.isDeleted ?? false,
       };
 
       // 🔥 STORE / UPDATE PRODUCT DETAIL
@@ -165,9 +162,11 @@ export default function ProductFormModal({ open, onClose, data }: any) {
 
         {/* PRODUCT NAME */}
         <div>
+          <label htmlFor="product-name" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Product name</label>
           <input
+            id="product-name"
             {...register("name")}
-            placeholder="Product Name"
+            placeholder="Enter product name"
             className="input"
           />
 
@@ -180,7 +179,9 @@ export default function ProductFormModal({ open, onClose, data }: any) {
 
         {/* SALE PRICE */}
         <div>
+          <label htmlFor="product-sale-price" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Sale price</label>
           <input
+            id="product-sale-price"
             type="number"
             {...register("salePrice")}
             placeholder="Sale Price"
@@ -196,7 +197,9 @@ export default function ProductFormModal({ open, onClose, data }: any) {
 
         {/* PURCHASE PRICE */}
         <div>
+          <label htmlFor="product-purchase-price" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Purchase price</label>
           <input
+            id="product-purchase-price"
             type="number"
             {...register("purchasePrice")}
             placeholder="Purchase Price"
@@ -246,7 +249,9 @@ export default function ProductFormModal({ open, onClose, data }: any) {
 
         {/* PACKAGE */}
         <div>
+          <label htmlFor="product-package" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Package</label>
           <input
+            id="product-package"
             {...register("package")}
             placeholder="Package"
             className="input"
@@ -261,7 +266,9 @@ export default function ProductFormModal({ open, onClose, data }: any) {
 
         {/* BANDWIDTH */}
         <div>
+          <label htmlFor="product-bandwidth" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Bandwidth</label>
           <input
+            id="product-bandwidth"
             {...register("bandwidth")}
             placeholder="Bandwidth"
             className="input"
@@ -274,7 +281,7 @@ export default function ProductFormModal({ open, onClose, data }: any) {
           )}
         </div>
 
-        {/* ACTIVE & DELETED */}
+        {/* ACTIVE */}
         <div className="flex items-center gap-4">
           <label className="flex items-center gap-1">
             <input
@@ -286,19 +293,10 @@ export default function ProductFormModal({ open, onClose, data }: any) {
             <span>Active</span>
           </label>
 
-          <label className="flex items-center gap-1">
-            <input
-              type="checkbox"
-              {...register("isDeleted")}
-              className="checkbox"
-            />
-
-            <span>Deleted</span>
-          </label>
         </div>
 
         {/* ACTIONS */}
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="crud-form-actions flex justify-end gap-2 mt-4">
           <button
             type="button"
             onClick={onClose}

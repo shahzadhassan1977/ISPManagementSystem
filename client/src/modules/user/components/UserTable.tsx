@@ -16,12 +16,12 @@ type User = {
   name: string;
   email: string;
   password: string;
-  isactive: boolean;
+  isActive: boolean;
   isdeleted: boolean;  
 };
 
 export default function UserTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useUsers();
+  const { data = [], isLoading, isError, error, refetch } = useUsers();
   const { mutate: deleteUser, isPending } = useDeleteUser();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -41,12 +41,9 @@ export default function UserTable({ onEdit }: any) {
       header: "User Email",
     },
     {
-      accessorKey: "isactive",
+      accessorKey: "isActive",
       header: "Is Active",
-    },
-    {
-      accessorKey: "isdeleted",
-      header: "Is Deleted",
+      cell: ({ row }) => (row.original.isActive ? "Yes" : "No"),
     },
     {
       id: "actions",
@@ -86,6 +83,8 @@ export default function UserTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

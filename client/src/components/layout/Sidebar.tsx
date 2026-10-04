@@ -88,18 +88,28 @@ export default function Sidebar({
       />
 
       <aside
-        className={`fixed inset-y-0 left-0 z-30 w-64 transform overflow-y-auto bg-slate-900 text-white transition duration-300 md:static md:translate-x-0 md:w-64 ${
+        className={`fixed inset-y-0 left-0 z-30 w-64 transform overflow-y-auto bg-[#102f66] text-white transition duration-300 md:static md:translate-x-0 md:w-64 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
 
         {/* HEADER */}
-        <div className="flex items-center justify-between p-4 font-bold text-lg border-b border-white/10 md:justify-center">
-          <span>ISP Panel</span>
+        <div className="flex items-center justify-between border-b border-white/10 bg-[#0b2149] p-4 md:justify-center">
+          <div className="flex items-center gap-3">
+            <svg viewBox="0 0 48 48" className="h-9 w-9 shrink-0" role="img" aria-label="M3-Solution">
+              <rect width="48" height="48" rx="9" fill="#ffffff" />
+              <path d="M6 37V11l13 13 12-13v26h-9V28l-4 4-5-4v9z" fill="#1768bd" />
+              <path d="M31 12h15L37 24c8-1 11 3 11 7 0 6-5 9-12 9-5 0-9-1-12-4l5-6c2 2 4 3 7 3 2 0 3-1 3-2s-2-2-5-2h-4l5-9h-9z" fill="#f28a16" />
+            </svg>
+            <div className="leading-tight">
+              <span className="block text-sm font-bold tracking-normal text-white">M3-Solution</span>
+              <span className="mt-1 block text-[9px] font-medium tracking-[0.12em] text-blue-200">ISP MANAGEMENT</span>
+            </div>
+          </div>
           <button
             type="button"
             onClick={onClose}
-            className="md:hidden rounded-lg bg-white/10 p-2 transition hover:bg-white/20"
+            className="rounded-md bg-white/10 p-2 transition hover:bg-white/20 md:hidden"
             aria-label="Close sidebar"
           >
             ✕
@@ -110,8 +120,8 @@ export default function Sidebar({
         {showDashboard && (
           <Link
             href="/dashboard"
-            className={`flex items-center gap-2 p-2 rounded hover:bg-white/10 ${
-              isActive("/dashboard") ? "bg-blue-600" : ""
+            className={`flex items-center gap-2 rounded-md p-2 transition hover:bg-white/10 ${
+              isActive("/dashboard") ? "bg-[#1f447f] shadow-[inset_3px_0_0_#f28a16]" : ""
             }`}
           >
             <LayoutDashboard size={18} />

@@ -24,7 +24,7 @@ type Employee = {
 };
 
 export default function EmployeeTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useEmployees();
+  const { data = [], isLoading, isError, error, refetch } = useEmployees();
   const { mutate: deleteEmployee, isPending } = useDeleteEmployee();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -101,6 +101,8 @@ export default function EmployeeTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

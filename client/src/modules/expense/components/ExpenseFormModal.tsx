@@ -238,7 +238,7 @@ export default function ExpenseFormModal({ open, onClose, data }: any) {
       open={open}
       onClose={onClose}
       title={data ? "Edit Expense" : "Add Expense"}
-      width="100"
+      width="max-w-6xl"
     >
       <div className="max-h-[80vh] overflow-y-auto pr-3">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -477,7 +477,7 @@ export default function ExpenseFormModal({ open, onClose, data }: any) {
           </div>
 
           {/* ACTIONS */}
-          <div className="flex justify-end gap-2 mt-6 pt-4 border-t">
+          <div className="crud-form-actions flex justify-end gap-2 mt-6 pt-4 border-t">
             <button
               type="button"
               onClick={onClose}

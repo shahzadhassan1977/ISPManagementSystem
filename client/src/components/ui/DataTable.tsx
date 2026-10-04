@@ -4,28 +4,34 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  useReactTable,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  getFilteredRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
-
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import ViewModal from "@/components/ui/ViewModal";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+  ChevronsUpDown,
+  Download,
+  FileSpreadsheet,
+  Search,
+} from "lucide-react";
 
 type DataTableProps<T> = {
   data: T[];
-  columns: ColumnDef<T, any>[];
+  columns: ColumnDef<T, unknown>[];
   loading?: boolean;
+  error?: unknown;
+  onRetry?: () => void;
 };
 
-export default function DataTable<T>({
-  data,
-  columns,
-  loading = false,
-}: DataTableProps<T>) {
+export default function DataTable<T>({ data, columns, loading = false, error, onRetry }: DataTableProps<T>) {
   const [globalFilter, setGlobalFilter] = useState("");
 
   const table = useReactTable({
@@ -39,151 +45,209 @@ export default function DataTable<T>({
     getFilteredRowModel: getFilteredRowModel(),
   });
 
-  // ✅ EXPORT DATA (filtered rows)
   const exportData = table.getFilteredRowModel().rows.map((row) => row.original);
+  const filteredCount = table.getFilteredRowModel().rows.length;
+  const pageRows = table.getRowModel().rows;
+  const pageCount = Math.max(table.getPageCount(), 1);
+  const currentPage = table.getState().pagination.pageIndex + 1;
+  const hasError = Boolean(error);
 
-  // 📄 CSV EXPORT
   const exportCSV = () => {
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const csv = XLSX.utils.sheet_to_csv(worksheet);
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, "data.csv");
+    saveAs(new Blob([csv], { type: "text/csv;charset=utf-8;" }), "data.csv");
   };
 
-  // 📊 EXCEL EXPORT
   const exportExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Records");
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    saveAs(
+      new Blob([excelBuffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      }),
+      "data.xlsx",
+    );
+  };
 
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
-
-    const blob = new Blob([excelBuffer], {
-      type:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-
-    saveAs(blob, "data.xlsx");
+  const sortIcon = (sorted: false | "asc" | "desc") => {
+    if (sorted === "asc") return <ChevronUp size={13} aria-hidden="true" />;
+    if (sorted === "desc") return <ChevronDown size={13} aria-hidden="true" />;
+    return <ChevronsUpDown size={13} aria-hidden="true" />;
   };
 
   return (
-    <div className="bg-white dark:bg-slate-950 p-4 rounded-xl shadow space-y-4 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700">
+    <section className="space-y-4 rounded-lg border border-slate-200 bg-white p-3 text-slate-800 shadow-sm dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100 sm:p-5">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <label className="relative block w-full lg:max-w-sm">
+          <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+          <input
+            type="search"
+            value={globalFilter ?? ""}
+            onChange={(event) => setGlobalFilter(event.target.value)}
+            placeholder="Search records"
+            aria-label="Search all records"
+            className="min-h-10 w-full rounded-md border border-slate-300 bg-white pl-9 pr-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#2468bd] focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-blue-400 dark:focus:ring-blue-950"
+          />
+        </label>
 
-      {/* 🔍 SEARCH + EXPORT */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-
-        <input
-          value={globalFilter ?? ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search..."
-          className="border px-3 py-2 rounded w-full md:w-64 bg-slate-50 text-slate-900 border-slate-300 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
-        />
-
-        <div className="space-x-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="mr-auto text-xs text-slate-500 dark:text-slate-400 lg:mr-2">
+            {filteredCount.toLocaleString()} {filteredCount === 1 ? "record" : "records"}
+          </p>
           <button
+            type="button"
             onClick={exportCSV}
-            className="px-3 py-1 border rounded bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
+            disabled={exportData.length === 0}
+            className="inline-flex min-h-9 items-center gap-2 rounded-md border border-slate-300 bg-white px-3 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
           >
-            Export CSV
+            <Download size={14} aria-hidden="true" /> CSV
           </button>
-
           <button
+            type="button"
             onClick={exportExcel}
-            className="px-3 py-1 bg-green-600 text-white rounded"
+            disabled={exportData.length === 0}
+            className="inline-flex min-h-9 items-center gap-2 rounded-md bg-[#142e5c] px-3 text-xs font-semibold text-white transition hover:bg-[#1d447d] disabled:cursor-not-allowed disabled:opacity-40 dark:bg-blue-700 dark:hover:bg-blue-600"
           >
-            Export Excel
+            <FileSpreadsheet size={14} aria-hidden="true" /> Excel
           </button>
         </div>
-
       </div>
 
-      {/* 📊 TABLE */}
-      <table className="w-full border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100">
-
-        <thead className="bg-gray-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  className="p-2 text-left cursor-pointer"
-                  onClick={header.column.getToggleSortingHandler()}
-                >
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-
-                  {{
-                    asc: " 🔼",
-                    desc: " 🔽",
-                  }[header.column.getIsSorted() as string] ?? null}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-
-        <tbody>
-          {loading ? (
-            <tr>
-              <td colSpan={columns.length} className="text-center p-4">
-                Loading...
-              </td>
-            </tr>
-          ) : table.getRowModel().rows.length === 0 ? (
-            <tr>
-              <td colSpan={columns.length} className="text-center p-4">
-                No data found
-              </td>
-            </tr>
-          ) : (
-            table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="border-t border-slate-200 dark:border-slate-700">
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-2 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-700">
-                    {flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
+      {hasError ? (
+        <div role="alert" className="rounded-md border border-amber-200 bg-amber-50 px-4 py-8 text-center dark:border-amber-900/70 dark:bg-amber-950/30">
+          <p className="text-sm font-semibold text-slate-800 dark:text-slate-100">Records couldn&apos;t be loaded</p>
+          <p className="mt-1 text-xs text-slate-600 dark:text-slate-300">Check your connection and try again.</p>
+          {onRetry && (
+            <button type="button" onClick={onRetry} className="mt-4 min-h-9 rounded-md bg-[#142e5c] px-4 text-xs font-semibold text-white transition hover:bg-[#1d447d] dark:bg-blue-700 dark:hover:bg-blue-600">
+              Try again
+            </button>
+          )}
+        </div>
+      ) : <>
+      <div className="hidden overflow-x-auto rounded-md border border-slate-200 dark:border-slate-700 md:block">
+        <table className="w-full min-w-[680px] border-collapse text-left text-sm">
+          <thead className="bg-slate-50 text-[10px] uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-300">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id} scope="col" className="whitespace-nowrap px-3 py-3 font-bold">
+                    {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                      <button
+                        type="button"
+                        onClick={header.column.getToggleSortingHandler()}
+                        className="inline-flex items-center gap-1.5 rounded text-left transition hover:text-[#245fae] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+                        aria-label={`Sort by ${String(header.column.columnDef.header ?? header.column.id)}`}
+                      >
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {sortIcon(header.column.getIsSorted())}
+                      </button>
+                    ) : (
+                      flexRender(header.column.columnDef.header, header.getContext())
                     )}
-                  </td>
+                  </th>
                 ))}
               </tr>
-            ))
-          )}
-        </tbody>
+            ))}
+          </thead>
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            {loading ? (
+              <tr><td colSpan={columns.length} className="px-4 py-12 text-center text-sm text-slate-500">Loading records…</td></tr>
+            ) : pageRows.length === 0 ? (
+              <tr><td colSpan={columns.length} className="px-4 py-12 text-center text-sm text-slate-500">{globalFilter ? "No records match your search." : "No records available yet."}</td></tr>
+            ) : (
+              pageRows.map((row) => (
+                <tr key={row.id} className="transition hover:bg-slate-50/80 dark:hover:bg-slate-900/70">
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="max-w-[360px] px-3 py-3 align-middle text-xs text-slate-700 dark:text-slate-200">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
 
-      </table>
+      <div className="space-y-2 md:hidden">
+        {loading ? (
+          <div className="rounded-md border border-slate-200 px-4 py-10 text-center text-sm text-slate-500 dark:border-slate-700">Loading records…</div>
+        ) : pageRows.length === 0 ? (
+          <div className="rounded-md border border-slate-200 px-4 py-10 text-center text-sm text-slate-500 dark:border-slate-700">{globalFilter ? "No records match your search." : "No records available yet."}</div>
+        ) : (
+          pageRows.map((row) => {
+            const cells = row.getVisibleCells();
+            const actionCell = cells.find((cell) => cell.column.id === "actions");
+            const detailCells = cells.filter((cell) => cell.column.id !== "actions").slice(1);
+            const titleCell = cells.find((cell) => cell.column.id !== "actions");
 
-      {/* 📄 PAGINATION */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-slate-900 dark:text-slate-100">
+            return (
+              <article key={row.id} className="rounded-md border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="min-w-0 flex-1 truncate text-sm font-semibold text-[#142e5c] dark:text-blue-100">
+                    {titleCell ? flexRender(titleCell.column.columnDef.cell, titleCell.getContext()) : "Record"}
+                  </h3>
+                  {actionCell && <div className="shrink-0">{flexRender(actionCell.column.columnDef.cell, actionCell.getContext())}</div>}
+                </div>
+                {detailCells.length > 0 && (
+                  <dl className="mt-3 grid grid-cols-1 gap-2 border-t border-slate-100 pt-3 dark:border-slate-800 sm:grid-cols-2">
+                    {detailCells.map((cell) => {
+                      const heading = cell.column.columnDef.header;
+                      const label = typeof heading === "string" ? heading : cell.column.id.replaceAll(".", " ");
+                      return (
+                        <div key={cell.id} className="min-w-0">
+                          <dt className="text-[9px] font-semibold uppercase tracking-wide text-slate-400">{label}</dt>
+                          <dd className="mt-0.5 truncate text-xs text-slate-700 dark:text-slate-200">
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </dd>
+                        </div>
+                      );
+                    })}
+                  </dl>
+                )}
+              </article>
+            );
+          })
+        )}
+      </div>
 
-        <div className="text-sm">
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+      <div className="flex flex-col gap-3 border-t border-slate-100 pt-3 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <span>Rows</span>
+          <select
+            aria-label="Rows per page"
+            value={table.getState().pagination.pageSize}
+            onChange={(event) => table.setPageSize(Number(event.target.value))}
+            className="h-8 rounded border border-slate-300 bg-white px-2 text-xs text-slate-700 outline-none focus:border-[#2468bd] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+          >
+            {[10, 20, 50, 100].map((size) => <option key={size} value={size}>{size}</option>)}
+          </select>
+          <span className="ml-1">Page {currentPage} of {pageCount}</span>
         </div>
-
-        <div className="space-x-2">
+        <div className="flex items-center justify-between gap-2 sm:justify-end">
           <button
+            type="button"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="px-3 py-1 border rounded bg-slate-100 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
+            aria-label="Previous page"
+            className="grid h-9 w-9 place-items-center rounded-md border border-slate-300 bg-white text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
           >
-            Prev
+            <ChevronLeft size={16} aria-hidden="true" />
           </button>
-
           <button
+            type="button"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="px-3 py-1 border rounded bg-slate-100 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
+            aria-label="Next page"
+            className="grid h-9 w-9 place-items-center rounded-md border border-slate-300 bg-white text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
           >
-            Next
+            <ChevronRight size={16} aria-hidden="true" />
           </button>
         </div>
-
       </div>
-    </div>
+      </>}
+    </section>
   );
 }

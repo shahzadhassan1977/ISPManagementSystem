@@ -196,7 +196,9 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
         <div className="grid grid-cols-2 gap-4">
           {/* EMPLOYEE NAME */}
           <div>
+            <label htmlFor="employee-name" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Full name</label>
             <input
+              id="employee-name"
               {...register("name")}
               placeholder="Employee Name"
               className="input"
@@ -210,7 +212,11 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
 
           {/* EMPLOYEE EMAIL */}
           <div>
+            <label htmlFor="employee-email" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Email address</label>
             <input
+              id="employee-email"
+              type="email"
+              autoComplete="email"
               {...register("email")}
               placeholder="Employee Email"
               className="input"
@@ -223,7 +229,11 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
           </div>
           {/* EMPLOYEE PHONE */}
           <div>
+            <label htmlFor="employee-phone" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Phone</label>
             <input
+              id="employee-phone"
+              type="tel"
+              autoComplete="tel"
               {...register("phone")}
               placeholder="Employee Phone"
               className="input"
@@ -237,7 +247,10 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
 
           {/* EMPLOYEE MOBILE */}
           <div>
+            <label htmlFor="employee-mobile" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Mobile</label>
             <input
+              id="employee-mobile"
+              type="tel"
               {...register("mobile")}
               placeholder="Employee Mobile"
               className="input"
@@ -351,7 +364,7 @@ export default function EmployeeFormModal({ open, onClose, data }: any) {
           </div>
 
           {/* ACTIONS */}
-          <div className="flex justify-end gap-2 mt-4">
+          <div className="crud-form-actions flex justify-end gap-2 mt-4">
             <button
               type="button"
               onClick={onClose}

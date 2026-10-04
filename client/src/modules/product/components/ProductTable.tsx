@@ -21,7 +21,7 @@ type Product = {
 };
 
 export default function ProductTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useProducts();
+  const { data = [], isLoading, isError, error, refetch } = useProducts();
   const { mutate: deleteProduct, isPending } = useDeleteProduct();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -48,11 +48,6 @@ export default function ProductTable({ onEdit }: any) {
         accessorKey: "isActive",
         header: "Is Active",
         cell: ({ row }) => (row.original.isActive ? "Yes" : "No"),
-    },
-    {
-        accessorKey: "isDeleted",
-        header: "Is Deleted",
-        cell: ({ row }) => (row.original.isDeleted ? "Yes" : "No"),
     },
     {
       id: "actions",
@@ -92,6 +87,8 @@ export default function ProductTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

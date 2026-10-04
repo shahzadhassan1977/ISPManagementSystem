@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1080" viewBox="0 0 1440 1080" role="img" aria-labelledby="title description">
+  <title id="title">M3-Solution desktop CRUD layout preview</title>
+  <desc id="description">Desktop customer management concept with operational summary, filters, searchable sortable table, permission-aware actions, pagination and a create-customer drawer preview.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="12" flood-color="#142e5c" flood-opacity=".09"/></filter>
+    <style>
+      text { font-family: Inter, "Segoe UI", Arial, sans-serif; }
+      .ink { fill: #142e5c; }
+      .muted { fill: #73809a; }
+      .card { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="1440" height="1080" fill="#f3f6fb"/>
+  <rect width="232" height="1080" fill="#102f66"/>
+  <rect width="232" height="80" fill="#0b2149"/>
+  <rect x="18" y="19" width="42" height="42" rx="9" fill="#ffffff"/>
+  <path d="M23 52V28l12 12 11-12v24h-8v-9l-3 3-4-3v9z" fill="#1768bd"/>
+  <path d="M47 29h11l-7 9c6-1 9 2 9 6 0 5-4 8-10 8-4 0-7-1-9-3l4-5c1 1 3 2 5 2 2 0 3-1 3-2s-1-2-4-2h-3l4-7h-6z" fill="#f28a16"/>
+  <text x="70" y="40" fill="#ffffff" font-size="15" font-weight="700">M3-Solution</text>
+  <text x="70" y="56" fill="#b9cbe6" font-size="9">ISP MANAGEMENT</text>
+  <text x="20" y="111" fill="#91a6c8" font-size="9" font-weight="700" letter-spacing="1">WORKSPACE</text>
+  <rect x="12" y="127" width="208" height="39" rx="7" fill="#1f447f"/>
+  <rect x="12" y="127" width="3" height="39" rx="1.5" fill="#f28a16"/>
+  <circle cx="31" cy="142" r="5" fill="none" stroke="#ffffff" stroke-width="1.4"/><path d="M22 157c1-6 4-8 9-8s8 2 9 8" fill="none" stroke="#ffffff" stroke-width="1.4"/>
+  <text x="51" y="151" fill="#ffffff" font-size="12" font-weight="600">Customers</text>
+  <g fill="#dce6f4" font-size="12">
+    <rect x="25" y="185" width="14" height="12" rx="2" fill="none" stroke="#b9cbe6" stroke-width="1.3"/><path d="M25 189h14" stroke="#b9cbe6" stroke-width="1.3"/><text x="51" y="196">Subscriptions</text>
+    <rect x="25" y="218" width="14" height="11" rx="2" fill="none" stroke="#b9cbe6" stroke-width="1.3"/><path d="M25 222h14M29 226h4" stroke="#b9cbe6" stroke-width="1.2"/><text x="51" y="228">Payments</text>
+    <path d="M26 255h13M29 251v8M36 251v8" stroke="#b9cbe6" stroke-width="1.4" stroke-linecap="round"/><text x="51" y="261">Expenses</text>
+    <path d="M26 286h13v13H26zM29 283h7M29 290h7M29 294h5" fill="none" stroke="#b9cbe6" stroke-width="1.2" stroke-linecap="round"/><text x="51" y="295">Products</text>
+    <circle cx="32" cy="328" r="6" fill="none" stroke="#b9cbe6" stroke-width="1.3"/><path d="M22 343c1-6 4-8 10-8s9 2 10 8" fill="none" stroke="#b9cbe6" stroke-width="1.3"/><text x="51" y="333">Employees</text>
+  </g>
+  <line x1="20" y1="367" x2="212" y2="367" stroke="#344a70"/>
+  <text x="20" y="396" fill="#91a6c8" font-size="9" font-weight="700" letter-spacing="1">ADMINISTRATION</text>
+  <g fill="#dce6f4" font-size="12">
+    <path d="M25 419h14v12H25zM28 416h8M28 423h8M28 427h5" fill="none" stroke="#b9cbe6" stroke-width="1.2"/><text x="51" y="429">Company</text>
+    <circle cx="32" cy="461" r="7" fill="none" stroke="#b9cbe6" stroke-width="1.3"/><path d="M32 457v8M28 461h8" stroke="#b9cbe6" stroke-width="1.3"/><text x="51" y="465">Settings</text>
+    <path d="M26 491h13v13H26zM29 488h7M29 495h7M29 499h5" fill="none" stroke="#b9cbe6" stroke-width="1.2"/><text x="51" y="501">Reports</text>
+  </g>
+  <rect x="13" y="1002" width="206" height="60" rx="8" fill="#183765"/>
+  <circle cx="37" cy="1032" r="15" fill="#f1bd6a"/><text x="37" y="1036" text-anchor="middle" fill="#5a3d12" font-size="10" font-weight="700">SA</text>
+  <text x="61" y="1029" fill="#ffffff" font-size="11" font-weight="600">System Admin</text><text x="61" y="1045" fill="#b9cbe6" font-size="9">Administrator</text>
+
+  <rect x="232" width="1208" height="66" fill="#ffffff"/>
+  <line x1="232" y1="66" x2="1440" y2="66" stroke="#e2e8f0"/>
+  <text x="260" y="40" class="muted" font-size="11">Management</text><path d="M324 36l4 4-4 4" fill="none" stroke="#97a4b6" stroke-width="1.2"/>
+  <text x="341" y="40" class="ink" font-size="11" font-weight="600">Customers</text>
+  <rect x="1177" y="17" width="154" height="32" rx="6" fill="#ffffff" stroke="#dfe6ef"/>
+  <circle cx="1194" cy="32" r="5" fill="none" stroke="#73809a" stroke-width="1.2"/><path d="M1198 36l4 4" stroke="#73809a" stroke-width="1.2"/>
+  <text x="1210" y="36" class="muted" font-size="10">Search workspace</text>
+  <circle cx="1360" cy="33" r="16" fill="#f5e5c7"/><text x="1360" y="37" text-anchor="middle" fill="#74521b" font-size="9" font-weight="700">SA</text>
+
+  <text x="260" y="112" class="ink" font-size="24" font-weight="700">Customers</text>
+  <text x="260" y="134" class="muted" font-size="11">Review customer accounts, contact details and service status.</text>
+  <rect x="1200" y="91" width="208" height="40" rx="7" fill="#142e5c"/>
+  <text x="1220" y="116" fill="#ffffff" font-size="12" font-weight="700">＋  Add customer</text>
+  <path d="M1382 106v10m-5-5h10" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+
+  <g filter="url(#shadow)">
+    <rect x="260" y="160" width="266" height="82" rx="8" class="card"/>
+    <rect x="540" y="160" width="266" height="82" rx="8" class="card"/>
+    <rect x="820" y="160" width="266" height="82" rx="8" class="card"/>
+    <rect x="1100" y="160" width="308" height="82" rx="8" class="card"/>
+  </g>
+  <text x="278" y="188" class="muted" font-size="10">TOTAL CUSTOMERS</text><text x="278" y="222" class="ink" font-size="24" font-weight="700">1,284</text><text x="485" y="220" text-anchor="end" fill="#c46a08" font-size="9" font-weight="700">+32 this month</text>
+  <text x="558" y="188" class="muted" font-size="10">ACTIVE ACCOUNTS</text><text x="558" y="222" class="ink" font-size="24" font-weight="700">1,197</text><circle cx="771" cy="215" r="4" fill="#278052"/><text x="783" y="219" fill="#278052" font-size="9">93.2%</text>
+  <text x="838" y="188" class="muted" font-size="10">NEW THIS MONTH</text><text x="838" y="222" class="ink" font-size="24" font-weight="700">32</text><path d="M1020 219l5-8 5 3 8-12" fill="none" stroke="#2468bd" stroke-width="1.5"/>
+  <text x="1118" y="188" class="muted" font-size="10">NEEDS ATTENTION</text><text x="1118" y="222" class="ink" font-size="24" font-weight="700">14</text><text x="1388" y="219" text-anchor="end" fill="#c46a08" font-size="9" font-weight="600">Inactive</text>
+
+  <g filter="url(#shadow)"><rect x="260" y="260" width="1148" height="756" rx="9" class="card"/></g>
+  <text x="282" y="292" class="ink" font-size="14" font-weight="700">Customer directory</text>
+  <text x="282" y="311" class="muted" font-size="10">1,284 records · updated just now</text>
+  <rect x="1125" y="275" width="126" height="31" rx="6" fill="#ffffff" stroke="#dfe6ef"/>
+  <path d="M1140 285h12M1140 290h12M1140 295h8" stroke="#74839a" stroke-width="1.2" stroke-linecap="round"/><text x="1160" y="295" fill="#52627c" font-size="9">Filters</text><path d="M1230 286l4 4-4 4" fill="none" stroke="#73809a" stroke-width="1.2"/>
+  <rect x="1261" y="275" width="125" height="31" rx="6" fill="#ffffff" stroke="#dfe6ef"/>
+  <circle cx="1277" cy="290" r="5" fill="none" stroke="#73809a" stroke-width="1.2"/><path d="M1281 294l4 4" stroke="#73809a" stroke-width="1.2"/><text x="1293" y="294" class="muted" font-size="9">Search records</text>
+
+  <rect x="282" y="326" width="1104" height="42" rx="5" fill="#f2f5f9"/>
+  <g fill="#64748b" font-size="9" font-weight="700" letter-spacing=".4">
+    <text x="300" y="352">CUSTOMER</text><text x="558" y="352">CONTACT</text><text x="748" y="352">SERVICE ADDRESS</text><text x="1008" y="352">STATUS</text><text x="1118" y="352">CREATED</text><text x="1311" y="352">ACTIONS</text>
+  </g>
+  <g>
+    <circle cx="316" cy="397" r="16" fill="#e4edf9"/><text x="316" y="401" text-anchor="middle" fill="#245fae" font-size="9" font-weight="700">AK</text>
+    <text x="342" y="394" class="ink" font-size="10" font-weight="700">Amina Khan</text><text x="342" y="410" class="muted" font-size="9">CUS-001284</text>
+    <text x="558" y="396" fill="#334155" font-size="9">amina.khan@email.com</text><text x="558" y="411" class="muted" font-size="9">0301 555 0142</text>
+    <text x="748" y="402" fill="#52627c" font-size="9">Gulberg III, Lahore</text>
+    <rect x="1008" y="387" width="59" height="20" rx="10" fill="#e8f5ed"/><circle cx="1019" cy="397" r="3" fill="#278052"/><text x="1027" y="401" fill="#247246" font-size="8" font-weight="700">Active</text>
+    <text x="1118" y="402" class="muted" font-size="9">Oct 02, 2026</text>
+    <circle cx="1318" cy="397" r="13" fill="#eaf1fb"/><path d="M1313 397h10m-5-5v10" stroke="#245fae" stroke-width="1.3" stroke-linecap="round"/><circle cx="1357" cy="397" r="13" fill="#fff1df"/><path d="M1353 393h8M1353 397h8M1353 401h6" stroke="#c46a08" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="282" y1="429" x2="1386" y2="429" stroke="#edf1f5"/>
+
+    <circle cx="316" cy="459" r="16" fill="#f8eadf"/><text x="316" y="463" text-anchor="middle" fill="#a15e2b" font-size="9" font-weight="700">MF</text>
+    <text x="342" y="456" class="ink" font-size="10" font-weight="700">Muhammad Farooq</text><text x="342" y="472" class="muted" font-size="9">CUS-001283</text>
+    <text x="558" y="458" fill="#334155" font-size="9">m.farooq@email.com</text><text x="558" y="473" class="muted" font-size="9">0322 888 4091</text>
+    <text x="748" y="464" fill="#52627c" font-size="9">Model Town, Lahore</text>
+    <rect x="1008" y="449" width="59" height="20" rx="10" fill="#e8f5ed"/><circle cx="1019" cy="459" r="3" fill="#278052"/><text x="1027" y="463" fill="#247246" font-size="8" font-weight="700">Active</text>
+    <text x="1118" y="464" class="muted" font-size="9">Oct 01, 2026</text>
+    <circle cx="1318" cy="459" r="13" fill="#eaf1fb"/><path d="M1313 459h10m-5-5v10" stroke="#245fae" stroke-width="1.3" stroke-linecap="round"/><circle cx="1357" cy="459" r="13" fill="#fff1df"/><path d="M1353 455h8M1353 459h8M1353 463h6" stroke="#c46a08" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="282" y1="491" x2="1386" y2="491" stroke="#edf1f5"/>
+
+    <circle cx="316" cy="521" r="16" fill="#eee8f5"/><text x="316" y="525" text-anchor="middle" fill="#72578a" font-size="9" font-weight="700">SA</text>
+    <text x="342" y="518" class="ink" font-size="10" font-weight="700">Sara Ahmed</text><text x="342" y="534" class="muted" font-size="9">CUS-001282</text>
+    <text x="558" y="520" fill="#334155" font-size="9">sara.ahmed@email.com</text><text x="558" y="535" class="muted" font-size="9">0300 771 2560</text>
+    <text x="748" y="526" fill="#52627c" font-size="9">Johar Town, Lahore</text>
+    <rect x="1008" y="511" width="59" height="20" rx="10" fill="#fff1df"/><circle cx="1019" cy="521" r="3" fill="#c46a08"/><text x="1027" y="525" fill="#a15e0b" font-size="8" font-weight="700">Pending</text>
+    <text x="1118" y="526" class="muted" font-size="9">Sep 30, 2026</text>
+    <circle cx="1318" cy="521" r="13" fill="#eaf1fb"/><path d="M1313 521h10m-5-5v10" stroke="#245fae" stroke-width="1.3" stroke-linecap="round"/><circle cx="1357" cy="521" r="13" fill="#fff1df"/><path d="M1353 517h8M1353 521h8M1353 525h6" stroke="#c46a08" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="282" y1="553" x2="1386" y2="553" stroke="#edf1f5"/>
+
+    <circle cx="316" cy="583" r="16" fill="#e5f1ec"/><text x="316" y="587" text-anchor="middle" fill="#24725e" font-size="9" font-weight="700">UR</text>
+    <text x="342" y="580" class="ink" font-size="10" font-weight="700">Usman Raza</text><text x="342" y="596" class="muted" font-size="9">CUS-001281</text>
+    <text x="558" y="582" fill="#334155" font-size="9">usman.raza@email.com</text><text x="558" y="597" class="muted" font-size="9">0304 222 6198</text>
+    <text x="748" y="588" fill="#52627c" font-size="9">DHA Phase 5, Lahore</text>
+    <rect x="1008" y="573" width="59" height="20" rx="10" fill="#e8f5ed"/><circle cx="1019" cy="583" r="3" fill="#278052"/><text x="1027" y="587" fill="#247246" font-size="8" font-weight="700">Active</text>
+    <text x="1118" y="588" class="muted" font-size="9">Sep 29, 2026</text>
+    <circle cx="1318" cy="583" r="13" fill="#eaf1fb"/><path d="M1313 583h10m-5-5v10" stroke="#245fae" stroke-width="1.3" stroke-linecap="round"/><circle cx="1357" cy="583" r="13" fill="#fff1df"/><path d="M1353 579h8M1353 583h8M1353 587h6" stroke="#c46a08" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="282" y1="615" x2="1386" y2="615" stroke="#edf1f5"/>
+
+    <circle cx="316" cy="645" r="16" fill="#e4edf9"/><text x="316" y="649" text-anchor="middle" fill="#245fae" font-size="9" font-weight="700">HB</text>
+    <text x="342" y="642" class="ink" font-size="10" font-weight="700">Hassan Bilal</text><text x="342" y="658" class="muted" font-size="9">CUS-001280</text>
+    <text x="558" y="644" fill="#334155" font-size="9">hassan.b@email.com</text><text x="558" y="659" class="muted" font-size="9">0312 900 7714</text>
+    <text x="748" y="650" fill="#52627c" font-size="9">Wapda Town, Lahore</text>
+    <rect x="1008" y="635" width="59" height="20" rx="10" fill="#feeceb"/><circle cx="1019" cy="645" r="3" fill="#c94843"/><text x="1027" y="649" fill="#ad3631" font-size="8" font-weight="700">Inactive</text>
+    <text x="1118" y="650" class="muted" font-size="9">Sep 28, 2026</text>
+    <circle cx="1318" cy="645" r="13" fill="#eaf1fb"/><path d="M1313 645h10m-5-5v10" stroke="#245fae" stroke-width="1.3" stroke-linecap="round"/><circle cx="1357" cy="645" r="13" fill="#fff1df"/><path d="M1353 641h8M1353 645h8M1353 649h6" stroke="#c46a08" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+
+  <rect x="282" y="950" width="1104" height="1" fill="#edf1f5"/>
+  <text x="282" y="980" class="muted" font-size="10">Showing 1–5 of 1,284 customers</text>
+  <text x="1195" y="980" class="muted" font-size="9">Rows</text><rect x="1225" y="963" width="50" height="26" rx="5" fill="#ffffff" stroke="#dfe6ef"/><text x="1250" y="980" text-anchor="middle" class="ink" font-size="9">10⌄</text>
+  <rect x="1290" y="962" width="29" height="28" rx="5" fill="#ffffff" stroke="#dfe6ef"/><path d="M1307 970l-5 6 5 6" fill="none" stroke="#73809a" stroke-width="1.3"/>
+  <rect x="1324" y="962" width="29" height="28" rx="5" fill="#142e5c"/><text x="1338" y="980" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="700">1</text>
+  <rect x="1358" y="962" width="29" height="28" rx="5" fill="#ffffff" stroke="#dfe6ef"/><path d="M1369 970l5 6-5 6" fill="none" stroke="#73809a" stroke-width="1.3"/>
+
+  <rect x="918" y="0" width="522" height="1080" fill="#142e5c" opacity=".14"/>
+  <rect x="930" y="0" width="510" height="1080" fill="#ffffff" stroke="#d9e1ec" filter="url(#shadow)"/>
+  <rect x="930" y="0" width="510" height="66" fill="#ffffff"/>
+  <line x1="930" y1="66" x2="1440" y2="66" stroke="#e7edf4"/>
+  <text x="962" y="39" class="ink" font-size="14" font-weight="700">Add customer</text>
+  <circle cx="1400" cy="33" r="15" fill="#f2f5f9"/><path d="M1396 29l8 8m0-8-8 8" stroke="#66758c" stroke-width="1.4" stroke-linecap="round"/>
+  <text x="962" y="98" class="muted" font-size="10">CUSTOMER DETAILS</text>
+  <text x="962" y="132" class="ink" font-size="11" font-weight="600">Full name</text><rect x="962" y="142" width="446" height="41" rx="6" fill="#ffffff" stroke="#cbd5e1"/><text x="976" y="167" fill="#9aa6b8" font-size="10">Enter customer name</text>
+  <text x="962" y="212" class="ink" font-size="11" font-weight="600">Email address</text><rect x="962" y="222" width="446" height="41" rx="6" fill="#ffffff" stroke="#cbd5e1"/><text x="976" y="247" fill="#9aa6b8" font-size="10">name@example.com</text>
+  <text x="962" y="292" class="ink" font-size="11" font-weight="600">Phone</text><rect x="962" y="302" width="215" height="41" rx="6" fill="#ffffff" stroke="#cbd5e1"/><text x="976" y="327" fill="#9aa6b8" font-size="10">03XX XXXXXXX</text>
+  <text x="1193" y="292" class="ink" font-size="11" font-weight="600">Mobile</text><rect x="1193" y="302" width="215" height="41" rx="6" fill="#ffffff" stroke="#cbd5e1"/><text x="1207" y="327" fill="#9aa6b8" font-size="10">03XX XXXXXXX</text>
+  <text x="962" y="372" class="ink" font-size="11" font-weight="600">CNIC</text><rect x="962" y="382" width="446" height="41" rx="6" fill="#ffffff" stroke="#cbd5e1"/><text x="976" y="407" fill="#9aa6b8" font-size="10">XXXXX-XXXXXXX-X</text>
+  <text x="962" y="452" class="ink" font-size="11" font-weight="600">Service address</text><rect x="962" y="462" width="446" height="81" rx="6" fill="#ffffff" stroke="#cbd5e1"/><text x="976" y="487" fill="#9aa6b8" font-size="10">Street, area, city</text>
+  <rect x="962" y="568" width="18" height="18" rx="4" fill="#2468bd"/><path d="M966 577l4 4 7-8" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><text x="990" y="581" fill="#334155" font-size="11">Account active</text>
+  <rect x="930" y="985" width="510" height="95" fill="#ffffff"/><line x1="930" y1="985" x2="1440" y2="985" stroke="#e7edf4"/>
+  <rect x="1114" y="1010" width="112" height="40" rx="6" fill="#ffffff" stroke="#cbd5e1"/><text x="1170" y="1035" text-anchor="middle" fill="#52627c" font-size="11" font-weight="600">Cancel</text>
+  <rect x="1238" y="1010" width="170" height="40" rx="6" fill="#142e5c"/><text x="1323" y="1035" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">Save customer</text>
+  <text x="264" y="1055" fill="#91a0b4" font-size="9">CONCEPT PREVIEW · SAMPLE CUSTOMER DATA · FORM FIELDS VARY BY MODULE</text>
+</svg>

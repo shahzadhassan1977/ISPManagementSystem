@@ -15,7 +15,7 @@ type Permission = {
 };
 
 export default function PermissionTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = usePermission();
+  const { data = [], isLoading, isError, error, refetch } = usePermission();
   const { mutate: deletePermission, isPending } = useDeletePermission();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -72,6 +72,8 @@ export default function PermissionTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

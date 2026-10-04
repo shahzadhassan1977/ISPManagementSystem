@@ -96,7 +96,9 @@ export default function SubareaFormModal({ open, onClose, data }: any) {
 
         {/* NAME */}
         <div>
+          <label htmlFor="subarea-name" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Subarea name</label>
           <input
+            id="subarea-name"
             {...register("name")}
             placeholder="Subarea Name"
             className="input"
@@ -141,7 +143,7 @@ export default function SubareaFormModal({ open, onClose, data }: any) {
         </div>
 
         {/* BUTTONS */}
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="crud-form-actions flex justify-end gap-2 mt-4">
           <button
             type="button"
             onClick={onClose}

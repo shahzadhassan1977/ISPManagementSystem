@@ -137,7 +137,10 @@ export default function UserFormModal({ open, onClose, data }: any) {
 
         {/* USER NAME */}
         <div>
+          <label htmlFor="user-name" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Full name</label>
           <input
+            id="user-name"
+            autoComplete="name"
             {...register("name")}
             placeholder="User Name"
             className="input"
@@ -151,7 +154,11 @@ export default function UserFormModal({ open, onClose, data }: any) {
 
         {/* USER EMAIL */}
         <div>
+          <label htmlFor="user-email" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Email address</label>
           <input
+            id="user-email"
+            type="email"
+            autoComplete="email"
             {...register("email")}
             placeholder="User Email"
             className="input"
@@ -165,7 +172,11 @@ export default function UserFormModal({ open, onClose, data }: any) {
 
         {/* USER PASSWORD */}
         <div>
+          <label htmlFor="user-password" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Password</label>
           <input
+            id="user-password"
+            type="password"
+            autoComplete="new-password"
             {...register("password")}
             placeholder="User Password"
             className="input"
@@ -207,7 +218,7 @@ export default function UserFormModal({ open, onClose, data }: any) {
           </label>
         </div>
 
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="crud-form-actions flex justify-end gap-2 mt-4">
           <button
             type="button"
             onClick={onClose}

@@ -115,7 +115,9 @@ export default function RoleFormModal({ open, onClose, data }: any) {
 
         {/* ROLE NAME */}
         <div>
+          <label htmlFor="role-name" className="mb-1.5 block text-xs font-semibold text-slate-700 dark:text-slate-200">Role name</label>
           <input
+            id="role-name"
             {...register("name")}
             placeholder="Role Name"
             className="input"
@@ -170,7 +172,7 @@ export default function RoleFormModal({ open, onClose, data }: any) {
         </div>
 
         {/* ACTIONS */}
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="crud-form-actions flex justify-end gap-2 mt-4">
           <button
             type="button"
             onClick={onClose}

@@ -49,11 +49,11 @@ select {
 }
 
 .input {
-  @apply w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 transition duration-150;
+  @apply min-h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none transition duration-150 focus:border-blue-500 focus:ring-2 focus:ring-blue-100;
 }
 
 .dark .input {
-  @apply border-slate-700 bg-slate-900 text-slate-100;
+  @apply border-slate-700 bg-slate-900 text-slate-100 focus:border-blue-400 focus:ring-blue-950;
 }
 
 .dark .bg-white {
@@ -70,7 +70,9 @@ select {
 
 .dark .text-slate-900,
 .dark .text-slate-800,
+.dark .text-slate-600,
 .dark .text-gray-700,
+.dark .text-gray-600,
 .dark .text-gray-500,
 .dark .text-slate-700 {
   color: #f8fafc !important;
@@ -82,10 +84,49 @@ select {
   border-color: #334155 !important;
 }
 
+.dashboard-page {
+  --dashboard-ink: #142e5c;
+  --dashboard-link: #245fae;
+  --dashboard-orange: #c46a08;
+}
+
+.dashboard-page .dashboard-ink {
+  color: var(--dashboard-ink);
+}
+
+.dashboard-page .dashboard-link {
+  color: var(--dashboard-link);
+}
+
+.dashboard-page .dashboard-orange {
+  color: var(--dashboard-orange);
+}
+
+.dark .dashboard-page {
+  --dashboard-ink: #e7efff;
+  --dashboard-link: #8ab8ff;
+  --dashboard-orange: #ffbd69;
+}
+
+.dark .dashboard-page .dashboard-orange-surface {
+  background-color: #392a19;
+}
+
+.dark .dashboard-page .dashboard-blue-surface {
+  background-color: #1b2f50 !important;
+}
+
+.dark .dashboard-page .dashboard-navy-surface {
+  background-color: #1b2c47;
+}
+
+.dark .dashboard-page .dashboard-chart-grid {
+  stroke: #334155;
+}
+
 .dark input,
 .dark textarea,
-.dark select,
-.dark button {
+.dark select {
   color: #f8fafc;
 }
 
@@ -153,6 +194,144 @@ select {
 .dark .react-select__indicator-separator,
 .dark .react-select__clear-indicator {
   color: #94a3b8 !important;
+}
+
+.crud-modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.crud-modal-content form > * + * {
+  margin-top: 0 !important;
+}
+
+.crud-modal-content form input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+.crud-modal-content form textarea,
+.crud-modal-content form select {
+  min-height: 2.75rem;
+  max-width: 100%;
+  border-radius: 0.375rem;
+  border-color: #cbd5e1;
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.crud-modal-content form input[type="checkbox"] {
+  accent-color: #2468bd;
+}
+
+.crud-modal-content .react-select__control {
+  min-height: 2.75rem;
+  border-radius: 0.375rem;
+}
+
+.crud-modal-content > div[class*="max-h-"] {
+  max-height: none !important;
+  overflow: visible !important;
+  padding-right: 0 !important;
+}
+
+.crud-modal-content .crud-form-actions {
+  position: sticky;
+  bottom: -1.25rem;
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  z-index: 5;
+  width: auto;
+  margin: 0 -1.25rem -1.25rem !important;
+  padding: 1rem 1.25rem max(1rem, env(safe-area-inset-bottom));
+  border-top: 1px solid #e2e8f0;
+  background: rgb(255 255 255 / 96%);
+  backdrop-filter: blur(12px);
+}
+
+.crud-modal-content .crud-form-actions > button[type="button"] {
+  min-height: 2.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+  background: #ffffff;
+  padding: 0.5rem 1rem;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.crud-modal-content .crud-form-actions > button[type="button"]:hover {
+  background: #f8fafc;
+}
+
+.crud-modal-content .crud-form-actions > button:not([type="button"]) {
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: #142e5c;
+  padding: 0.5rem 1.125rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: background-color 150ms ease;
+}
+
+.crud-modal-content .crud-form-actions > button:not([type="button"]):hover {
+  background: #1d447d;
+}
+
+.crud-modal-content .crud-form-actions > button.subscription-submit {
+  background-color: #b45309;
+  color: #ffffff;
+}
+
+.crud-modal-content .crud-form-actions > button.subscription-submit:hover {
+  background-color: #92400e;
+}
+
+.dark .crud-modal-content form input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+.dark .crud-modal-content form textarea,
+.dark .crud-modal-content form select {
+  border-color: #475569;
+  background-color: #111827;
+  color: #f8fafc;
+}
+
+.dark .crud-modal-content .react-select__control {
+  background-color: #111827;
+  border-color: #475569;
+}
+
+.dark .crud-modal-content .crud-form-actions {
+  border-color: #334155;
+  background: rgb(15 23 42 / 96%);
+}
+
+.dark .crud-modal-content .crud-form-actions > button[type="button"] {
+  border-color: #475569;
+  background: #1e293b;
+  color: #e2e8f0;
+}
+
+.dark .crud-modal-content .crud-form-actions > button[type="button"]:hover {
+  background: #334155;
+}
+
+.dark .crud-modal-content .crud-form-actions > button:not([type="button"]) {
+  background: #1d4ed8;
+}
+
+.dark .crud-modal-content .crud-form-actions > button:not([type="button"]):hover {
+  background: #2563eb;
+}
+
+.dark .crud-modal-content .crud-form-actions > button.subscription-submit {
+  background-color: #b45309;
+  color: #ffffff;
+}
+
+.dark .crud-modal-content .crud-form-actions > button.subscription-submit:hover {
+  background-color: #92400e;
 }
 
 ::selection {

@@ -62,15 +62,31 @@ const yearOptions = (() => {
 })();
 
 export default function RepCustomerInvoiceTable() {
-  const { data: customers = [] } = useCustomers();
-  const { data: payments = [], isLoading } = usePayments();
-  const { data: companies = [] } = useCompanies();
+  const { data: customers = [], isLoading: loadingCustomers, error: customersError, refetch: refetchCustomers } = useCustomers();
+  const { data: payments = [], isLoading: loadingPayments, error: paymentsError, refetch: refetchPayments } = usePayments();
+  const { data: companies = [], isLoading: loadingCompanies, error: companiesError, refetch: refetchCompanies } = useCompanies();
 
   const [customerId, setCustomerId] = useState<number | "">("");
   const [billingMonth, setBillingMonth] = useState<string>("");
   const [billingYear, setBillingYear] = useState<string>("");
   const [filteredPayments, setFilteredPayments] = useState<PaymentRow[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const isLoading = loadingCustomers || loadingPayments || loadingCompanies;
+  const reportError = customersError || paymentsError || companiesError;
+
+  const retryReport = () => {
+    void refetchCustomers();
+    void refetchPayments();
+    void refetchCompanies();
+  };
+
+  const resetFilters = () => {
+    setCustomerId("");
+    setBillingMonth("");
+    setBillingYear("");
+    setFilteredPayments([]);
+    setHasSearched(false);
+  };
 
   const ownerCompany = useMemo(
     () => companies.find((company: any) => company.isOwner) ?? companies[0] ?? null,
@@ -223,8 +239,8 @@ export default function RepCustomerInvoiceTable() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-xl shadow space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <div>
             <label className="block text-sm text-gray-600 mb-1">Customer</label>
             <Select
@@ -266,27 +282,38 @@ export default function RepCustomerInvoiceTable() {
             />
           </div>
 
-          <div className="flex items-end">
+          <div className="flex items-end gap-2">
             <button
+              type="button"
               onClick={handleSearch}
-              className="w-full bg-blue-600 text-white rounded p-3"
+              className="min-h-10 flex-1 rounded-md bg-[#142e5c] px-4 text-sm font-semibold text-white transition hover:bg-[#1d447d] dark:bg-blue-700 dark:hover:bg-blue-600"
             >
               Search
+            </button>
+            <button type="button" onClick={resetFilters} className="min-h-10 rounded-md border border-slate-300 px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+              Reset
             </button>
           </div>
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-xl shadow">
+      <div>
         {hasSearched ? (
           <DataTable
             data={filteredPayments}
             columns={columns}
             loading={isLoading}
+            error={reportError}
+            onRetry={retryReport}
           />
+        ) : reportError ? (
+          <div role="alert" className="rounded-lg border border-amber-200 bg-amber-50 p-5 text-sm text-slate-700 dark:border-amber-900/70 dark:bg-amber-950/30 dark:text-slate-200">
+            <p className="font-semibold">Invoice data couldn&apos;t be loaded.</p>
+            <button type="button" onClick={retryReport} className="mt-3 min-h-9 rounded-md bg-[#142e5c] px-4 text-xs font-semibold text-white hover:bg-[#1d447d] dark:bg-blue-700">Try again</button>
+          </div>
         ) : (
-          <div className="text-gray-500 text-center py-16">
-            Select filters and click Search to view customer invoice records.
+          <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-12 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+            Choose optional filters, then search to view matching invoices.
           </div>
         )}
       </div>

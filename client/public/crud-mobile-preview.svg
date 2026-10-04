@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1080" viewBox="0 0 390 1080" role="img" aria-labelledby="title description">
+  <title id="title">M3-Solution mobile CRUD layout preview</title>
+  <desc id="description">Mobile customer management concept with a branded compact header, summary, search and filters, customer rows, and a mobile create form state.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="8" flood-color="#142e5c" flood-opacity=".10"/></filter>
+    <style>text { font-family: Inter, "Segoe UI", Arial, sans-serif; }</style>
+  </defs>
+  <rect width="390" height="1080" fill="#f3f6fb"/>
+  <rect x="0" y="0" width="390" height="63" fill="#ffffff"/>
+  <line x1="0" y1="63" x2="390" y2="63" stroke="#e2e8f0"/>
+  <rect x="16" y="11" width="40" height="40" rx="8" fill="#102f66"/>
+  <path d="M21 42V20l11 11 10-11v22h-7v-8l-3 3-4-3v8z" fill="#ffffff"/>
+  <path d="M43 21h10l-6 8c6-1 8 2 8 6 0 4-4 7-9 7-4 0-7-1-8-3l4-5c1 1 3 2 5 2 1 0 2-.5 2-1.5s-1-1.5-4-1.5h-3l4-7h-7z" fill="#f28a16"/>
+  <text x="66" y="30" fill="#142e5c" font-size="13" font-weight="700">M3-Solution</text>
+  <text x="67" y="44" fill="#73809a" font-size="8" font-weight="600" letter-spacing="1">ISP MANAGEMENT</text>
+  <rect x="340" y="15" width="34" height="34" rx="7" fill="#f1f4f8"/>
+  <path d="M350 26h14m-14 5h14m-14 5h14" stroke="#142e5c" stroke-width="1.5" stroke-linecap="round"/>
+
+  <text x="18" y="96" fill="#142e5c" font-size="21" font-weight="700">Customers</text>
+  <text x="18" y="115" fill="#73809a" font-size="10">Manage accounts and service details.</text>
+  <rect x="237" y="78" width="135" height="37" rx="6" fill="#142e5c"/>
+  <text x="254" y="101" fill="#ffffff" font-size="10" font-weight="700">＋ Add customer</text>
+
+  <g filter="url(#shadow)"><rect x="18" y="135" width="354" height="68" rx="8" fill="#ffffff" stroke="#e2e8f0"/></g>
+  <text x="34" y="158" fill="#73809a" font-size="9" font-weight="700">TOTAL CUSTOMERS</text>
+  <text x="34" y="188" fill="#142e5c" font-size="23" font-weight="700">1,284</text>
+  <text x="350" y="184" text-anchor="end" fill="#c46a08" font-size="9" font-weight="700">+32 this month</text>
+
+  <rect x="18" y="218" width="354" height="42" rx="6" fill="#ffffff" stroke="#d4dde9"/>
+  <circle cx="37" cy="237" r="5" fill="none" stroke="#73809a" stroke-width="1.3"/><path d="M41 241l4 4" stroke="#73809a" stroke-width="1.3"/>
+  <text x="54" y="241" fill="#8b98ab" font-size="10">Search customers</text>
+  <rect x="309" y="223" width="57" height="32" rx="5" fill="#e8edf5"/>
+  <path d="M323 232h12m-10 4h8m-6 4h4" stroke="#245fae" stroke-width="1.2" stroke-linecap="round"/><text x="344" y="243" fill="#245fae" font-size="9" font-weight="700">Filter</text>
+
+  <text x="18" y="287" fill="#142e5c" font-size="12" font-weight="700">Customer directory</text>
+  <text x="372" y="287" text-anchor="end" fill="#73809a" font-size="9">1,284 records</text>
+  <g filter="url(#shadow)">
+    <rect x="18" y="301" width="354" height="82" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="18" y="392" width="354" height="82" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="18" y="483" width="354" height="82" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <rect x="18" y="574" width="354" height="82" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+  </g>
+  <circle cx="45" cy="328" r="16" fill="#e4edf9"/><text x="45" y="332" text-anchor="middle" fill="#245fae" font-size="9" font-weight="700">AK</text>
+  <text x="70" y="326" fill="#142e5c" font-size="10" font-weight="700">Amina Khan</text><text x="70" y="342" fill="#73809a" font-size="9">CUS-001284 · 0301 555 0142</text>
+  <text x="33" y="366" fill="#66758c" font-size="9">Gulberg III, Lahore</text><rect x="292" y="354" width="63" height="19" rx="9.5" fill="#e8f5ed"/><circle cx="303" cy="363.5" r="3" fill="#278052"/><text x="311" y="367" fill="#247246" font-size="8" font-weight="700">Active</text>
+  <circle cx="45" cy="419" r="16" fill="#f8eadf"/><text x="45" y="423" text-anchor="middle" fill="#a15e2b" font-size="9" font-weight="700">MF</text>
+  <text x="70" y="417" fill="#142e5c" font-size="10" font-weight="700">Muhammad Farooq</text><text x="70" y="433" fill="#73809a" font-size="9">CUS-001283 · 0322 888 4091</text>
+  <text x="33" y="457" fill="#66758c" font-size="9">Model Town, Lahore</text><rect x="292" y="445" width="63" height="19" rx="9.5" fill="#e8f5ed"/><circle cx="303" cy="454.5" r="3" fill="#278052"/><text x="311" y="458" fill="#247246" font-size="8" font-weight="700">Active</text>
+  <circle cx="45" cy="510" r="16" fill="#eee8f5"/><text x="45" y="514" text-anchor="middle" fill="#72578a" font-size="9" font-weight="700">SA</text>
+  <text x="70" y="508" fill="#142e5c" font-size="10" font-weight="700">Sara Ahmed</text><text x="70" y="524" fill="#73809a" font-size="9">CUS-001282 · 0300 771 2560</text>
+  <text x="33" y="548" fill="#66758c" font-size="9">Johar Town, Lahore</text><rect x="292" y="536" width="63" height="19" rx="9.5" fill="#fff1df"/><circle cx="303" cy="545.5" r="3" fill="#c46a08"/><text x="311" y="549" fill="#a15e0b" font-size="8" font-weight="700">Pending</text>
+  <circle cx="45" cy="601" r="16" fill="#e5f1ec"/><text x="45" y="605" text-anchor="middle" fill="#24725e" font-size="9" font-weight="700">UR</text>
+  <text x="70" y="599" fill="#142e5c" font-size="10" font-weight="700">Usman Raza</text><text x="70" y="615" fill="#73809a" font-size="9">CUS-001281 · 0304 222 6198</text>
+  <text x="33" y="639" fill="#66758c" font-size="9">DHA Phase 5, Lahore</text><rect x="292" y="627" width="63" height="19" rx="9.5" fill="#e8f5ed"/><circle cx="303" cy="636.5" r="3" fill="#278052"/><text x="311" y="640" fill="#247246" font-size="8" font-weight="700">Active</text>
+
+  <text x="18" y="686" fill="#73809a" font-size="9">Showing 1–4 of 1,284</text>
+  <rect x="285" y="669" width="36" height="29" rx="5" fill="#ffffff" stroke="#dfe6ef"/><path d="M306 676l-5 7 5 7" fill="none" stroke="#73809a" stroke-width="1.2"/>
+  <rect x="326" y="669" width="36" height="29" rx="5" fill="#142e5c"/><path d="M341 676l5 7-5 7" fill="none" stroke="#ffffff" stroke-width="1.2"/>
+
+  <rect x="18" y="724" width="354" height="330" rx="9" fill="#ffffff" stroke="#dce4ee" filter="url(#shadow)"/>
+  <rect x="18" y="724" width="354" height="48" rx="9" fill="#ffffff"/>
+  <line x1="18" y1="772" x2="372" y2="772" stroke="#e7edf4"/>
+  <text x="36" y="754" fill="#142e5c" font-size="12" font-weight="700">Add customer</text>
+  <circle cx="352" cy="748" r="12" fill="#f2f5f9"/><path d="M348 744l8 8m0-8-8 8" stroke="#66758c" stroke-width="1.2" stroke-linecap="round"/>
+  <text x="36" y="795" fill="#263b5f" font-size="9" font-weight="600">Full name</text><rect x="36" y="802" width="318" height="34" rx="5" fill="#ffffff" stroke="#cbd5e1"/><text x="47" y="823" fill="#9aa6b8" font-size="9">Enter customer name</text>
+  <text x="36" y="855" fill="#263b5f" font-size="9" font-weight="600">Email address</text><rect x="36" y="862" width="318" height="34" rx="5" fill="#ffffff" stroke="#cbd5e1"/><text x="47" y="883" fill="#9aa6b8" font-size="9">name@example.com</text>
+  <text x="36" y="915" fill="#263b5f" font-size="9" font-weight="600">Phone</text><rect x="36" y="922" width="153" height="34" rx="5" fill="#ffffff" stroke="#cbd5e1"/><text x="47" y="943" fill="#9aa6b8" font-size="9">03XX XXXXXXX</text>
+  <text x="201" y="915" fill="#263b5f" font-size="9" font-weight="600">CNIC</text><rect x="201" y="922" width="153" height="34" rx="5" fill="#ffffff" stroke="#cbd5e1"/><text x="212" y="943" fill="#9aa6b8" font-size="9">XXXXX-XXXXXXX-X</text>
+  <rect x="36" y="977" width="15" height="15" rx="3" fill="#2468bd"/><path d="M39 984l3 3 6-7" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><text x="58" y="988" fill="#334155" font-size="9">Account active</text>
+  <rect x="220" y="1005" width="60" height="32" rx="5" fill="#ffffff" stroke="#cbd5e1"/><text x="250" y="1025" text-anchor="middle" fill="#52627c" font-size="9" font-weight="600">Cancel</text>
+  <rect x="288" y="1005" width="66" height="32" rx="5" fill="#142e5c"/><text x="321" y="1025" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="700">Save</text>
+  <text x="195" y="1070" text-anchor="middle" fill="#91a0b4" font-size="8">CONCEPT PREVIEW · SAMPLE CUSTOMER DATA</text>
+</svg>

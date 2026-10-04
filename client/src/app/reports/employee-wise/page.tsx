@@ -52,8 +52,8 @@ const getProfit = (payment: any) => {
 const formatCurrency = (value: number) => `Rs.${value.toFixed(2)}`;
 
 export default function EmployeeWiseReportPage() {
-  const { data: employees = [], isLoading: loadingEmployees } = useEmployees();
-  const { data: payments = [], isLoading: loadingPayments } = usePayments();
+  const { data: employees = [], isLoading: loadingEmployees, error: employeesError, refetch: refetchEmployees } = useEmployees();
+  const { data: payments = [], isLoading: loadingPayments, error: paymentsError, refetch: refetchPayments } = usePayments();
   const user = useAuthStore((state) => state.user);
   const canViewAdminFinancials = isAdminUser(user);
 
@@ -75,6 +75,19 @@ export default function EmployeeWiseReportPage() {
   );
 
   const isLoading = loadingEmployees || loadingPayments;
+  const reportError = employeesError || paymentsError;
+  const retryReport = () => {
+    void refetchEmployees();
+    void refetchPayments();
+  };
+
+  const resetFilters = () => {
+    setEmployeeId("");
+    setBillingMonth("");
+    setBillingYear("");
+    setFilteredPayments([]);
+    setHasSearched(false);
+  };
 
   const handleSearch = () => {
     const filtered = payments.filter((payment: any) => {
@@ -153,8 +166,8 @@ export default function EmployeeWiseReportPage() {
       pagePermission="reportemployee-wise"
     >
       <div className="space-y-6">
-        <div className="bg-white p-6 rounded-xl shadow space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-5">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <div>
               <label className="block text-sm text-gray-600 mb-1">Employee</label>
               <Select
@@ -196,12 +209,16 @@ export default function EmployeeWiseReportPage() {
               />
             </div>
 
-            <div className="flex items-end">
+            <div className="flex items-end gap-2">
               <button
+                type="button"
                 onClick={handleSearch}
-                className="w-full bg-blue-600 text-white rounded p-3"
+                className="min-h-10 flex-1 rounded-md bg-[#142e5c] px-4 text-sm font-semibold text-white transition hover:bg-[#1d447d] dark:bg-blue-700 dark:hover:bg-blue-600"
               >
                 Search
+              </button>
+              <button type="button" onClick={resetFilters} className="min-h-10 rounded-md border border-slate-300 px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                Reset
               </button>
             </div>
           </div>
@@ -226,11 +243,16 @@ export default function EmployeeWiseReportPage() {
           </div>
         )}
 
-        <div className="bg-white p-6 rounded-xl shadow">
+        <div>
           {hasSearched ? (
-            <DataTable data={filteredPayments} columns={columns} loading={isLoading} />
+            <DataTable data={filteredPayments} columns={columns} loading={isLoading} error={reportError} onRetry={retryReport} />
+          ) : reportError ? (
+            <div role="alert" className="rounded-lg border border-amber-200 bg-amber-50 p-5 text-sm text-slate-700 dark:border-amber-900/70 dark:bg-amber-950/30 dark:text-slate-200">
+              <p className="font-semibold">Report data couldn&apos;t be loaded.</p>
+              <button type="button" onClick={retryReport} className="mt-3 min-h-9 rounded-md bg-[#142e5c] px-4 text-xs font-semibold text-white hover:bg-[#1d447d] dark:bg-blue-700">Try again</button>
+            </div>
           ) : (
-            <div className="text-gray-500 text-center py-16">
+            <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-4 py-12 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
               Select filters and click Search to view employee-wise payment records.
             </div>
           )}

@@ -16,7 +16,7 @@ type Subarea = {
 };
 
 export default function SubareaTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useSubareas();
+  const { data = [], isLoading, isError, error, refetch } = useSubareas();
   const { mutate: deleteSubarea, isPending } = useDeleteSubarea();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -73,6 +73,8 @@ export default function SubareaTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

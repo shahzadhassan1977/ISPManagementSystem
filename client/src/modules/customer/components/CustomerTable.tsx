@@ -23,14 +23,14 @@ type Customer = {
   updatedAt: Date;
 };
 
-export default function CustomerTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useCustomers();
+export default function CustomerTable({ onEdit }: { onEdit: (row: Customer) => void }) {
+  const { data = [], isLoading, isError, error, refetch } = useCustomers();
   const { mutate: deleteCustomer, isPending } = useDeleteCustomer();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
 
-  const [viewData, setViewData] = useState<any>(null);
+  const [viewData, setViewData] = useState<Customer | null>(null);
   const [openView, setOpenView] = useState(false);
   const pagePermission = "customer";
 
@@ -63,11 +63,6 @@ export default function CustomerTable({ onEdit }: any) {
         accessorKey: "isActive",
         header: "Is Active",
         cell: ({ row }) => (row.original.isActive ? "Yes" : "No"),
-    },
-    {
-        accessorKey: "isDeleted",
-        header: "Is Deleted",
-        cell: ({ row }) => (row.original.isDeleted ? "Yes" : "No"),
     },
     {
       id: "actions",
@@ -107,6 +102,8 @@ export default function CustomerTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

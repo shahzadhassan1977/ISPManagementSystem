@@ -92,17 +92,20 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
       title={data ? "Edit Company" : "Add Company"}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-
-        <input {...register("name")} placeholder="Name" className="input" />
+        <label htmlFor="company-name" className="block text-xs font-semibold text-slate-700 dark:text-slate-200">Company name</label>
+        <input id="company-name" {...register("name")} placeholder="Enter company name" className="input" />
         {errors.name && <p className="text-red-500 text-xs">{errors.name.message as string}</p>}
 
-        <input {...register("email")} placeholder="Email" className="input" />
+        <label htmlFor="company-email" className="block text-xs font-semibold text-slate-700 dark:text-slate-200">Email address</label>
+        <input id="company-email" type="email" autoComplete="email" {...register("email")} placeholder="name@example.com" className="input" />
         {errors.email && <p className="text-red-500 text-xs">{errors.email.message as string}</p>}
 
-        <input {...register("address")} placeholder="Address" className="input" />
+        <label htmlFor="company-address" className="block text-xs font-semibold text-slate-700 dark:text-slate-200">Address</label>
+        <input id="company-address" {...register("address")} placeholder="Street, area and city" className="input" />
         {errors.address && <p className="text-red-500 text-xs">{errors.address.message as string}</p>}
 
-        <input {...register("phone")} placeholder="Phone" className="input" />
+        <label htmlFor="company-phone" className="block text-xs font-semibold text-slate-700 dark:text-slate-200">Phone</label>
+        <input id="company-phone" type="tel" autoComplete="tel" {...register("phone")} placeholder="03XX XXXXXXX" className="input" />
         {errors.phone && <p className="text-red-500 text-xs">{errors.phone.message as string}</p>}
 
         {/* ACTIVE & DELETED TOGGLES */}
@@ -128,7 +131,7 @@ export default function CompanyFormModal({ open, onClose, data }: any) {
         </div>
 
 
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="crud-form-actions flex justify-end gap-2 mt-4">
           <button type="button" onClick={onClose} className="border px-3 py-1 rounded">
             Cancel
           </button>

@@ -2,6 +2,8 @@
 
 import PageWrapper from "@/components/ui/PageWrapper";
 import DataTable from "@/components/ui/DataTable";
+import ReportMetricCard from "@/components/reports/ReportMetricCard";
+import { Activity, CreditCard, Users, Wallet } from "lucide-react";
 import { useCustomers } from "@/modules/customer/hooks/useCustomers";
 import { useExpenses } from "@/modules/expense/hooks/useExpenses";
 import { usePayments } from "@/modules/payment/hooks/usePayments";
@@ -20,10 +22,10 @@ const formatDate = (value: any) => {
 };
 
 export default function MonthlyReportPage() {
-  const { data: customers = [], isLoading: loadingCustomers } = useCustomers();
-  const { data: payments = [], isLoading: loadingPayments } = usePayments();
-  const { data: subscriptions = [], isLoading: loadingSubscriptions } = useSubscriptions();
-  const { data: expenses = [], isLoading: loadingExpenses } = useExpenses();
+  const { data: customers = [], isLoading: loadingCustomers, error: customersError, refetch: refetchCustomers } = useCustomers();
+  const { data: payments = [], isLoading: loadingPayments, error: paymentsError, refetch: refetchPayments } = usePayments();
+  const { data: subscriptions = [], isLoading: loadingSubscriptions, error: subscriptionsError, refetch: refetchSubscriptions } = useSubscriptions();
+  const { data: expenses = [], isLoading: loadingExpenses, error: expensesError, refetch: refetchExpenses } = useExpenses();
 
   const today = new Date();
 
@@ -53,6 +55,13 @@ export default function MonthlyReportPage() {
   const totalExpenses = expenseRows.reduce((sum: number, expense: any) => sum + Number(expense.amount || 0), 0);
 
   const isLoading = loadingCustomers || loadingPayments || loadingSubscriptions || loadingExpenses;
+  const reportError = customersError || paymentsError || subscriptionsError || expensesError;
+  const retryReport = () => {
+    void refetchCustomers();
+    void refetchPayments();
+    void refetchSubscriptions();
+    void refetchExpenses();
+  };
 
   const customerColumns = [
     { accessorKey: "name", header: "Customer Name" },
@@ -117,47 +126,32 @@ export default function MonthlyReportPage() {
       pagePermission="reportmonthly"
     >
       <div className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
-            <p className="text-sm text-slate-500">New customer registrations</p>
-            <p className="mt-4 text-4xl font-semibold">{customerRows.length}</p>
-          </div>
-
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
-            <p className="text-sm text-slate-500">Monthly revenue</p>
-            <p className="mt-4 text-4xl font-semibold">Rs.{totalRevenue.toFixed(2)}</p>
-          </div>
-
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
-            <p className="text-sm text-slate-500">Active subscriptions</p>
-            <p className="mt-4 text-4xl font-semibold">{subscriptionRows.length}</p>
-          </div>
-
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow">
-            <p className="text-sm text-slate-500">Monthly expenses</p>
-            <p className="mt-4 text-4xl font-semibold">Rs.{totalExpenses.toFixed(2)}</p>
-          </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <ReportMetricCard label="New customers" value={customerRows.length.toLocaleString()} icon={Users} tone="blue" />
+          <ReportMetricCard label="Revenue collected" value={`Rs. ${totalRevenue.toLocaleString("en-PK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`} icon={CreditCard} tone="green" />
+          <ReportMetricCard label="Subscription starts" value={subscriptionRows.length.toLocaleString()} icon={Activity} tone="navy" />
+          <ReportMetricCard label="Expenses recorded" value={`Rs. ${totalExpenses.toLocaleString("en-PK", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`} icon={Wallet} tone="orange" />
         </div>
 
         <div className="grid grid-cols-1 gap-6">
           <div>
             <h2 className="text-xl font-semibold mb-4">Customer Registrations</h2>
-            <DataTable data={customerRows} columns={customerColumns} loading={isLoading} />
+            <DataTable data={customerRows} columns={customerColumns} loading={isLoading} error={reportError} onRetry={retryReport} />
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-4">Revenue</h2>
-            <DataTable data={paymentRows} columns={paymentColumns} loading={isLoading} />
+            <DataTable data={paymentRows} columns={paymentColumns} loading={isLoading} error={reportError} onRetry={retryReport} />
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-4">Active Subscriptions</h2>
-            <DataTable data={subscriptionRows} columns={subscriptionColumns} loading={isLoading} />
+            <DataTable data={subscriptionRows} columns={subscriptionColumns} loading={isLoading} error={reportError} onRetry={retryReport} />
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-4">Expenses</h2>
-            <DataTable data={expenseRows} columns={expenseColumns} loading={isLoading} />
+            <DataTable data={expenseRows} columns={expenseColumns} loading={isLoading} error={reportError} onRetry={retryReport} />
           </div>
         </div>
       </div>

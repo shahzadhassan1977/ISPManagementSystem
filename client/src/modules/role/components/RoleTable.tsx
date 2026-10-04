@@ -16,7 +16,7 @@ type Role = {
 };
 
 export default function RoleTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useRoles();
+  const { data = [], isLoading, isError, error, refetch } = useRoles();
   const { mutate: deleteRole, isPending } = useDeleteRole();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -69,6 +69,8 @@ export default function RoleTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

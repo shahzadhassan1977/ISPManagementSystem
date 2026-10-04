@@ -69,11 +69,11 @@ export default function AreaFormModal({ open, onClose, data }: any) {
       title={data ? "Edit Area" : "Add Area"}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-
-        <input {...register("name")} placeholder="Name" className="input" />
+        <label htmlFor="area-name" className="block text-xs font-semibold text-slate-700 dark:text-slate-200">Area name</label>
+        <input id="area-name" {...register("name")} placeholder="Enter area name" className="input" />
         {errors.name && <p className="text-red-500 text-xs">{errors.name.message as string}</p>}
         
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="crud-form-actions flex justify-end gap-2 mt-4">
           <button type="button" onClick={onClose} className="border px-3 py-1 rounded">
             Cancel
           </button>

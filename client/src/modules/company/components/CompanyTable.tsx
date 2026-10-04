@@ -18,7 +18,7 @@ type Company = {
 };
 
 export default function CompanyTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useCompanies();
+  const { data = [], isLoading, isError, error, refetch } = useCompanies();
   const { mutate: deleteCompany, isPending } = useDeleteCompany();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -83,6 +83,8 @@ export default function CompanyTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

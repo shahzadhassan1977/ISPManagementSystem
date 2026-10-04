@@ -40,7 +40,7 @@ const formatDate = (value: any) => {
 const formatCurrency = (value: number) => `Rs.${value.toFixed(2)}`;
 
 export default function ExpensesReportPage() {
-  const { data: expenses = [], isLoading } = useExpenses();
+  const { data: expenses = [], isLoading, error, refetch } = useExpenses();
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -105,6 +105,14 @@ export default function ExpensesReportPage() {
     { count: 0, amount: 0, pending: 0, paid: 0 },
   );
 
+  const resetFilters = () => {
+    setCategory("");
+    setStatus("");
+    setPaymentMethod("");
+    setBillingMonth("");
+    setBillingYear("");
+  };
+
   const columns = [
     { accessorKey: "title", header: "Title" },
     { accessorKey: "category", header: "Category" },
@@ -130,8 +138,8 @@ export default function ExpensesReportPage() {
       pagePermission="reportexpenses"
     >
       <div className="space-y-6">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:p-5">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
             <div>
               <label className="mb-1 block text-sm text-gray-600">Category</label>
               <Select
@@ -194,6 +202,11 @@ export default function ExpensesReportPage() {
                 className="text-sm"
               />
             </div>
+            <div className="flex items-end">
+              <button type="button" onClick={resetFilters} className="min-h-10 w-full rounded-md border border-slate-300 bg-white px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700">
+                Reset filters
+              </button>
+            </div>
           </div>
         </div>
 
@@ -212,7 +225,7 @@ export default function ExpensesReportPage() {
           </div>
         </div>
 
-        <DataTable data={filteredExpenses} columns={columns} loading={isLoading} />
+        <DataTable data={filteredExpenses} columns={columns} loading={isLoading} error={error} onRetry={refetch} />
       </div>
     </PageWrapper>
   );

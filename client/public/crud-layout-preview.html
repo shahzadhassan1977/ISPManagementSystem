@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>M3-Solution CRUD layout previews</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 32px 20px 56px;
+        background: #f3f6fb;
+        color: #142e5c;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+      main { width: min(100%, 1440px); margin: 0 auto; }
+      h1 { margin: 0 0 8px; font-size: 24px; }
+      p { margin: 0 0 28px; color: #73809a; font-size: 14px; }
+      section { margin-top: 30px; }
+      h2 { margin: 0 0 12px; font-size: 16px; }
+      .frame {
+        overflow: hidden;
+        border: 1px solid #dce4ee;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 8px 24px rgba(20, 46, 92, .08);
+      }
+      .desktop img { display: block; width: 100%; height: auto; }
+      .mobile { width: min(100%, 390px); }
+      .mobile img { display: block; width: 100%; height: auto; }
+      .caption { margin-top: 8px; color: #8794a7; font-size: 11px; }
+      @media (max-width: 600px) {
+        body { padding: 24px 14px 40px; }
+        h1 { font-size: 21px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>M3-Solution CRUD layout concepts</h1>
+      <p>Customer management is shown as the representative example. Sample records are illustrative; fields and columns adapt to each module.</p>
+      <section>
+        <h2>Desktop · customer directory and add drawer</h2>
+        <div class="frame desktop"><img src="crud-layout-preview.svg" alt="Desktop CRUD page concept" /></div>
+        <div class="caption">1440 × 1080 concept canvas, scaled to fit.</div>
+      </section>
+      <section>
+        <h2>Mobile · searchable customer list and form</h2>
+        <div class="frame mobile"><img src="crud-mobile-preview.svg" alt="Mobile CRUD page concept" /></div>
+        <div class="caption">390 × 1080 concept canvas.</div>
+      </section>
+    </main>
+  </body>
+</html>

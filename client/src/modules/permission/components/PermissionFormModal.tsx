@@ -85,8 +85,8 @@ export default function PermissionFormModal({ open, onClose, data }: any) {
       title={data ? "Edit Permission" : "Add Permission"}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-
-        <input {...register("name")} placeholder="Name" className="input" />
+        <label htmlFor="permission-name" className="block text-xs font-semibold text-slate-700 dark:text-slate-200">Permission name</label>
+        <input id="permission-name" {...register("name")} placeholder="Enter permission name" className="input" />
         {errors.name && <p className="text-red-500 text-xs">{errors.name.message as string}</p>}
         
         {/* ACTIVE & DELETED TOGGLES */}
@@ -101,7 +101,7 @@ export default function PermissionFormModal({ open, onClose, data }: any) {
             </label>            
         </div>
 
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="crud-form-actions flex justify-end gap-2 mt-4">
           <button type="button" onClick={onClose} className="border px-3 py-1 rounded">
             Cancel
           </button>

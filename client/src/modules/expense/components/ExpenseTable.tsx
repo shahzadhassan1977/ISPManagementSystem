@@ -1,8 +1,8 @@
 "use client";
 
-import { Eye, Edit3, Trash2 } from "lucide-react";
 import ViewModal from "@/components/ui/ViewModal";
 import DataTable from "@/components/ui/DataTable";
+import PermissionActionButtons from "@/components/ui/PermissionActionButtons";
 import { ColumnDef } from "@tanstack/react-table";
 import { useExpenses, useDeleteExpense } from "../hooks/useExpenses";
 import { useState } from "react";
@@ -39,7 +39,7 @@ const formatDate = (value: any) => {
 };
 
 export default function ExpenseTable({ onEdit }: any) {
-  const { data = [], isLoading } = useExpenses();
+  const { data = [], isLoading, isError, error, refetch } = useExpenses();
   const { mutate: deleteExpense, isPending } = useDeleteExpense();
 
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -79,43 +79,18 @@ export default function ExpenseTable({ onEdit }: any) {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => {
+        <PermissionActionButtons
+          pagePermission={pagePermission}
+          onView={() => {
               setViewData(row.original);
               setOpenView(true);
-            }}
-            className="text-blue-500 hover:text-blue-700"
-            aria-label="View"
-            title="View"
-          >
-            <Eye className="h-4 w-4" />
-            <span className="sr-only">View</span>
-          </button>
-
-          <button
-            onClick={() => onEdit(row.original)}
-            className="text-green-500 hover:text-green-700"
-            aria-label="Edit"
-            title="Edit"
-          >
-            <Edit3 className="h-4 w-4" />
-            <span className="sr-only">Edit</span>
-          </button>
-
-          <button
-            onClick={() => {
-              setSelectedId(row.original.id);
-              setOpenConfirm(true);
-            }}
-            className="text-red-500 hover:text-red-700"
-            aria-label="Delete"
-            title="Delete"
-          >
-            <Trash2 className="h-4 w-4" />
-            <span className="sr-only">Delete</span>
-          </button>
-        </div>
+          }}
+          onEdit={() => onEdit(row.original)}
+          onDelete={() => {
+            setSelectedId(row.original.id);
+            setOpenConfirm(true);
+          }}
+        />
       ),
     },
   ];
@@ -128,6 +103,12 @@ export default function ExpenseTable({ onEdit }: any) {
       onSuccess: () => {
         toast.success("Deleted successfully");
         setOpenConfirm(false);
+        setSelectedId(null);
+      },
+      onError: (error: any) => {
+        toast.error(
+          error?.response?.data?.message || error?.message || "Delete failed",
+        );
       },
     });
   };
@@ -137,6 +118,8 @@ export default function ExpenseTable({ onEdit }: any) {
         data={data}
         columns={columns}
         loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
       />
 
         <ViewModal

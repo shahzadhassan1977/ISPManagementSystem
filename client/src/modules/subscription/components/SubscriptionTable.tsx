@@ -57,7 +57,7 @@ type SubscriptionDetail = {
 };
 
 export default function SubscriptionTable({ onEdit }: any) {
-  const { data = [], isLoading, isError, error } = useSubscriptions();
+  const { data = [], isLoading, isError, error, refetch } = useSubscriptions();
   const { mutate: deleteSubscription, isPending } = useDeleteSubscription();
   const { data: employees = [] } = useEmployees();
 
@@ -146,7 +146,13 @@ export default function SubscriptionTable({ onEdit }: any) {
 
   return (
     <>
-      <DataTable data={data} columns={columns} loading={isLoading} />
+      <DataTable
+        data={data}
+        columns={columns}
+        loading={isLoading}
+        error={isError ? error : undefined}
+        onRetry={refetch}
+      />
 
       <ViewModal
         open={openView}

@@ -29,12 +29,6 @@ export default function Header({
           <Menu size={18} />
         </button>
 
-        <div className="hidden sm:block">
-          <input
-            placeholder="Search..."
-            className="border rounded-lg px-3 py-1 w-64 bg-slate-50 text-slate-900 border-slate-200 transition placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
-          />
-        </div>
       </div>
 
       <div className="flex items-center gap-2">
@@ -53,7 +47,7 @@ export default function Header({
             className="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-slate-800 transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
           >
             <div className="w-8 h-8 rounded-full bg-blue-600" />
-            <span className="text-sm">{user?.name || "Admin"}</span>
+            <span className="text-sm">{user?.name || user?.email || "User"}</span>
           </button>
 
           {open && (

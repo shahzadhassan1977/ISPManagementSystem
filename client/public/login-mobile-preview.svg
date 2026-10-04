@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="844" viewBox="0 0 390 844" role="img" aria-labelledby="title description">
+  <title id="title">M3-Solution mobile login layout preview</title>
+  <desc id="description">Mobile sign-in concept with email and password fields, password visibility control, remember-me checkbox, and sign-in button.</desc>
+  <defs>
+    <linearGradient id="brandPanel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102f66"/>
+      <stop offset="1" stop-color="#0b2149"/>
+    </linearGradient>
+    <filter id="softShadow" x="-15%" y="-15%" width="130%" height="145%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#142e5c" flood-opacity="0.10"/>
+    </filter>
+    <style>text { font-family: Inter, "Segoe UI", Arial, sans-serif; }</style>
+  </defs>
+
+  <rect width="390" height="844" fill="#f4f7fb"/>
+  <rect width="390" height="230" fill="url(#brandPanel)"/>
+  <path d="M0 181 C95 130 205 249 390 170 L390 230 L0 230Z" fill="#163d7a" opacity=".52"/>
+
+  <rect x="24" y="32" width="48" height="48" rx="11" fill="#ffffff"/>
+  <path d="M30 69V43l12 13 12-13v26h-8V59l-4 4-4-4v10z" fill="#1768bd"/>
+  <path d="M55 44h14l-9 12c7-1 10 3 10 7 0 6-5 9-12 9-5 0-8-1-11-4l5-6c2 1 4 2 6 2s3-1 3-2-1-2-5-2h-4l5-9h-8z" fill="#f28a16"/>
+  <text x="84" y="53" fill="#ffffff" font-size="17" font-weight="700">M3-Solution</text>
+  <text x="85" y="71" fill="#bed0ea" font-size="9" font-weight="600" letter-spacing="1.3">ISP MANAGEMENT</text>
+  <text x="24" y="144" fill="#ffffff" font-size="23" font-weight="700">Welcome back</text>
+  <text x="24" y="166" fill="#c9d8ec" font-size="11">Sign in to continue to your workspace.</text>
+
+  <g filter="url(#softShadow)"><rect x="18" y="204" width="354" height="504" rx="11" fill="#ffffff" stroke="#e3e9f1"/></g>
+  <text x="42" y="246" fill="#142e5c" font-size="21" font-weight="700">Sign in</text>
+  <text x="42" y="267" fill="#70809a" font-size="10.5">Enter your administrator account details.</text>
+
+  <text x="42" y="311" fill="#263b5f" font-size="11" font-weight="600">Email address</text>
+  <rect x="42" y="322" width="306" height="48" rx="7" fill="#ffffff" stroke="#cbd5e1"/>
+  <path d="M57 340h16v12H57zM57 341l8 6 8-6" fill="none" stroke="#74839a" stroke-width="1.3" stroke-linejoin="round"/>
+  <text x="85" y="351" fill="#9aa6b8" font-size="12">admin@isp.com</text>
+
+  <text x="42" y="405" fill="#263b5f" font-size="11" font-weight="600">Password</text>
+  <rect x="42" y="416" width="306" height="48" rx="7" fill="#ffffff" stroke="#cbd5e1"/>
+  <path d="M57 440c4-6 13-6 17 0-4 6-13 6-17 0z" fill="none" stroke="#74839a" stroke-width="1.3"/>
+  <circle cx="65.5" cy="440" r="2" fill="none" stroke="#74839a" stroke-width="1.3"/>
+  <text x="86" y="445" fill="#a5afbe" font-size="14" letter-spacing="3">••••••••</text>
+  <path d="M333 435c-4-6-13-6-17 0 4 6 13 6 17 0z" fill="none" stroke="#74839a" stroke-width="1.2"/>
+  <circle cx="324.5" cy="435" r="1.9" fill="none" stroke="#74839a" stroke-width="1.2"/>
+
+  <rect x="43" y="492" width="17" height="17" rx="4" fill="#ffffff" stroke="#9aa8bb"/>
+  <text x="69" y="505" fill="#51627d" font-size="11">Remember me</text>
+
+  <rect x="42" y="544" width="306" height="49" rx="7" fill="#142e5c"/>
+  <text x="195" y="574" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="700">Sign in</text>
+  <path d="M312 568h12m-5-5 5 5-5 5" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <line x1="42" y1="622" x2="348" y2="622" stroke="#edf1f5"/>
+  <circle cx="56" cy="650" r="9" fill="#e7f4ec"/>
+  <path d="M52 650l3 3 5-6" fill="none" stroke="#278052" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="654" fill="#748198" font-size="10">Secure ISP Admin Panel</text>
+
+  <text x="195" y="780" text-anchor="middle" fill="#8794a7" font-size="9">M3-Solution · Secure account sign-in</text>
+</svg>

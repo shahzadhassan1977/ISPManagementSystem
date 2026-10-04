@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Edit3, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { useAuthStore } from "@/core/store/auth.store";
 import { canPerformAction } from "@/utils/auth";
 
@@ -23,7 +23,7 @@ export default function PermissionActionButtons({
   viewLabel = "View",
   editLabel = "Edit",
   deleteLabel = "Delete",
-  className = "flex flex-wrap gap-2",
+  className = "flex flex-wrap items-center gap-1",
 }: PermissionActionButtonsProps) {
   const user = useAuthStore((s) => s.user);
 
@@ -41,11 +41,11 @@ export default function PermissionActionButtons({
         <button
           type="button"
           onClick={onView}
-          className="text-blue-500 hover:text-blue-700"
+          className="grid h-9 w-9 place-items-center rounded-md text-[#245fae] transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:text-blue-300 dark:hover:bg-blue-950"
           aria-label={viewLabel}
           title={viewLabel}
         >
-          <Eye className="h-4 w-4" />
+          <Eye className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only">{viewLabel}</span>
         </button>
       ) : null}
@@ -54,11 +54,11 @@ export default function PermissionActionButtons({
         <button
           type="button"
           onClick={onEdit}
-          className="text-green-500 hover:text-green-700"
+          className="grid h-9 w-9 place-items-center rounded-md text-amber-700 transition hover:bg-amber-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 dark:text-amber-300 dark:hover:bg-amber-950"
           aria-label={editLabel}
           title={editLabel}
         >
-          <Edit3 className="h-4 w-4" />
+          <Pencil className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only">{editLabel}</span>
         </button>
       ) : null}
@@ -67,11 +67,11 @@ export default function PermissionActionButtons({
         <button
           type="button"
           onClick={onDelete}
-          className="text-red-500 hover:text-red-700"
+          className="grid h-9 w-9 place-items-center rounded-md text-red-600 transition hover:bg-red-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 dark:text-red-400 dark:hover:bg-red-950"
           aria-label={deleteLabel}
           title={deleteLabel}
         >
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only">{deleteLabel}</span>
         </button>
       ) : null}
